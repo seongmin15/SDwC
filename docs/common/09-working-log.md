@@ -36,3 +36,10 @@
 - **변경된 파일**: README.md (신규), .gitignore (신규), docs/common/07-workplan.md (태스크 목록 추가), docs/common/09-working-log.md (본 엔트리), docs/common/10-changelog.md
 - **의사결정**: 태스크를 ~30분 리뷰 가능 단위로 18개로 분할. T017-T018은 Backlog (코어 기능 완료 후 진행).
 - **미완료/후속**: T001 (sdwc-api project scaffolding)부터 시작
+
+### 2026-03-03 — T001: sdwc-api project scaffolding
+
+- **작업**: FastAPI 프로젝트 초기화. Poetry 설정, src/sdwc_api/ 구조 생성, health endpoint, ruff/mypy/pytest 설정.
+- **변경된 파일**: sdwc-api/ (신규 디렉토리 전체), .gitignore (poetry.lock 제외 해제), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: coding-standards skill에 따라 `src/sdwc_api/` 구조 채택 (`app/` 대신). DB/ORM/auth 관련 디렉토리 생략. poetry.lock 커밋을 위해 .gitignore 수정.
+- **미완료/후속**: T002 (Pydantic models - phases 1-3)

@@ -16,7 +16,7 @@ venv/
 ENV/
 
 # Poetry
-poetry.lock
+# poetry.lock is committed for reproducible builds
 
 # Node.js
 node_modules/
