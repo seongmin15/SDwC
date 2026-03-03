@@ -165,7 +165,7 @@ This folder contains the **original templates and rules** used by SDwC to genera
 2. Check the service's mode in Section 2.
 3. Read relevant docs (Section 4 document map).
 4. Read relevant skills if writing code.
-5. Propose a plan.
+5. Propose a plan (per Section 5.14).
 6. After plan approval, create a feature branch (per skills/common/git/).
    - **learning mode**: skip (human creates branch).
 7. Update 07-workplan: move task status to In Progress.
@@ -339,6 +339,14 @@ When the human requests work not in 07-workplan (e.g., "fix this file", "rename 
    - Now -> follow Section 5.12 Pause, then start the new task.
    - Later -> continue current task.
 
+### 5.14 Approval Protocol
+
+When presenting a plan or report for human approval:
+
+1. Present to human and wait for response.
+2. If approved: proceed to the next step.
+3. If human provides feedback: revise based on feedback and present again (repeat from 1).
+
 ---
 
 ## 6. Document Update Triggers
@@ -399,8 +407,7 @@ When the user says "start project" or equivalent:
 8. Ask human: "Do you have a remote repository URL?" If provided: `git remote add origin <url>` and `git push -u origin main`. If declined: skip and record "remote: not configured" in 09-working-log.
 9. Record Init completion in 09-working-log.
 10. Read 05-roadmap and write initial task list in 07-workplan.
-11. Report to human: project summary + proposed work plan.
--> Requires approval to start first task.
+11. Report to human: project summary + proposed work plan (per Section 5.14).
 
 ### Resuming Session
 

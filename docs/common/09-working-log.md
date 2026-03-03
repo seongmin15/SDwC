@@ -29,3 +29,10 @@
 - **의사결정**: 내린 결정과 이유
 - **미완료/후속**: 다음에 이어할 것
 -->
+
+### 2026-03-03 — Project Init
+
+- **작업**: Section 7 Init 완료. 전체 docs/ 및 skills/ 읽기, README.md 생성, .gitignore 생성, git init, 초기 커밋, remote 연결 (https://github.com/seongmin15/SDwC.git), 초기 태스크 목록 작성 (T001-T018).
+- **변경된 파일**: README.md (신규), .gitignore (신규), docs/common/07-workplan.md (태스크 목록 추가), docs/common/09-working-log.md (본 엔트리), docs/common/10-changelog.md
+- **의사결정**: 태스크를 ~30분 리뷰 가능 단위로 18개로 분할. T017-T018은 Backlog (코어 기능 완료 후 진행).
+- **미완료/후속**: T001 (sdwc-api project scaffolding)부터 시작

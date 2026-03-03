@@ -16,3 +16,7 @@
      한 줄에 "무엇이 어떻게 변했는가"만 간결하게.
      릴리스 시 [Unreleased]를 버전 번호로 전환.
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
+
+### Added
+- Project initialized with README.md, .gitignore, git repo, and remote (github.com/seongmin15/SDwC)
+- Initial work plan with 18 tasks (T001-T018) in 07-workplan
