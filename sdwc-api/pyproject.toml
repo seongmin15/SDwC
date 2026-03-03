@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "sdwc-api"
+version = "0.1.0"
+description = "SDwC API - Survey-driven project documentation generator"
+authors = []
+packages = [{include = "sdwc_api", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115"
+uvicorn = {version = "^0.34", extras = ["standard"]}
+jinja2 = "^3.1"
+pyyaml = "^6.0"
+pydantic = "^2.0"
+pydantic-settings = "^2.0"
+python-multipart = "^0.0.18"
+structlog = "^24.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+pytest-asyncio = "^0.25"
+httpx = "^0.28"
+ruff = "^0.9"
+mypy = "^1.14"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM", "RUF"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+plugins = ["pydantic.mypy"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = ["integration: integration tests"]

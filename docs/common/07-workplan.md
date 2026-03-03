@@ -70,7 +70,7 @@ Any active status -> Cancelled
      - Record Result when Done. -->
 
 ### T001: sdwc-api project scaffolding
-- Status: Ready
+- Status: Review
 - Service: sdwc-api
 - Description: Initialize FastAPI project with Poetry. Set up project structure (routers, services, engine packages), configure ruff/mypy, create health endpoint, configure CORS middleware.
 - Acceptance Criteria:
