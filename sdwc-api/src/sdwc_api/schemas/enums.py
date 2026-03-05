@@ -770,3 +770,144 @@ class SecurityCategory(StrEnum):
     INPUT_VALIDATION = "input_validation"
     AUDIT = "audit"
     TRANSPORT_SECURITY = "transport_security"
+
+
+# Phase 6 enums
+
+
+class LongRunningHandling(StrEnum):
+    """Long-running operation handling strategy."""
+
+    BACKGROUND = "background"
+    QUEUE = "queue"
+    STREAMING = "streaming"
+
+
+class ProgressFeedback(StrEnum):
+    """Progress feedback mechanism for long-running operations."""
+
+    POLLING = "polling"
+    WEBSOCKET = "websocket"
+    SSE = "sse"
+    NONE = "none"
+
+
+# Phase 7 enums
+
+
+class Methodology(StrEnum):
+    """Development methodology.
+
+    CRITICAL: This enum controls CLAUDE.md branching for process sections.
+    """
+
+    SCRUM = "scrum"
+    KANBAN = "kanban"
+    SCRUMBAN = "scrumban"
+    XP = "xp"
+
+
+class TestApproach(StrEnum):
+    """Testing approach."""
+
+    TDD = "tdd"
+    BDD = "bdd"
+    TEST_AFTER = "test_after"
+    TEST_FIRST = "test_first"
+
+
+class TestLevel(StrEnum):
+    """Test level."""
+
+    UNIT = "unit"
+    INTEGRATION = "integration"
+    E2E = "e2e"
+    CONTRACT = "contract"
+    SMOKE = "smoke"
+    PERFORMANCE = "performance"
+
+
+class TestFrameworkEnum(StrEnum):
+    """Test framework."""
+
+    PYTEST = "pytest"
+    JEST = "jest"
+    VITEST = "vitest"
+    PLAYWRIGHT = "playwright"
+    CYPRESS = "cypress"
+    JUNIT = "junit"
+    GO_TEST = "go_test"
+    RSPEC = "rspec"
+
+
+class TestDataStrategy(StrEnum):
+    """Test data management strategy."""
+
+    FIXTURES = "fixtures"
+    FACTORIES = "factories"
+    SNAPSHOTS = "snapshots"
+    SEED_SCRIPTS = "seed_scripts"
+
+
+class DbTestStrategy(StrEnum):
+    """Database testing strategy."""
+
+    IN_MEMORY = "in_memory"
+    TESTCONTAINERS = "testcontainers"
+    SHARED_TEST_DB = "shared_test_db"
+    DOCKER_COMPOSE = "docker_compose"
+
+
+class ExternalServiceStrategy(StrEnum):
+    """External service testing strategy."""
+
+    MOCKS = "mocks"
+    STUBS = "stubs"
+    SANDBOX = "sandbox"
+    WIREMOCK = "wiremock"
+
+
+class BranchStrategy(StrEnum):
+    """Git branch strategy."""
+
+    GITHUB_FLOW = "github_flow"
+    GITFLOW = "gitflow"
+    TRUNK_BASED = "trunk_based"
+    MASTER_DEVELOP_TASK = "master_develop_task"
+
+
+class CommitConvention(StrEnum):
+    """Commit message convention."""
+
+    CONVENTIONAL = "conventional"
+    GITMOJI = "gitmoji"
+    ANGULAR = "angular"
+    FREE = "free"
+
+
+class RepoStructure(StrEnum):
+    """Repository structure."""
+
+    MONOREPO = "monorepo"
+    POLYREPO = "polyrepo"
+
+
+class PrCreatedBy(StrEnum):
+    """Who creates pull requests."""
+
+    HUMAN = "human"
+    CLAUDE = "claude"
+    BOTH = "both"
+
+
+# Phase 8 enums
+
+
+class RolloutStrategy(StrEnum):
+    """Rollout strategy."""
+
+    BIG_BANG = "big_bang"
+    CANARY = "canary"
+    BLUE_GREEN = "blue_green"
+    ROLLING = "rolling"
+    FEATURE_FLAG = "feature_flag"

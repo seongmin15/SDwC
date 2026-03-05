@@ -65,6 +65,13 @@
 - **의사결정**: 사용자 피드백 반영 — T002 완료 시 workplan Done 갱신 및 문서 업데이트 누락 방지를 위한 명시적 체크리스트 절차 추가.
 - **미완료/후속**: 없음
 
+### 2026-03-05 — T004: Pydantic models - phases 6-8 + YAML parser
+
+- **작업**: Phase 6-8 Pydantic v2 모델 정의 (Performance, Availability, Observability, ExternalSystem, Process, CodeQuality, Testing, VersionControl, Evolution, Rollout, Operations), root IntakeData 모델 (전 phase 통합 + per_service↔services 교차 검증), YAML 파서 (safe_load, 1MB 제한, 5s 타임아웃) 구현 완료.
+- **변경된 파일**: schemas/enums.py (수정 - 15개 신규 enum), schemas/phase6.py (신규), schemas/phase7.py (신규), schemas/phase8.py (신규), schemas/intake.py (신규), services/yaml_parser.py (신규), tests/unit/test_phase6_models.py (신규), tests/unit/test_phase7_models.py (신규), tests/unit/test_phase8_models.py (신규), tests/unit/test_intake_model.py (신규), tests/unit/test_yaml_parser.py (신규), pyproject.toml (types-PyYAML 추가), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: scalability는 plan 명세대로 `str | None` 유지 (template는 nested 구조이나 plan이 승인됨). ExternalSystem.reliability는 Likelihood enum 재사용. FutureFeature.planned_phase는 PlannedPhase enum 재사용. Windows 환경에서 signal.SIGALRM 미지원으로 threading 기반 타임아웃 구현. types-PyYAML dev 의존성 추가 (mypy 타입 체크용).
+- **미완료/후속**: T005 (Template Engine - context composition)
+
 ### 2026-03-05 — Ad-hoc: Section 5.1 프로세스 개선
 
 - **작업**: Receiving a Task 절차에 pre-coding checklist (step 7) 추가. 코드 작성 전 반드시 07-workplan In Progress 전환 및 09-working-log 계획 기록을 완료하도록 명시. CLAUDE.md와 .sdwc/CLAUDE_BASE.md 양쪽 반영.
