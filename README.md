@@ -40,7 +40,7 @@ Developers using Claude Code lack structured project documentation, leading to w
 ```bash
 cd sdwc-api
 poetry install
-poetry run uvicorn app.main:app --reload
+poetry run uvicorn sdwc_api.main:app --reload
 ```
 
 ### sdwc-web (Frontend)
