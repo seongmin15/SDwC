@@ -161,15 +161,16 @@ Any active status -> Cancelled
 - Result: engine/validator.py with 14 check functions (S-2~S-9, C-1~C-7) + validate_output/validate_or_raise orchestrators, engine/packager.py with build_zip (in-memory ZIP_DEFLATED, .sdwc/ per-file E-5 warning), OutputContractError exception. C-4/C-5/C-6/C-7 reuse postprocess rule functions as safety net. 66 new unit tests (332 total). All ruff/mypy/pytest pass.
 
 ### T009: API endpoints - GET /template & POST /validate
-- Status: Ready
+- Status: Done
 - Service: sdwc-api
 - Description: Implement GET /api/v1/template (serve intake_template.yaml) and POST /api/v1/validate (parse, validate, return errors/warnings). RFC 7807 error format for validation failures.
 - Acceptance Criteria:
-  - [ ] GET /template returns intake_template.yaml with correct content-type
-  - [ ] POST /validate accepts multipart file upload
-  - [ ] Returns {valid, errors, warnings} JSON response
-  - [ ] Invalid YAML returns RFC 7807 error with line numbers
-  - [ ] Integration tests for both endpoints
+  - [x] GET /template returns intake_template.yaml with correct content-type
+  - [x] POST /validate accepts multipart file upload
+  - [x] Returns {valid, errors, warnings} JSON response
+  - [x] Invalid YAML returns RFC 7807 error with line numbers
+  - [x] Integration tests for both endpoints
+- Result: routers/intake.py with GET /api/v1/template (FileResponse, application/x-yaml) and POST /api/v1/validate (multipart upload, parse_intake_yaml, RFC 7807 error mapping). schemas/responses.py with ValidationErrorItem + ValidationResponse models. core/config.py with SDWC_RESOURCE_DIR setting. 10 new integration tests (342 total). All ruff/mypy/pytest pass.
 
 ### T010: API endpoints - POST /preview & POST /generate
 - Status: Ready

@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from sdwc_api.core.config import settings
-from sdwc_api.routers import health
+from sdwc_api.routers import health, intake
 
 
 @asynccontextmanager
@@ -45,3 +45,4 @@ app.add_middleware(
 )
 
 app.include_router(health.router)
+app.include_router(intake.router)

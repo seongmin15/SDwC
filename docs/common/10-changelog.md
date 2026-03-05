@@ -22,6 +22,7 @@
 - Section 5.8 Completing a Task: added pre-commit doc checklist (step 5) with sub-tasks for 07-workplan, 09-working-log, 10-changelog, and Section 6 trigger docs (applied to CLAUDE.md and .sdwc/CLAUDE_BASE.md)
 
 ### Added
+- API endpoints: GET /api/v1/template (FileResponse with application/x-yaml) and POST /api/v1/validate (multipart upload, RFC 7807 error format), ValidationErrorItem/ValidationResponse response models, SDWC_RESOURCE_DIR config setting (10 new integration tests, 342 total)
 - Output contract validator: 14 check functions (S-2~S-9 structure, C-1~C-7 content), validate_output/validate_or_raise orchestrators, OutputContractError exception with violation collection (51 new tests)
 - ZIP packager: build_zip with in-memory ZIP_DEFLATED assembly, project.name root folder, .sdwc/ server resource copy with per-file E-5 warning handling (14 new tests, 332 total)
 - Markdown post-processing pipeline: 5 rules (empty sections, consecutive dividers, blank lines, empty tables, trailing whitespace) with Claude-managed file exemption, integrated into render_all (34 new tests, 266 total)
