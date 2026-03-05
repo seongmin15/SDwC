@@ -106,3 +106,10 @@
 - **변경된 파일**: src/sdwc_api/engine/validator.py (신규), src/sdwc_api/engine/packager.py (신규), src/sdwc_api/exceptions/__init__.py (수정 — OutputContractError 추가), tests/unit/test_validator.py (신규, 51 tests), tests/unit/test_packager.py (신규, 14 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: validator는 engine/ 패키지에 배치 (postprocess와 동일한 순수 함수 패턴). C-4/C-5/C-6/C-7은 postprocess rule 함수 재사용 (rule(content) != content 비교로 안전망 역할). Sequence[ServiceModel] 타입으로 mypy list invariance 해결. .sdwc/ 복사는 per-file try/except (E-5 spec). S-1은 ZIP assembly에서 강제 (dict validation에서 제외).
 - **미완료/후속**: T009 (API endpoints - GET /template & POST /validate)
+
+### 2026-03-05 — T009: API endpoints - GET /template & POST /validate
+
+- **작업**: GET /api/v1/template (intake_template.yaml FileResponse 다운로드), POST /api/v1/validate (multipart 업로드 → parse_intake_yaml → RFC 7807 에러 매핑) 엔드포인트 구현 완료.
+- **변경된 파일**: src/sdwc_api/routers/intake.py (신규), src/sdwc_api/schemas/responses.py (신규), src/sdwc_api/core/config.py (수정 — SDWC_RESOURCE_DIR 추가), src/sdwc_api/main.py (수정 — intake router 마운트), tests/integration/test_intake.py (신규, 10 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: SDWC_RESOURCE_DIR을 config.py에 추가하여 .sdwc/ 경로를 환경변수로 오버라이드 가능하게 함. B008 ruff 규칙 준수를 위해 File(...) 기본값 대신 UploadFile 타입만 사용. Pydantic ValidationError는 e.errors()를 순회하며 개별 RFC 7807 항목으로 변환.
+- **미완료/후속**: T010 (API endpoints - POST /preview & POST /generate)
