@@ -139,13 +139,14 @@ Any active status -> Cancelled
 - Result: 7 functions in engine/renderer.py (_make_adr_seq, create_jinja_env, _discover_templates, _map_output_path, _render_template, _find_per_service, render_all). SdwcError base exception + FrameworkNotFoundError in exceptions/__init__.py. 4-phase render pipeline (CLAUDE.md → common docs → common skills → per-service). 33 new unit tests (232 total). All ruff/mypy/pytest checks pass.
 
 ### T007: Template Engine - post-processing (5 markdown rules)
-- Status: Ready
+- Status: Done
 - Service: sdwc-api
 - Description: Implement markdown post-processing per generation_rules.md §11: remove empty sections, merge consecutive separators, collapse excess blank lines, remove empty tables, strip trailing whitespace. Skip rule 1 for Claude-managed files (07, 09, 10, 11, 12).
 - Acceptance Criteria:
-  - [ ] All 5 post-processing rules implemented
-  - [ ] Claude-managed files exempt from rule 1
-  - [ ] Unit tests for each rule with edge cases
+  - [x] All 5 post-processing rules implemented
+  - [x] Claude-managed files exempt from rule 1
+  - [x] Unit tests for each rule with edge cases
+- Result: 5 rule functions + post_process orchestrator in engine/postprocess.py. Integrated into render_all() via dict comprehension. Claude-managed file detection by basename prefix. Rule 1 iterates until stable for cascading empty sections. 34 new unit tests (266 total). All ruff/mypy/pytest checks pass.
 
 ### T008: Template Engine - ZIP packaging & output_contract validation
 - Status: Ready

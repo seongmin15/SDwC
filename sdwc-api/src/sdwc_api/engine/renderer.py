@@ -17,6 +17,7 @@ from sdwc_api.engine.context import (
     compose_service_context,
     compose_skill_context,
 )
+from sdwc_api.engine.postprocess import post_process
 from sdwc_api.exceptions import FrameworkNotFoundError
 from sdwc_api.schemas.intake import IntakeData
 from sdwc_api.schemas.phase3 import PerServiceCollaboration
@@ -186,4 +187,5 @@ def render_all(intake: IntakeData, template_dir: Path) -> dict[str, str]:
             rendered = _render_template(env, tpl, skill_ctx)
             output[_map_output_path(tpl, svc_name)] = rendered
 
-    return output
+    # Post-processing: apply markdown cleanup rules per generation_rules.md §11
+    return {path: post_process(content, path) for path, content in output.items()}

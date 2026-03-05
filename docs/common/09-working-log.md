@@ -92,3 +92,10 @@
 - **변경된 파일**: src/sdwc_api/engine/renderer.py (신규), src/sdwc_api/exceptions/__init__.py (수정), tests/unit/test_renderer.py (신규, 33 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: Jinja2 Undefined (기본값)으로 {{ mermaid_erd }} 등 미구현 변수가 빈 문자열로 렌더링되도록 허용 (T006 범위). _map_output_path에서 forward slash 강제 (Windows 호환). FrameworkNotFoundError를 SdwcError 하위 클래스로 설계하여 T011 RFC 7807 매핑에 활용 가능.
 - **미완료/후속**: T007 (Template Engine - post-processing)
+
+### 2026-03-05 — T007: Template Engine - post-processing (5 markdown rules)
+
+- **작업**: generation_rules.md §11에 따른 5가지 마크다운 후처리 규칙 구현. Rule 1(빈 섹션 제거 — ##/### 대상, iterative pass로 cascading 처리, Claude-managed 파일 면제), Rule 2(연속 구분선 병합 — line-based scan), Rule 3(과잉 빈 줄 축소 — 3+ → 2), Rule 4(빈 테이블 제거 — header+separator만 있는 테이블), Rule 5(후행 공백 제거). post_process 오케스트레이터가 1→5 순서로 적용.
+- **변경된 파일**: src/sdwc_api/engine/postprocess.py (신규), src/sdwc_api/engine/renderer.py (수정 — post_process 통합), tests/unit/test_postprocess.py (신규, 34 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: Rule 2는 regex 대신 line-based scan으로 구현 (3+ 연속 구분선 처리의 신뢰성 확보). Rule 1은 # (h1)은 제외하고 ##/### 만 대상. _is_claude_managed는 basename prefix 매칭으로 구현 (forward-slash 경로 보장). render_all 내부에서 dict comprehension으로 통합하여 API 표면 변경 없음.
+- **미완료/후속**: T008 (Template Engine - ZIP packaging & output_contract validation)
