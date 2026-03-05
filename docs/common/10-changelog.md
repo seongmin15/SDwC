@@ -21,7 +21,13 @@
 - Section 5.1 Receiving a Task: added pre-coding checklist (step 7) requiring 07-workplan In Progress and 09-working-log plan recording before writing any code (applied to CLAUDE.md and .sdwc/CLAUDE_BASE.md)
 - Section 5.8 Completing a Task: added pre-commit doc checklist (step 5) with sub-tasks for 07-workplan, 09-working-log, 10-changelog, and Section 6 trigger docs (applied to CLAUDE.md and .sdwc/CLAUDE_BASE.md)
 
+### Fixed
+- Jinja2 renderer: switched from Undefined to ChainableUndefined to support optional field attribute chaining in templates
+- Output contract C-1 check: exclude fenced code blocks to avoid false positives from Python dict literals containing `}}`
+- Postprocessor: iterate full rule sequence until stable to handle cross-rule interactions (e.g., empty table removal creating empty sections)
+
 ### Added
+- API endpoints: POST /api/v1/preview (PreviewResponse with file_tree/file_count/services) and POST /api/v1/generate (StreamingResponse ZIP), 30s asyncio timeout, RFC 7807 error handling, PreviewResponse/ServiceInfo response models (10 new integration tests, 352 total)
 - API endpoints: GET /api/v1/template (FileResponse with application/x-yaml) and POST /api/v1/validate (multipart upload, RFC 7807 error format), ValidationErrorItem/ValidationResponse response models, SDWC_RESOURCE_DIR config setting (10 new integration tests, 342 total)
 - Output contract validator: 14 check functions (S-2~S-9 structure, C-1~C-7 content), validate_output/validate_or_raise orchestrators, OutputContractError exception with violation collection (51 new tests)
 - ZIP packager: build_zip with in-memory ZIP_DEFLATED assembly, project.name root folder, .sdwc/ server resource copy with per-file E-5 warning handling (14 new tests, 332 total)

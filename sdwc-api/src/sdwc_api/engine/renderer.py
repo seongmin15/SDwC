@@ -50,7 +50,7 @@ def create_jinja_env(template_dir: Path) -> jinja2.Environment:
         lstrip_blocks=True,
         keep_trailing_newline=True,
         autoescape=False,
-        undefined=jinja2.Undefined,
+        undefined=jinja2.ChainableUndefined,
     )
 
 

@@ -173,11 +173,20 @@ def _check_s9(rendered: dict[str, str]) -> list[str]:
 # --- Content checks ---
 
 
+def _strip_fenced_code(content: str) -> str:
+    """Remove fenced code blocks (```...```) from content for validation."""
+    return re.sub(r"```[\s\S]*?```", "", content)
+
+
 def _check_c1(rendered: dict[str, str]) -> list[str]:
-    """C-1: No unsubstituted Jinja2 {{ or }} in rendered content."""
+    """C-1: No unsubstituted Jinja2 {{ or }} in rendered content.
+
+    Skips fenced code blocks to avoid false positives from dict literals.
+    """
     violations: list[str] = []
     for path, content in rendered.items():
-        if "{{" in content or "}}" in content:
+        stripped = _strip_fenced_code(content)
+        if "{{" in stripped or "}}" in stripped:
             violations.append(f"C-1: unsubstituted Jinja2 found in {path}")
     return violations
 

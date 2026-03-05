@@ -113,3 +113,10 @@
 - **변경된 파일**: src/sdwc_api/routers/intake.py (신규), src/sdwc_api/schemas/responses.py (신규), src/sdwc_api/core/config.py (수정 — SDWC_RESOURCE_DIR 추가), src/sdwc_api/main.py (수정 — intake router 마운트), tests/integration/test_intake.py (신규, 10 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: SDWC_RESOURCE_DIR을 config.py에 추가하여 .sdwc/ 경로를 환경변수로 오버라이드 가능하게 함. B008 ruff 규칙 준수를 위해 File(...) 기본값 대신 UploadFile 타입만 사용. Pydantic ValidationError는 e.errors()를 순회하며 개별 RFC 7807 항목으로 변환.
 - **미완료/후속**: T010 (API endpoints - POST /preview & POST /generate)
+
+### 2026-03-06 — T010: API endpoints - POST /preview & POST /generate
+
+- **작업**: POST /api/v1/preview (파일 트리 JSON 반환) 및 POST /api/v1/generate (ZIP 패키징 StreamingResponse 반환) 엔드포인트 구현 완료. 30s asyncio.wait_for 타임아웃, RFC 7807 에러 핸들링 (validation-failed, rendering-failed, request-timeout, output-contract-failed). 통합 테스트 중 발견된 3개 부수 버그 수정.
+- **변경된 파일**: src/sdwc_api/routers/intake.py (수정 — preview/generate 엔드포인트 + 공유 헬퍼), src/sdwc_api/schemas/responses.py (수정 — PreviewResponse, ServiceInfo 추가), src/sdwc_api/engine/renderer.py (수정 — ChainableUndefined), src/sdwc_api/engine/validator.py (수정 — C-1 코드블록 제외), src/sdwc_api/engine/postprocess.py (수정 — iteration-until-stable), tests/integration/test_intake.py (수정 — 10개 신규 테스트), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: (1) ChainableUndefined: 템플릿이 optional 필드를 `{% if field.attr %}` 패턴으로 접근 — default Undefined는 AttributeError 발생, ChainableUndefined로 전환. (2) C-1 validator: 코드블록 내 `}}` (Python dict literal)이 false positive — _strip_fenced_code로 code block 제외. (3) postprocess iteration: Rule 4(빈 테이블 제거)가 새 빈 섹션 생성 가능 — 전체 규칙 세트를 iteration-until-stable로 변경.
+- **미완료/후속**: T011 (Error handling - RFC 7807 & domain exceptions)
