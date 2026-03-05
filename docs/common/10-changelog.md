@@ -18,6 +18,7 @@
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
 ### Changed
+- Section 5.1 Receiving a Task: added pre-coding checklist (step 7) requiring 07-workplan In Progress and 09-working-log plan recording before writing any code (applied to CLAUDE.md and .sdwc/CLAUDE_BASE.md)
 - Section 5.8 Completing a Task: added pre-commit doc checklist (step 5) with sub-tasks for 07-workplan, 09-working-log, 10-changelog, and Section 6 trigger docs (applied to CLAUDE.md and .sdwc/CLAUDE_BASE.md)
 
 ### Added

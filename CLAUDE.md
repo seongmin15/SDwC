@@ -168,9 +168,10 @@ This folder contains the **original templates and rules** used by SDwC to genera
 5. Propose a plan (per Section 5.14).
 6. After plan approval, create a feature branch (per skills/common/git/).
    - **learning mode**: skip (human creates branch).
-7. Update 07-workplan: move task status to In Progress.
-8. Record the plan in 09-working-log (date, task name, planned scope).
-9. Execute according to mode:
+7. **Pre-coding checklist** — complete ALL before writing any code:
+   - [ ] 07-workplan: move task status to In Progress.
+   - [ ] 09-working-log: record the plan (date, task name, planned scope).
+8. Execute according to mode:
    - **autonomous** -> implement after approval, request review when done.
    - **collaborative** -> confirm role split, implement my part.
    - **learning** -> provide plan and approach only; do NOT write code.

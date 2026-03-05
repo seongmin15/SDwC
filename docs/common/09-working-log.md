@@ -64,3 +64,10 @@
 - **변경된 파일**: CLAUDE.md, .sdwc/CLAUDE_BASE.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: 사용자 피드백 반영 — T002 완료 시 workplan Done 갱신 및 문서 업데이트 누락 방지를 위한 명시적 체크리스트 절차 추가.
 - **미완료/후속**: 없음
+
+### 2026-03-05 — Ad-hoc: Section 5.1 프로세스 개선
+
+- **작업**: Receiving a Task 절차에 pre-coding checklist (step 7) 추가. 코드 작성 전 반드시 07-workplan In Progress 전환 및 09-working-log 계획 기록을 완료하도록 명시. CLAUDE.md와 .sdwc/CLAUDE_BASE.md 양쪽 반영.
+- **변경된 파일**: CLAUDE.md, .sdwc/CLAUDE_BASE.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: T003 진행 시 workplan In Progress 전환 누락 방지를 위한 명시적 체크리스트 형태로 변경.
+- **미완료/후속**: 없음
