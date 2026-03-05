@@ -51,9 +51,23 @@
 - **의사결정**: per_service[].service ↔ services[].name 교차 검증은 T004 (root IntakeData 모델)에서 구현 예정 (services는 phase 4-6 소속). Python 3.12+ StrEnum 사용. 파일을 phase별로 분리하여 T003/T004와 일관된 구조 유지.
 - **미완료/후속**: T003 (Pydantic models - phases 4-6)
 
+### 2026-03-05 — T003: Pydantic models - services & architecture (phases 4-6)
+
+- **작업**: Phase 4-6 intake_template.yaml 필드에 대한 Pydantic v2 모델 정의. ~50개 신규 StrEnum, Architecture 모델, 5개 서비스 타입 모델 (BackendApiService, WebUiService, WorkerService, MobileAppService, DataPipelineService) with discriminated union, Deployment 공유 모델, CriticalFlow/Security/Risks 모델. 47개 신규 단위 테스트 (누적 110개).
+- **변경된 파일**: schemas/enums.py (수정), schemas/phase4_architecture.py (신규), schemas/phase4_services.py (신규), schemas/phase5.py (신규), tests/unit/test_phase4_architecture_models.py (신규), tests/unit/test_phase4_services_models.py (신규), tests/unit/test_phase5_models.py (신규), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: 서비스 타입별 Language/Framework enum 분리 (BackendLanguage, WebLanguage 등). Pydantic discriminated union으로 type 필드 기반 서비스 자동 선택. api_style→endpoints/graphql/grpc 조건부 필수 검증은 T004 root 모델에서 처리 예정. PageTransition/ScreenTransition의 "from" 필드는 Field(alias="from") 사용.
+- **미완료/후속**: T004 (Pydantic models - phases 7-8 + YAML parser)
+
 ### 2026-03-05 — Ad-hoc: Section 5.8 프로세스 개선
 
 - **작업**: Completing a Task 절차에 pre-commit doc checklist (step 5) 추가. 커밋 전 반드시 확인할 항목을 서브태스크로 명시: 07-workplan Done/AC/Result, 09-working-log 완료 기록, 10-changelog 기록, Section 6 트리거 문서. CLAUDE.md와 .sdwc/CLAUDE_BASE.md 양쪽 반영.
 - **변경된 파일**: CLAUDE.md, .sdwc/CLAUDE_BASE.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: 사용자 피드백 반영 — T002 완료 시 workplan Done 갱신 및 문서 업데이트 누락 방지를 위한 명시적 체크리스트 절차 추가.
+- **미완료/후속**: 없음
+
+### 2026-03-05 — Ad-hoc: Section 5.1 프로세스 개선
+
+- **작업**: Receiving a Task 절차에 pre-coding checklist (step 7) 추가. 코드 작성 전 반드시 07-workplan In Progress 전환 및 09-working-log 계획 기록을 완료하도록 명시. CLAUDE.md와 .sdwc/CLAUDE_BASE.md 양쪽 반영.
+- **변경된 파일**: CLAUDE.md, .sdwc/CLAUDE_BASE.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: T003 진행 시 workplan In Progress 전환 누락 방지를 위한 명시적 체크리스트 형태로 변경.
 - **미완료/후속**: 없음
