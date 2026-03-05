@@ -256,14 +256,19 @@ When a technology change is needed (framework, library, database, etc.):
 2. Execute Document Update Triggers (Section 6).
 3. Run the verification checklist (Section 6).
 4. Record completion in 09-working-log (what was done, what changed, any follow-ups).
-5. Commit with proper convention (Section 3 Git rules).
+5. **Pre-commit doc checklist** — complete ALL before committing:
+   - [ ] 07-workplan: status → Done, all Acceptance Criteria checked (`[x]`), Result recorded.
+   - [ ] 09-working-log: completion entry recorded (what was done, changed files, decisions, follow-ups).
+   - [ ] 10-changelog: change recorded under `[Unreleased]`.
+   - [ ] Other docs updated per Section 6 trigger table (01-requirements, service docs, 02-architecture-decisions, 06-glossary, 11-troubleshooting, 12-runbook — as applicable).
+6. Commit with proper convention (Section 3 Git rules).
    - **learning mode**: skip (human commits).
-6. Push the branch.
-7. Report to human: summary of changes. State the branch is ready for PR.
-8. Stop and wait for human to confirm PR merge.
-9. After merge confirmed: switch to main branch and pull latest.
-10. Delete the finished feature branch.
-    - **learning mode** (steps 6-10): skip (human manages git workflow).
+7. Push the branch.
+8. Report to human: summary of changes. State the branch is ready for PR.
+9. Stop and wait for human to confirm PR merge.
+10. After merge confirmed: switch to main branch and pull latest.
+11. Delete the finished feature branch.
+    - **learning mode** (steps 7-11): skip (human manages git workflow).
 
 ### 5.9 Work Style
 
