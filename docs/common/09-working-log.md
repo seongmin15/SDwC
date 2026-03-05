@@ -43,3 +43,10 @@
 - **변경된 파일**: sdwc-api/ (신규 디렉토리 전체), .gitignore (poetry.lock 제외 해제), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: coding-standards skill에 따라 `src/sdwc_api/` 구조 채택 (`app/` 대신). DB/ORM/auth 관련 디렉토리 생략. poetry.lock 커밋을 위해 .gitignore 수정.
 - **미완료/후속**: T002 (Pydantic models - phases 1-3)
+
+### 2026-03-05 — T002: Pydantic models - project & common fields (phases 1-3)
+
+- **작업**: Phase 1-3 intake_template.yaml 필드에 대한 Pydantic v2 모델 정의. StrEnum 기반 14개 enum, Phase 1 (Project, Problem, Motivation, ValueProposition, ProjectCharacteristic), Phase 2 (Goal, Goals, NonGoal, Scope, Assumption, Constraint, Timeline, Budget, GlossaryEntry 등), Phase 3 (UserPersona, AntiPersona, Stakeholder, Collaboration 등) 모델 구현. 63개 단위 테스트 작성.
+- **변경된 파일**: src/sdwc_api/schemas/enums.py (신규), schemas/phase1.py (신규), schemas/phase2.py (신규), schemas/phase3.py (신규), schemas/__init__.py (수정), tests/unit/test_phase1_models.py (신규), tests/unit/test_phase2_models.py (신규), tests/unit/test_phase3_models.py (신규), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: per_service[].service ↔ services[].name 교차 검증은 T004 (root IntakeData 모델)에서 구현 예정 (services는 phase 4-6 소속). Python 3.12+ StrEnum 사용. 파일을 phase별로 분리하여 T003/T004와 일관된 구조 유지.
+- **미완료/후속**: T003 (Pydantic models - phases 4-6)
