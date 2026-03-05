@@ -17,6 +17,9 @@
      릴리스 시 [Unreleased]를 버전 번호로 전환.
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
+### Changed
+- Section 5.8 Completing a Task: added pre-commit doc checklist (step 5) with sub-tasks for 07-workplan, 09-working-log, 10-changelog, and Section 6 trigger docs (applied to CLAUDE.md and .sdwc/CLAUDE_BASE.md)
+
 ### Added
 - Project initialized with README.md, .gitignore, git repo, and remote (github.com/seongmin15/SDwC)
 - Initial work plan with 18 tasks (T001-T018) in 07-workplan
