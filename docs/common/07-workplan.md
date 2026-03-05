@@ -81,7 +81,7 @@ Any active status -> Cancelled
   - [ ] ruff and mypy configured
 
 ### T002: Pydantic models - project & common fields (phases 1-3)
-- Status: Ready
+- Status: In Progress
 - Service: sdwc-api
 - Description: Define Pydantic v2 models for intake_template.yaml phases 1-3: project, problem, motivation, value_proposition, project_characteristics, goals, non_goals, scope, assumptions, constraints, timeline, budget, glossary, user_personas, anti_personas, stakeholders, collaboration.
 - Acceptance Criteria:

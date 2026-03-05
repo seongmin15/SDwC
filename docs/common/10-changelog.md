@@ -21,3 +21,4 @@
 - Project initialized with README.md, .gitignore, git repo, and remote (github.com/seongmin15/SDwC)
 - Initial work plan with 18 tasks (T001-T018) in 07-workplan
 - sdwc-api project scaffolding: FastAPI + Poetry, src/sdwc_api/ structure, health endpoint, ruff/mypy/pytest config
+- Pydantic v2 models for intake_template.yaml phases 1-3: 14 enums, 20+ models covering project identity, goals/scope, users/stakeholders/collaboration (63 unit tests)
