@@ -99,3 +99,10 @@
 - **변경된 파일**: src/sdwc_api/engine/postprocess.py (신규), src/sdwc_api/engine/renderer.py (수정 — post_process 통합), tests/unit/test_postprocess.py (신규, 34 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: Rule 2는 regex 대신 line-based scan으로 구현 (3+ 연속 구분선 처리의 신뢰성 확보). Rule 1은 # (h1)은 제외하고 ##/### 만 대상. _is_claude_managed는 basename prefix 매칭으로 구현 (forward-slash 경로 보장). render_all 내부에서 dict comprehension으로 통합하여 API 표면 변경 없음.
 - **미완료/후속**: T008 (Template Engine - ZIP packaging & output_contract validation)
+
+### 2026-03-05 — T008: Template Engine - ZIP packaging & output_contract validation
+
+- **작업**: output_contract.md 기반 유효성 검증 (S-2~S-9 구조 검사, C-1~C-7 콘텐츠 검사) + ZIP 패키징 (.sdwc/ 리소스 포함) 구현 완료.
+- **변경된 파일**: src/sdwc_api/engine/validator.py (신규), src/sdwc_api/engine/packager.py (신규), src/sdwc_api/exceptions/__init__.py (수정 — OutputContractError 추가), tests/unit/test_validator.py (신규, 51 tests), tests/unit/test_packager.py (신규, 14 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: validator는 engine/ 패키지에 배치 (postprocess와 동일한 순수 함수 패턴). C-4/C-5/C-6/C-7은 postprocess rule 함수 재사용 (rule(content) != content 비교로 안전망 역할). Sequence[ServiceModel] 타입으로 mypy list invariance 해결. .sdwc/ 복사는 per-file try/except (E-5 spec). S-1은 ZIP assembly에서 강제 (dict validation에서 제외).
+- **미완료/후속**: T009 (API endpoints - GET /template & POST /validate)
