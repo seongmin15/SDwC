@@ -163,15 +163,8 @@ def rule_remove_trailing_whitespace(content: str) -> str:
     return "\n".join(line.rstrip() for line in content.split("\n"))
 
 
-def post_process(content: str, output_path: str) -> str:
-    """Apply all post-processing rules to rendered markdown content.
-
-    Rules are applied in order 1→5. Rule 1 is skipped for Claude-managed files.
-
-    Args:
-        content: Rendered markdown content from Jinja2.
-        output_path: Output file path (for Claude-managed file detection).
-    """
+def _apply_rules(content: str, output_path: str) -> str:
+    """Single pass of all post-processing rules."""
     result = content
 
     # Rule 1: Remove empty sections (exempt for Claude-managed files)
@@ -190,4 +183,23 @@ def post_process(content: str, output_path: str) -> str:
     # Rule 5: Remove trailing whitespace
     result = rule_remove_trailing_whitespace(result)
 
+    return result
+
+
+def post_process(content: str, output_path: str) -> str:
+    """Apply all post-processing rules to rendered markdown content.
+
+    Rules are applied in order 1→5, iterating until stable to handle
+    cross-rule interactions (e.g., empty table removal creating empty sections).
+    Rule 1 is skipped for Claude-managed files.
+
+    Args:
+        content: Rendered markdown content from Jinja2.
+        output_path: Output file path (for Claude-managed file detection).
+    """
+    previous = ""
+    result = content
+    while result != previous:
+        previous = result
+        result = _apply_rules(result, output_path)
     return result

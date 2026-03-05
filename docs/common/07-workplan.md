@@ -173,16 +173,17 @@ Any active status -> Cancelled
 - Result: routers/intake.py with GET /api/v1/template (FileResponse, application/x-yaml) and POST /api/v1/validate (multipart upload, parse_intake_yaml, RFC 7807 error mapping). schemas/responses.py with ValidationErrorItem + ValidationResponse models. core/config.py with SDWC_RESOURCE_DIR setting. 10 new integration tests (342 total). All ruff/mypy/pytest pass.
 
 ### T010: API endpoints - POST /preview & POST /generate
-- Status: Ready
+- Status: Done
 - Service: sdwc-api
 - Description: Implement POST /api/v1/preview (return file tree structure) and POST /api/v1/generate (run full pipeline, return ZIP). Wire up Template Engine to endpoints. 30s response timeout.
 - Acceptance Criteria:
-  - [ ] POST /preview returns {file_tree, file_count, services} JSON
-  - [ ] POST /generate returns ZIP file with correct content-type
-  - [ ] 30s response timeout enforced
-  - [ ] Error responses use RFC 7807 format
-  - [ ] Integration tests for both endpoints
-  - [ ] Swagger docs auto-generated and accurate
+  - [x] POST /preview returns {file_tree, file_count, services} JSON
+  - [x] POST /generate returns ZIP file with correct content-type
+  - [x] 30s response timeout enforced
+  - [x] Error responses use RFC 7807 format
+  - [x] Integration tests for both endpoints
+  - [x] Swagger docs auto-generated and accurate
+- Result: routers/intake.py에 POST /preview (PreviewResponse JSON), POST /generate (StreamingResponse ZIP) 추가. schemas/responses.py에 PreviewResponse, ServiceInfo 모델 추가. 30s asyncio.wait_for 타임아웃 적용. RFC 7807 에러 (validation-failed, rendering-failed, request-timeout, output-contract-failed). 10개 신규 integration tests (352 total). 부수 수정: renderer.py에 ChainableUndefined (optional 필드 Jinja2 호환), validator.py C-1 코드블록 false positive 수정, postprocess.py 교차 규칙 iteration-until-stable.
 
 ### T011: Error handling - RFC 7807 & domain exceptions
 - Status: Ready
