@@ -92,14 +92,15 @@ Any active status -> Cancelled
 - Result: 14 StrEnum types, 24 Pydantic models (5 phase1, 12 phase2, 7 phase3), 63 unit tests passing. Cross-validation of per_service↔services deferred to T004.
 
 ### T003: Pydantic models - services & architecture (phases 4-6)
-- Status: Ready
+- Status: Done
 - Service: sdwc-api
 - Description: Define Pydantic v2 models for phases 4-6: architecture, services (all 5 types: backend_api, web_ui, worker, mobile_app, data_pipeline), critical_flows, security, risks, error_handling.
 - Acceptance Criteria:
-  - [ ] Models cover all 5 service types with their specific fields
-  - [ ] CRITICAL enum validation (api_style, trigger_type)
-  - [ ] Nested service-type-specific validation
-  - [ ] Unit tests for each service type
+  - [x] Models cover all 5 service types with their specific fields
+  - [x] CRITICAL enum validation (api_style, trigger_type)
+  - [x] Nested service-type-specific validation
+  - [x] Unit tests for each service type
+- Result: ~50 new StrEnum types, Architecture model, 5 service type models with discriminated union (BackendApiService, WebUiService, WorkerService, MobileAppService, DataPipelineService), Deployment shared model, CriticalFlow/Security/Risks models. 47 new unit tests (110 total). Conditional api_style→endpoints/graphql/grpc cross-validation deferred to T004.
 
 ### T004: Pydantic models - process & evolution (phases 7-8) + YAML parser
 - Status: Ready
