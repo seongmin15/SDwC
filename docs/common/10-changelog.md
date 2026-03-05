@@ -22,6 +22,7 @@
 - Section 5.8 Completing a Task: added pre-commit doc checklist (step 5) with sub-tasks for 07-workplan, 09-working-log, 10-changelog, and Section 6 trigger docs (applied to CLAUDE.md and .sdwc/CLAUDE_BASE.md)
 
 ### Added
+- Template Engine Jinja2 rendering pipeline: create_jinja_env, _make_adr_seq, _discover_templates, _map_output_path, render_all with 4-phase orchestration, SdwcError + FrameworkNotFoundError exceptions (33 new tests, 232 total)
 - Template Engine context composition layer: normalize (§10 falsy removal), compose_global_context, compose_service_context, compose_skill_context, ServiceModel type alias (34 new tests, 199 total)
 - Project initialized with README.md, .gitignore, git repo, and remote (github.com/seongmin15/SDwC)
 - Initial work plan with 18 tasks (T001-T018) in 07-workplan
