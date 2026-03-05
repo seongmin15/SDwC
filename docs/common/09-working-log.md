@@ -85,3 +85,10 @@
 - **변경된 파일**: src/sdwc_api/engine/context.py (신규), tests/unit/test_context.py (신규, 34 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: normalize는 _REMOVE sentinel 객체로 "제거 대상"을 구분하여 False/0 보호와 재귀 cascade를 단순하게 구현. ServiceModel은 Union 대신 `X | Y` 문법 사용 (ruff UP007). compose_skill_context에서 collab_dict.pop("service") 로 name-matcher 키 제거.
 - **미완료/후속**: T006 (Template Engine - Jinja2 rendering & custom functions)
+
+### 2026-03-05 — T006: Template Engine - Jinja2 rendering & custom functions
+
+- **작업**: generation_rules.md §4-6, §8-9에 따른 Jinja2 렌더링 파이프라인 구현. Jinja2 환경 설정 (Markdown 최적화: trim_blocks, lstrip_blocks, keep_trailing_newline, autoescape=False), adr_seq() 커스텀 함수 (closure 기반 순차 번호), 템플릿 탐색 (_discover_templates), 출력 경로 매핑 (_map_output_path, §9), 4단계 render_all 오케스트레이터 (CLAUDE.md → common docs → common skills → per-service). SdwcError 기반 예외 + FrameworkNotFoundError 도메인 예외.
+- **변경된 파일**: src/sdwc_api/engine/renderer.py (신규), src/sdwc_api/exceptions/__init__.py (수정), tests/unit/test_renderer.py (신규, 33 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: Jinja2 Undefined (기본값)으로 {{ mermaid_erd }} 등 미구현 변수가 빈 문자열로 렌더링되도록 허용 (T006 범위). _map_output_path에서 forward slash 강제 (Windows 호환). FrameworkNotFoundError를 SdwcError 하위 클래스로 설계하여 T011 RFC 7807 매핑에 활용 가능.
+- **미완료/후속**: T007 (Template Engine - post-processing)

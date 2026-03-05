@@ -126,16 +126,17 @@ Any active status -> Cancelled
 - Result: 4 functions in engine/context.py (normalize, compose_global_context, compose_service_context, compose_skill_context), ServiceModel type alias. 34 new unit tests (199 total). Normalize implements §10 falsy removal with False/0 protection and recursive cascade. Skill context merges service + per_service collaboration fields.
 
 ### T006: Template Engine - Jinja2 rendering & custom functions
-- Status: Ready
+- Status: Done
 - Service: sdwc-api
 - Description: Set up Jinja2 environment with template directories, implement rendering pipeline for CLAUDE_BASE, doc-templates, and skill-templates. Implement custom functions (adr_seq for ADR numbering). Follow generation_rules.md §4-6.
 - Acceptance Criteria:
-  - [ ] Jinja2 environment configured with correct template directories
-  - [ ] CLAUDE_BASE.md renders correctly with global context
-  - [ ] doc-templates render with appropriate context (global or service)
-  - [ ] skill-templates selected per generation_rules.md §8
-  - [ ] adr_seq() produces sequential gap-free numbering
-  - [ ] Unit tests for rendering and custom functions
+  - [x] Jinja2 environment configured with correct template directories
+  - [x] CLAUDE_BASE.md renders correctly with global context
+  - [x] doc-templates render with appropriate context (global or service)
+  - [x] skill-templates selected per generation_rules.md §8
+  - [x] adr_seq() produces sequential gap-free numbering
+  - [x] Unit tests for rendering and custom functions
+- Result: 7 functions in engine/renderer.py (_make_adr_seq, create_jinja_env, _discover_templates, _map_output_path, _render_template, _find_per_service, render_all). SdwcError base exception + FrameworkNotFoundError in exceptions/__init__.py. 4-phase render pipeline (CLAUDE.md → common docs → common skills → per-service). 33 new unit tests (232 total). All ruff/mypy/pytest checks pass.
 
 ### T007: Template Engine - post-processing (5 markdown rules)
 - Status: Ready
