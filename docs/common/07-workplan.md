@@ -74,21 +74,22 @@ Any active status -> Cancelled
 - Service: sdwc-api
 - Description: Initialize FastAPI project with Poetry. Set up project structure (routers, services, engine packages), configure ruff/mypy, create health endpoint, configure CORS middleware.
 - Acceptance Criteria:
-  - [ ] Poetry project initialized with core dependencies (fastapi, uvicorn, jinja2, pyyaml, pydantic, python-multipart, structlog)
-  - [ ] Project directory structure follows skills/sdwc-api/coding-standards
-  - [ ] Health endpoint (`GET /health`) returns 200
-  - [ ] `poetry run uvicorn` starts the server successfully
-  - [ ] ruff and mypy configured
+  - [x] Poetry project initialized with core dependencies (fastapi, uvicorn, jinja2, pyyaml, pydantic, python-multipart, structlog)
+  - [x] Project directory structure follows skills/sdwc-api/coding-standards
+  - [x] Health endpoint (`GET /health`) returns 200
+  - [x] `poetry run uvicorn` starts the server successfully
+  - [x] ruff and mypy configured
 
 ### T002: Pydantic models - project & common fields (phases 1-3)
-- Status: In Progress
+- Status: Done
 - Service: sdwc-api
 - Description: Define Pydantic v2 models for intake_template.yaml phases 1-3: project, problem, motivation, value_proposition, project_characteristics, goals, non_goals, scope, assumptions, constraints, timeline, budget, glossary, user_personas, anti_personas, stakeholders, collaboration.
 - Acceptance Criteria:
-  - [ ] Models cover all phase 1-3 fields from intake_template.yaml
-  - [ ] Required field validation with clear error paths
-  - [ ] CRITICAL enum validation for collaboration.per_service[].mode
-  - [ ] Unit tests for valid/invalid data
+  - [x] Models cover all phase 1-3 fields from intake_template.yaml
+  - [x] Required field validation with clear error paths
+  - [x] CRITICAL enum validation for collaboration.per_service[].mode
+  - [x] Unit tests for valid/invalid data
+- Result: 14 StrEnum types, 24 Pydantic models (5 phase1, 12 phase2, 7 phase3), 63 unit tests passing. Cross-validation of per_service↔services deferred to T004.
 
 ### T003: Pydantic models - services & architecture (phases 4-6)
 - Status: Ready
