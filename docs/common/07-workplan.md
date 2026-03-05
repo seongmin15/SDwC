@@ -103,15 +103,16 @@ Any active status -> Cancelled
 - Result: ~50 new StrEnum types, Architecture model, 5 service type models with discriminated union (BackendApiService, WebUiService, WorkerService, MobileAppService, DataPipelineService), Deployment shared model, CriticalFlow/Security/Risks models. 47 new unit tests (110 total). Conditional api_style→endpoints/graphql/grpc cross-validation deferred to T004.
 
 ### T004: Pydantic models - process & evolution (phases 7-8) + YAML parser
-- Status: Ready
+- Status: Done
 - Service: sdwc-api
 - Description: Define Pydantic v2 models for phases 7-8: performance, availability, observability, scalability, process, code_quality, testing, version_control, evolution, rollout, operations. Implement YAML parser with safe_load, 1MB size limit, 5s timeout. Create root IntakeData model combining all phases.
 - Acceptance Criteria:
-  - [ ] Models cover all phase 7-8 fields
-  - [ ] CRITICAL enum validation for process.methodology
-  - [ ] Root IntakeData model combines all phases
-  - [ ] YAML parser uses safe_load with size/timeout limits
-  - [ ] Unit tests for parsing and full model validation
+  - [x] Models cover all phase 7-8 fields
+  - [x] CRITICAL enum validation for process.methodology
+  - [x] Root IntakeData model combines all phases
+  - [x] YAML parser uses safe_load with size/timeout limits
+  - [x] Unit tests for parsing and full model validation
+- Result: 15 new StrEnum types (phase 6-8), 28 new Pydantic models across phase6.py/phase7.py/phase8.py, root IntakeData model with per_service↔services cross-validation, YAML parser with 1MB/5s limits and threading-based timeout. 55 new unit tests (165 total). Added types-PyYAML dev dependency for mypy.
 
 ### T005: Template Engine - context composition
 - Status: Ready

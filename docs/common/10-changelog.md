@@ -27,3 +27,6 @@
 - sdwc-api project scaffolding: FastAPI + Poetry, src/sdwc_api/ structure, health endpoint, ruff/mypy/pytest config
 - Pydantic v2 models for intake_template.yaml phases 1-3: 14 enums, 20+ models covering project identity, goals/scope, users/stakeholders/collaboration (63 unit tests)
 - Pydantic v2 models for intake_template.yaml phases 4-6: ~50 enums, Architecture, 5 service types with discriminated union, Deployment, CriticalFlow, Security, Risks (47 new tests, 110 total)
+- Pydantic v2 models for intake_template.yaml phases 6-8: 15 new enums, Performance/Availability/Observability/ExternalSystem/Process/CodeQuality/Testing/VersionControl/Evolution/Rollout/Operations models (55 new tests, 165 total)
+- Root IntakeData model combining all phases with per_service↔services cross-field validation
+- YAML parser with safe_load, 1MB size limit, 5s threading-based timeout
