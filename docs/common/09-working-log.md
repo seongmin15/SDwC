@@ -78,3 +78,10 @@
 - **변경된 파일**: CLAUDE.md, .sdwc/CLAUDE_BASE.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: T003 진행 시 workplan In Progress 전환 누락 방지를 위한 명시적 체크리스트 형태로 변경.
 - **미완료/후속**: 없음
+
+### 2026-03-05 — T005: Template Engine - context composition
+
+- **작업**: generation_rules.md §1-3, §10에 따른 컨텍스트 구성 레이어 구현. normalize 함수 (falsy 값 재귀 제거, _REMOVE sentinel 패턴), compose_global_context (IntakeData → dict), compose_service_context (ServiceModel → dict), compose_skill_context (ServiceModel + PerServiceCollaboration → dict) 4개 함수. ServiceModel 타입 별칭 정의.
+- **변경된 파일**: src/sdwc_api/engine/context.py (신규), tests/unit/test_context.py (신규, 34 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: normalize는 _REMOVE sentinel 객체로 "제거 대상"을 구분하여 False/0 보호와 재귀 cascade를 단순하게 구현. ServiceModel은 Union 대신 `X | Y` 문법 사용 (ruff UP007). compose_skill_context에서 collab_dict.pop("service") 로 name-matcher 키 제거.
+- **미완료/후속**: T006 (Template Engine - Jinja2 rendering & custom functions)

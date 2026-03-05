@@ -115,14 +115,15 @@ Any active status -> Cancelled
 - Result: 15 new StrEnum types (phase 6-8), 28 new Pydantic models across phase6.py/phase7.py/phase8.py, root IntakeData model with per_service↔services cross-validation, YAML parser with 1MB/5s limits and threading-based timeout. 55 new unit tests (165 total). Added types-PyYAML dev dependency for mypy.
 
 ### T005: Template Engine - context composition
-- Status: Ready
+- Status: Done
 - Service: sdwc-api
 - Description: Build context composition layer per generation_rules.md §1-3. Create global context from full intake_data, service context from services[i] with per_service field merge. Handle variable mapping rules.
 - Acceptance Criteria:
-  - [ ] Global context correctly composed from full intake_data
-  - [ ] Service context composed per service with per_service fields merged
-  - [ ] Variable mapping matches generation_rules.md §3 specification
-  - [ ] Unit tests for both context types
+  - [x] Global context correctly composed from full intake_data
+  - [x] Service context composed per service with per_service fields merged
+  - [x] Variable mapping matches generation_rules.md §3 specification
+  - [x] Unit tests for both context types
+- Result: 4 functions in engine/context.py (normalize, compose_global_context, compose_service_context, compose_skill_context), ServiceModel type alias. 34 new unit tests (199 total). Normalize implements §10 falsy removal with False/0 protection and recursive cascade. Skill context merges service + per_service collaboration fields.
 
 ### T006: Template Engine - Jinja2 rendering & custom functions
 - Status: Ready
