@@ -22,6 +22,8 @@
 - Section 5.8 Completing a Task: added pre-commit doc checklist (step 5) with sub-tasks for 07-workplan, 09-working-log, 10-changelog, and Section 6 trigger docs (applied to CLAUDE.md and .sdwc/CLAUDE_BASE.md)
 
 ### Added
+- Output contract validator: 14 check functions (S-2~S-9 structure, C-1~C-7 content), validate_output/validate_or_raise orchestrators, OutputContractError exception with violation collection (51 new tests)
+- ZIP packager: build_zip with in-memory ZIP_DEFLATED assembly, project.name root folder, .sdwc/ server resource copy with per-file E-5 warning handling (14 new tests, 332 total)
 - Markdown post-processing pipeline: 5 rules (empty sections, consecutive dividers, blank lines, empty tables, trailing whitespace) with Claude-managed file exemption, integrated into render_all (34 new tests, 266 total)
 - Template Engine Jinja2 rendering pipeline: create_jinja_env, _make_adr_seq, _discover_templates, _map_output_path, render_all with 4-phase orchestration, SdwcError + FrameworkNotFoundError exceptions (33 new tests, 232 total)
 - Template Engine context composition layer: normalize (§10 falsy removal), compose_global_context, compose_service_context, compose_skill_context, ServiceModel type alias (34 new tests, 199 total)

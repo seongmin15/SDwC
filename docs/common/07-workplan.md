@@ -149,15 +149,16 @@ Any active status -> Cancelled
 - Result: 5 rule functions + post_process orchestrator in engine/postprocess.py. Integrated into render_all() via dict comprehension. Claude-managed file detection by basename prefix. Rule 1 iterates until stable for cascading empty sections. 34 new unit tests (266 total). All ruff/mypy/pytest checks pass.
 
 ### T008: Template Engine - ZIP packaging & output_contract validation
-- Status: Ready
+- Status: Done
 - Service: sdwc-api
 - Description: Implement ZIP file assembly with correct directory structure. Copy .sdwc/ server resources without rendering. Validate output against output_contract.md (S-1~S-9 structure checks, C-1~C-7 content checks).
 - Acceptance Criteria:
-  - [ ] ZIP structure matches output_contract.md specification
-  - [ ] .sdwc/ resources copied without Jinja2 rendering
-  - [ ] Structure validation (S-1~S-9) passes
-  - [ ] Content validation (C-1~C-7) passes
-  - [ ] Unit tests for ZIP structure and validation
+  - [x] ZIP structure matches output_contract.md specification
+  - [x] .sdwc/ resources copied without Jinja2 rendering
+  - [x] Structure validation (S-1~S-9) passes
+  - [x] Content validation (C-1~C-7) passes
+  - [x] Unit tests for ZIP structure and validation
+- Result: engine/validator.py with 14 check functions (S-2~S-9, C-1~C-7) + validate_output/validate_or_raise orchestrators, engine/packager.py with build_zip (in-memory ZIP_DEFLATED, .sdwc/ per-file E-5 warning), OutputContractError exception. C-4/C-5/C-6/C-7 reuse postprocess rule functions as safety net. 66 new unit tests (332 total). All ruff/mypy/pytest pass.
 
 ### T009: API endpoints - GET /template & POST /validate
 - Status: Ready
