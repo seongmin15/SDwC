@@ -155,3 +155,10 @@
 - **변경된 파일**: src/components/FileTreePreview/ (신규, 2 files), src/components/GenerateButton/ (신규, 2 files), src/components/ErrorDisplay/ (신규, 2 files), src/app/App.tsx (수정 — 전체 9-state 흐름), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: (1) FileTreePreview는 재귀 TreeNode 컴포넌트로 구현 — 폴더는 expand/collapse 토글, 파일은 leaf 노드. (2) Preview 호출은 useEffect로 자동 트리거 — uiState==="previewing" 진입 시 발동, cleanup으로 cancelled flag 관리. (3) Generate는 blob + createObjectURL + programmatic click으로 ZIP 다운로드. (4) ErrorDisplay에서 status 0 (network error)은 status line 숨김.
 - **미완료/후속**: T016 (Web UI - state management & API integration)
+
+### 2026-03-06 — T016: Web UI - state management & API integration
+
+- **작업**: Zustand 스토어 (useIntakeStore) 생성 — 9-state 머신 + 3개 비동기 액션 (upload, generate, reset). API 서비스 레이어 (intakeApi.ts) — 3개 순수 fetch 함수 (validateYaml, fetchPreview, generateZip). App.tsx를 로컬 상태 + inline fetch에서 스토어 셀렉터/액션으로 리팩터링.
+- **변경된 파일**: src/services/intakeApi.ts (신규), src/services/intakeApi.test.ts (신규, 9 tests), src/stores/useIntakeStore.ts (신규), src/stores/useIntakeStore.test.ts (신규, 8 tests), src/app/App.tsx (수정 — 스토어 기반으로 리팩터링), src/app/App.test.tsx (수정 — 스토어 리셋 추가), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: (1) React Query/SWR 미도입 — 단일 선형 플로우에서 캐싱/재검증 불필요, 의존성 추가 요청 승인 필요. Zustand 비동기 액션 + 서비스 레이어로 충분. (2) upload 액션에서 validate → preview 자동 체이닝 — useEffect 의존 제거 (코딩 표준 anti-pattern 해소). (3) validateYaml은 네트워크 에러 시 throw 대신 {valid:false} 반환 — /validate 엔드포인트의 의미론 유지. (4) vi.clearAllMocks()로 모듈 레벨 vi.mock() 호출 카운트 격리.
+- **미완료/후속**: T017 (Docker setup - sdwc-api)

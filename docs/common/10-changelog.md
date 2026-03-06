@@ -18,6 +18,7 @@
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
 ### Added
+- Web UI state management & API integration: Zustand store (useIntakeStore) with 9-state machine and async actions, API service layer (intakeApi.ts) with validateYaml/fetchPreview/generateZip. App.tsx refactored to use store selectors. 17 new tests (43 total)
 - Web UI preview & generate flow: FileTreePreview (recursive collapsible tree), GenerateButton (with spinner state), ErrorDisplay (RFC 7807 title/detail/status). App.tsx extended to full 9-state flow with auto-preview trigger, blob ZIP download, reset. 13 new component tests (26 total)
 - Web UI upload flow: TemplateDownloadButton (anchor to GET /template), FileUploader (drag-drop + file picker), ValidationResult (success/error/warning display), App.tsx state transitions (idle/uploading/validating/validation_error/validated), API types (types/api.ts). 13 component tests
 - sdwc-web project scaffolding: Vite 7 + React 19 + TypeScript 5.9, Tailwind CSS v4, Zustand v5, Vitest + @testing-library/react, ESLint flat config (typescript-eslint, react-hooks, jsx-a11y), Prettier, path alias @/, API proxy, project structure per coding-standards skill
