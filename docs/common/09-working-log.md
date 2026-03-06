@@ -141,3 +141,10 @@
 - **변경된 파일**: sdwc-web/ (전체 신규 — package.json, vite.config.ts, tsconfig.*.json, eslint.config.js, .prettierrc, src/app/App.tsx, src/app/providers.tsx, src/main.tsx, src/index.css, src/app/App.test.tsx, tests/setup.ts, index.html, .gitignore), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: (1) Tailwind v4 @tailwindcss/vite 플러그인 사용 (postcss.config 불필요). (2) ESLint flat config (eslint.config.js) 채택 — 신규 프로젝트 표준. (3) vitest/config에서 defineConfig import — test 옵션 타입 지원. (4) tsconfig.app.json에서 *.test.tsx 제외 — tsc -b가 vitest 타입 없이도 빌드 가능. (5) 라우터 미설치 — 단일 페이지 앱으로 라우팅 불필요.
 - **미완료/후속**: T014 (Web UI - upload flow components)
+
+### 2026-03-06 — T014: Web UI - upload flow components
+
+- **작업**: TemplateDownloadButton (anchor to GET /api/v1/template), FileUploader (drag-drop + file picker with onUpload callback), ValidationResult (success/error/warning 표시, onReset) 3개 컴포넌트 구현. App.tsx에 로컬 상태 기반 idle→uploading→validating→validation_error/validated 전환 로직.
+- **변경된 파일**: src/types/api.ts (신규), src/components/TemplateDownloadButton/ (신규, 2 files), src/components/FileUploader/ (신규, 2 files), src/components/ValidationResult/ (신규, 2 files), src/app/App.tsx (수정), src/app/App.test.tsx (수정), tests/setup.ts (수정 — cleanup 추가), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: (1) 컴포넌트는 presentational — API 호출 없이 props로만 동작 (T016에서 Zustand 연결). (2) TemplateDownloadButton은 `<a href download>` — JS fetch 불필요. (3) vitest + @testing-library/react cleanup을 tests/setup.ts에 명시적 afterEach로 추가 (자동 cleanup 미작동 이슈). (4) jsx-a11y 규칙에 따라 `<ul>` 에 redundant role="list" 제거.
+- **미완료/후속**: T015 (Web UI - preview & generate flow components)

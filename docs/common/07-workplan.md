@@ -221,15 +221,16 @@ Any active status -> Cancelled
 - Result: Vite 7 + React 19 + TypeScript 5.9 project. Tailwind CSS v4 via @tailwindcss/vite plugin. Zustand v5 installed. ESLint flat config with typescript-eslint, react-hooks, jsx-a11y. Prettier (double quotes, trailing commas, 100 chars). Vitest + @testing-library/react + jsdom. Path alias @/ = src/. Proxy /api → localhost:8000. Project structure per coding-standards skill. 1 test passing. Build, lint, format all pass.
 
 ### T014: Web UI - upload flow components
-- Status: Ready
+- Status: Done
 - Service: sdwc-web
 - Description: Build TemplateDownloadButton, FileUploader (drag-and-drop + file picker), and ValidationResult components. Handle idle → uploading → validating → validation_error states.
 - Acceptance Criteria:
-  - [ ] TemplateDownloadButton triggers intake_template.yaml download
-  - [ ] FileUploader supports drag-and-drop and file picker
-  - [ ] ValidationResult displays validation success or error details
-  - [ ] State transitions: idle → uploading → validating → validation_error work correctly
-  - [ ] Basic component tests
+  - [x] TemplateDownloadButton triggers intake_template.yaml download
+  - [x] FileUploader supports drag-and-drop and file picker
+  - [x] ValidationResult displays validation success or error details
+  - [x] State transitions: idle → uploading → validating → validation_error work correctly
+  - [x] Basic component tests
+- Result: 3 components (TemplateDownloadButton, FileUploader with drag-drop + file picker, ValidationResult with error/warning display). App.tsx wired with local state for idle/uploading/validating/validation_error/validated transitions. API types in types/api.ts. Test setup fixed with explicit cleanup. 13 tests passing. Build, lint, format all clean.
 
 ### T015: Web UI - preview & generate flow components
 - Status: Ready

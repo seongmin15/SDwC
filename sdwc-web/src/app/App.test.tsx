@@ -8,4 +8,14 @@ describe("App", () => {
     render(<App />);
     expect(screen.getByText("SDwC")).toBeInTheDocument();
   });
+
+  it("should render the template download button", () => {
+    render(<App />);
+    expect(screen.getByRole("link", { name: /download template/i })).toBeInTheDocument();
+  });
+
+  it("should render the file uploader", () => {
+    render(<App />);
+    expect(screen.getByRole("button", { name: /upload yaml file/i })).toBeInTheDocument();
+  });
 });
