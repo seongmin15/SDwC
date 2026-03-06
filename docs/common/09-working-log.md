@@ -169,3 +169,10 @@
 - **변경된 파일**: sdwc-api/Dockerfile (신규), .dockerignore (신규), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: (1) 빌드 컨텍스트를 프로젝트 루트로 설정 (`docker build -f sdwc-api/Dockerfile .`) — .sdwc/ 템플릿 디렉토리가 sdwc-api/ 외부에 위치하므로. (2) non-root user (appuser:1000) 적용 — 보안 베스트 프랙티스. (3) HEALTHCHECK에 Python urllib 사용 — slim 이미지에 curl 미포함. (4) .dockerignore를 프로젝트 루트에 배치 — 빌드 컨텍스트 루트에서 적용.
 - **미완료/후속**: T018 (Docker setup - sdwc-web & k3s manifests)
+
+### 2026-03-06 — T018: Docker setup - sdwc-web & k3s manifests
+
+- **작업**: sdwc-web용 multi-stage Dockerfile (node:20-slim → nginx:alpine), SPA 라우팅 nginx.conf, k3s 배포 매니페스트 (Deployment + Service × 2, Ingress) 생성. infra/ 디렉토리 구조 수립.
+- **변경된 파일**: sdwc-web/Dockerfile (신규), sdwc-web/nginx.conf (신규), infra/sdwc-api/deployment.yaml (신규), infra/sdwc-web/deployment.yaml (신규), infra/ingress.yaml (신규), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: (1) nginx.conf에 /api/ reverse proxy 포함 — k3s Ingress 없이도 단독 docker-compose 환경에서 API 라우팅 가능. (2) Ingress에 Traefik annotation 사용 — k3s 기본 Ingress controller. (3) sdwc-web 리소스 제한을 API보다 낮게 설정 (CPU 200m, Memory 128Mi) — 정적 파일 서빙만 수행. (4) HEALTHCHECK에 wget 사용 — nginx:alpine에 curl 미포함이나 wget 내장.
+- **미완료/후속**: 전체 T001-T018 태스크 완료. 향후 작업은 05-roadmap 참조.
