@@ -18,6 +18,9 @@
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
 ### Added
+- intake_template.yaml: mobile/native enum values for testing.levels[].framework (xctest, espresso, robolectric, flutter_test, detox), deployment.target (app_store, play_store, both_stores), ci.tool (xcode_cloud, bitrise, codemagic), cd.tool (fastlane, app_center). Matching Pydantic StrEnum values added.
+- intake_template.yaml: header guidance about removing unused optional fields + DELETE reminders on optional blocks with required sub-fields (push_notification, infrastructure_as_code x5, disaster_recovery, metrics, alerting)
+- intake_template.yaml: enum comments added to ci.tool and cd.tool in web_ui, worker, mobile_app, data_pipeline deployment sections (previously only backend_api had them)
 - k3d deployment scripts: deploy.sh, rebuild.sh, clean.sh, status.sh, logs.sh in scripts/ directory
 
 ### Fixed

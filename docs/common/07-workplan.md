@@ -312,5 +312,31 @@ Any active status -> Cancelled
   - [x] scripts/ directory with deployment scripts committed
   - [x] Workplan, working-log, changelog updated
 - Result: 5 scripts added by human: deploy.sh (full deploy), rebuild.sh (image rebuild + rollout restart), clean.sh (cluster delete), status.sh (pods/svc/ingress), logs.sh (pod logs). Docs updated.
-  - [x] Replacements: em dash -> hyphen, right arrow -> ->
-- Result: Fixed 4 non-ASCII characters in both .sdwc/CLAUDE_BASE.md and CLAUDE.md. Lines 216, 305, 306, 309 (CLAUDE_BASE.md) / 171, 260, 261, 264 (CLAUDE.md). Verified 0 remaining occurrences via grep.
+
+### T022: Add mobile/native test framework enums to intake_template.yaml
+- Status: Done
+- Service: sdwc-api
+- Origin: ZIP Review v1.32
+- Description: Add mobile-native test framework enums (xctest, espresso, robolectric, flutter_test, detox), mobile deployment targets (app_store, play_store, both_stores), mobile CI tools (xcode_cloud, bitrise, codemagic), mobile CD tools (fastlane, app_center) to intake_template.yaml enum comments and matching Pydantic StrEnum values.
+- Acceptance Criteria:
+  - [x] testing.levels[].framework enum comment includes mobile values
+  - [x] deployment.target enum comment includes mobile store values (all 5 service types)
+  - [x] ci.tool enum comment includes mobile CI tools (all 5 service types)
+  - [x] cd.tool enum comment includes mobile CD tools (all 5 service types)
+  - [x] Pydantic enums (TestFrameworkEnum, DeploymentTarget, CiTool, CdTool) match template values
+  - [x] YAML syntax validates
+  - [x] All existing tests pass
+- Result: Added 5 mobile test frameworks, 3 mobile deployment targets, 3 mobile CI tools, 2 mobile CD tools to both intake_template.yaml enum comments (all 5 service type sections) and Pydantic StrEnum classes. Also added missing ci.tool and cd.tool enum comments to web_ui, worker, mobile_app, data_pipeline sections. 358 tests passing.
+
+### T023: Add "omit unused optional fields" guidance to intake_template.yaml
+- Status: Done
+- Service: sdwc-api
+- Origin: ZIP Review v1.32
+- Description: Add header guidance about removing unused optional fields (instead of leaving empty) and DELETE reminders on optional blocks with required sub-fields (push_notification, infrastructure_as_code, disaster_recovery, metrics, alerting).
+- Acceptance Criteria:
+  - [x] File header includes IMPORTANT guidance about removing unused optional fields
+  - [x] push_notification block has DELETE reminder comment
+  - [x] infrastructure_as_code blocks have DELETE reminder comments (all 5 service types)
+  - [x] disaster_recovery, metrics, alerting blocks have DELETE reminder comments
+  - [x] YAML syntax validates
+- Result: Added 4-line IMPORTANT header guidance after line 6. Added 9 DELETE reminder comments (1 push_notification, 5 infrastructure_as_code, 1 disaster_recovery, 1 metrics, 1 alerting). YAML syntax validates.
