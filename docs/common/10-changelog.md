@@ -18,6 +18,7 @@
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
 ### Added
+- Docker setup for sdwc-web: multi-stage Dockerfile (node:20-slim builder, nginx:alpine runtime), nginx.conf with SPA routing + /assets cache + /api reverse proxy. k3s manifests: Deployment + ClusterIP Service for both services, Ingress with path-based routing (/api → sdwc-api, / → sdwc-web) using Traefik
 - Docker setup for sdwc-api: multi-stage Dockerfile (python:3.12-slim, poetry export, non-root user), .dockerignore at project root, HEALTHCHECK via Python urllib, SDWC_RESOURCE_DIR for .sdwc/ templates
 - Web UI state management & API integration: Zustand store (useIntakeStore) with 9-state machine and async actions, API service layer (intakeApi.ts) with validateYaml/fetchPreview/generateZip. App.tsx refactored to use store selectors. 17 new tests (43 total)
 - Web UI preview & generate flow: FileTreePreview (recursive collapsible tree), GenerateButton (with spinner state), ErrorDisplay (RFC 7807 title/detail/status). App.tsx extended to full 9-state flow with auto-preview trigger, blob ZIP download, reset. 13 new component tests (26 total)

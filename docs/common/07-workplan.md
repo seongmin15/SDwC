@@ -268,11 +268,12 @@ Any active status -> Cancelled
 - Result: Multi-stage Dockerfile (builder: poetry export + pip install, runtime: python:3.12-slim with non-root user). Build context is project root (-f sdwc-api/Dockerfile .) to include .sdwc/ templates. HEALTHCHECK via Python urllib. .dockerignore at project root excludes tests, dev files, node_modules, docs. Docker build not verified locally (Docker Desktop not running) but Dockerfile structure and paths validated.
 
 ### T018: Docker setup - sdwc-web & k3s manifests
-- Status: Backlog
+- Status: Done
 - Service: sdwc-web
 - Description: Create multi-stage Dockerfile for sdwc-web (Node:20-slim build, nginx:alpine runtime). Create k3s deployment manifests, service configs, and ingress rules for both services.
 - Acceptance Criteria:
-  - [ ] sdwc-web Dockerfile builds and serves SPA via nginx
-  - [ ] k8s deployment manifests for both services
-  - [ ] Ingress configuration for routing
-  - [ ] Health check probes configured
+  - [x] sdwc-web Dockerfile builds and serves SPA via nginx
+  - [x] k8s deployment manifests for both services
+  - [x] Ingress configuration for routing
+  - [x] Health check probes configured
+- Result: sdwc-web Dockerfile (node:20-slim builder + nginx:alpine runtime with SPA routing). nginx.conf with try_files fallback, /assets cache headers, /api reverse proxy to sdwc-api:8000. k3s manifests: Deployment + ClusterIP Service for both services (with resource limits, liveness/readiness probes), Ingress with path-based routing (/api → sdwc-api, / → sdwc-web) using Traefik. infra/ directory structure established.
