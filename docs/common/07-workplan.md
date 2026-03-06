@@ -197,14 +197,15 @@ Any active status -> Cancelled
 - Result: 4 global exception handlers in core/error_handlers.py (SdwcError, ValidationError, RequestValidationError, unhandled Exception). 3 new domain exceptions (YamlParseError, PipelineTimeoutError, RenderingError) with class-level RFC 7807 metadata. Existing exceptions (FrameworkNotFoundError, OutputContractError) enhanced with RFC 7807 attrs. yaml_parser ValueError/TimeoutError → YamlParseError. /preview and /generate simplified (~60 lines removed). 14 new unit tests (366 total). All ruff/mypy/pytest pass.
 
 ### T012: Structured logging - structlog & request middleware
-- Status: Ready
+- Status: Done
 - Service: sdwc-api
 - Description: Configure structlog with JSON output. Implement request/response logging middleware with request_id correlation. Follow skills/common/observability.
 - Acceptance Criteria:
-  - [ ] structlog configured with JSON rendering
-  - [ ] Request logging middleware logs method, path, status, duration
-  - [ ] request_id correlation across log entries
-  - [ ] Log levels follow skills/common/observability rules
+  - [x] structlog configured with JSON rendering
+  - [x] Request logging middleware logs method, path, status, duration
+  - [x] request_id correlation across log entries
+  - [x] Log levels follow skills/common/observability rules
+- Result: core/logging.py with setup_logging() (JSON renderer, contextvars, timestamper, configurable log level). middleware/request_logging.py with pure ASGI RequestLoggingMiddleware (request_id UUID4, method/path/status/duration_ms, /health excluded, structlog contextvars binding). error_handlers.py updated with request_id in unhandled error logs. 13 new unit tests (379 total). All ruff/mypy/pytest pass.
 
 ### T013: sdwc-web project scaffolding
 - Status: Ready

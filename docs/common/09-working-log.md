@@ -127,3 +127,10 @@
 - **변경된 파일**: src/sdwc_api/exceptions/__init__.py (수정), src/sdwc_api/services/yaml_parser.py (수정), src/sdwc_api/core/error_handlers.py (신규), src/sdwc_api/main.py (수정), src/sdwc_api/routers/intake.py (수정), tests/unit/test_yaml_parser.py (수정), tests/unit/test_error_handlers.py (신규, 14 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: (1) 예외 클래스에 RFC 7807 메타데이터를 직접 부착 (매핑 테이블 대신). (2) /validate는 의도적으로 200 OK + {valid: false} 반환 유지 (글로벌 핸들러 미적용). (3) YAML 5s 파싱 타임아웃은 YamlParseError로 처리 (파싱 문제), 30s 파이프라인 타임아웃은 PipelineTimeoutError로 분리.
 - **미완료/후속**: T012 (Structured logging - structlog & request middleware)
+
+### 2026-03-06 — T012: Structured logging - structlog & request middleware
+
+- **작업**: structlog JSON 로깅 설정 추출 (core/logging.py), 순수 ASGI 요청 로깅 미들웨어 구현 (middleware/request_logging.py), request_id UUID4 상관관계, /health 제외, error_handlers.py에 request_id 추가.
+- **변경된 파일**: src/sdwc_api/core/logging.py (신규), src/sdwc_api/middleware/__init__.py (신규), src/sdwc_api/middleware/request_logging.py (신규), src/sdwc_api/main.py (수정), src/sdwc_api/core/error_handlers.py (수정), tests/unit/test_logging_setup.py (신규, 5 tests), tests/unit/test_request_logging.py (신규, 8 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: (1) BaseHTTPMiddleware 대신 순수 ASGI 미들웨어 사용 — StreamingResponse (/generate)와의 호환성 문제 방지. (2) structlog.contextvars로 request_id 자동 바인딩 — 요청 내 모든 로그에 자동 포함. (3) /health 경로 제외 — 노이즈 감소. (4) setup_logging()을 core/logging.py로 분리 — 테스트에서 재사용 가능.
+- **미완료/후속**: T013 (sdwc-web project scaffolding)

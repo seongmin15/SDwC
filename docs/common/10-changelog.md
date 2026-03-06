@@ -17,6 +17,9 @@
      릴리스 시 [Unreleased]를 버전 번호로 전환.
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
+### Added
+- Structured logging: setup_logging() with JSON rendering, contextvars merge, configurable log level. Pure ASGI RequestLoggingMiddleware with request_id correlation (UUID4), method/path/status/duration_ms logging, /health exclusion. 13 new unit tests (379 total)
+
 ### Changed
 - Error handling: centralized inline try/except blocks into 4 global exception handlers (SdwcError, ValidationError, RequestValidationError, unhandled Exception) producing RFC 7807 responses. Simplified /preview and /generate routes by removing ~60 lines of duplicated error handling. Added domain exceptions (YamlParseError, PipelineTimeoutError, RenderingError) with class-level HTTP/RFC7807 metadata.
 - Section 5.1 Receiving a Task: added pre-coding checklist (step 7) requiring 07-workplan In Progress and 09-working-log plan recording before writing any code (applied to CLAUDE.md and .sdwc/CLAUDE_BASE.md)
