@@ -4,9 +4,18 @@ from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import ValidationError
 
 from sdwc_api.core.config import settings
+from sdwc_api.core.error_handlers import (
+    pydantic_validation_error_handler,
+    request_validation_error_handler,
+    sdwc_error_handler,
+    unhandled_error_handler,
+)
+from sdwc_api.exceptions import SdwcError
 from sdwc_api.routers import health, intake
 
 
@@ -35,7 +44,13 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Middleware: CORS (outermost). Logging and error handling added in later tasks.
+# Exception handlers (RFC 7807)
+app.add_exception_handler(SdwcError, sdwc_error_handler)  # type: ignore[arg-type]
+app.add_exception_handler(ValidationError, pydantic_validation_error_handler)  # type: ignore[arg-type]
+app.add_exception_handler(RequestValidationError, request_validation_error_handler)  # type: ignore[arg-type]
+app.add_exception_handler(Exception, unhandled_error_handler)
+
+# Middleware: CORS (outermost).
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,

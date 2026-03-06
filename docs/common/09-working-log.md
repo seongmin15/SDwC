@@ -120,3 +120,10 @@
 - **변경된 파일**: src/sdwc_api/routers/intake.py (수정 — preview/generate 엔드포인트 + 공유 헬퍼), src/sdwc_api/schemas/responses.py (수정 — PreviewResponse, ServiceInfo 추가), src/sdwc_api/engine/renderer.py (수정 — ChainableUndefined), src/sdwc_api/engine/validator.py (수정 — C-1 코드블록 제외), src/sdwc_api/engine/postprocess.py (수정 — iteration-until-stable), tests/integration/test_intake.py (수정 — 10개 신규 테스트), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: (1) ChainableUndefined: 템플릿이 optional 필드를 `{% if field.attr %}` 패턴으로 접근 — default Undefined는 AttributeError 발생, ChainableUndefined로 전환. (2) C-1 validator: 코드블록 내 `}}` (Python dict literal)이 false positive — _strip_fenced_code로 code block 제외. (3) postprocess iteration: Rule 4(빈 테이블 제거)가 새 빈 섹션 생성 가능 — 전체 규칙 세트를 iteration-until-stable로 변경.
 - **미완료/후속**: T011 (Error handling - RFC 7807 & domain exceptions)
+
+### 2026-03-06 — T011: Error handling - RFC 7807 & domain exceptions
+
+- **작업**: 인라인 try/except 블록을 4개 글로벌 예외 핸들러로 중앙화. SdwcError 베이스에 http_status/error_type/title 클래스 속성 추가. YamlParseError, PipelineTimeoutError, RenderingError 도메인 예외 신규. yaml_parser의 ValueError/TimeoutError → YamlParseError 전환. /preview, /generate 라우트 단순화 (~60줄 중복 제거).
+- **변경된 파일**: src/sdwc_api/exceptions/__init__.py (수정), src/sdwc_api/services/yaml_parser.py (수정), src/sdwc_api/core/error_handlers.py (신규), src/sdwc_api/main.py (수정), src/sdwc_api/routers/intake.py (수정), tests/unit/test_yaml_parser.py (수정), tests/unit/test_error_handlers.py (신규, 14 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: (1) 예외 클래스에 RFC 7807 메타데이터를 직접 부착 (매핑 테이블 대신). (2) /validate는 의도적으로 200 OK + {valid: false} 반환 유지 (글로벌 핸들러 미적용). (3) YAML 5s 파싱 타임아웃은 YamlParseError로 처리 (파싱 문제), 30s 파이프라인 타임아웃은 PipelineTimeoutError로 분리.
+- **미완료/후속**: T012 (Structured logging - structlog & request middleware)
