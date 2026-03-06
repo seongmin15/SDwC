@@ -190,3 +190,10 @@
 - **변경된 파일**: .sdwc/CLAUDE_BASE.md (4건 수정), CLAUDE.md (4건 수정), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: 서버 리소스 결함 원칙에 따라 .sdwc/CLAUDE_BASE.md 원본 수정. CLI 환경에서 재렌더링 불가하므로 CLAUDE.md도 직접 수정 (임시 조치). Desktop에서 재렌더링 ZIP 발급 시 근본 조치 완료.
 - **미완료/후속**: Desktop에 보고하여 재렌더링 ZIP 발급 요청 필요
+
+### 2026-03-07 — T021: Add k3d deployment scripts
+
+- **작업**: Human이 scripts/ 디렉토리에 k3d 배포 헬퍼 스크립트 5개 추가. deploy.sh (클러스터 생성 + 이미지 빌드 + import + 매니페스트 적용), rebuild.sh (이미지 재빌드 + rollout restart), clean.sh (클러스터 삭제), status.sh (pods/svc/ingress 조회), logs.sh (pod 로그 조회).
+- **변경된 파일**: scripts/deploy.sh (신규), scripts/rebuild.sh (신규), scripts/clean.sh (신규), scripts/status.sh (신규), scripts/logs.sh (신규), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: Human이 직접 작성한 스크립트. Section 5.6 절차에 따라 문서 업데이트.
+- **미완료/후속**: 없음

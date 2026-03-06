@@ -1,7 +1,12 @@
+
 #!/bin/bash
 set -e
 
 CLUSTER_NAME="sdwc"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$PROJECT_ROOT"
 
 echo "🚀 Creating k3d cluster..."
 k3d cluster create $CLUSTER_NAME -p "8080:80@loadbalancer" || echo "Cluster already exists"

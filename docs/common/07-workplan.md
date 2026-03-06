@@ -303,3 +303,14 @@ Any active status -> Cancelled
   - [x] CLAUDE.md contains 0 non-ASCII em dash (U+2014) or right arrow (U+2192) characters
   - [x] Replacements: em dash -> hyphen, right arrow -> ->
 - Result: Fixed 4 non-ASCII characters in both .sdwc/CLAUDE_BASE.md and CLAUDE.md. Lines 216, 305, 306, 309 (CLAUDE_BASE.md) / 171, 260, 261, 264 (CLAUDE.md). Verified 0 remaining occurrences via grep.
+
+### T021: Add k3d deployment scripts
+- Status: Done
+- Service: sdwc-api, sdwc-web
+- Description: Human added scripts/ directory with 5 k3d deployment helper scripts (deploy.sh, rebuild.sh, clean.sh, status.sh, logs.sh). Record in docs.
+- Acceptance Criteria:
+  - [x] scripts/ directory with deployment scripts committed
+  - [x] Workplan, working-log, changelog updated
+- Result: 5 scripts added by human: deploy.sh (full deploy), rebuild.sh (image rebuild + rollout restart), clean.sh (cluster delete), status.sh (pods/svc/ingress), logs.sh (pod logs). Docs updated.
+  - [x] Replacements: em dash -> hyphen, right arrow -> ->
+- Result: Fixed 4 non-ASCII characters in both .sdwc/CLAUDE_BASE.md and CLAUDE.md. Lines 216, 305, 306, 309 (CLAUDE_BASE.md) / 171, 260, 261, 264 (CLAUDE.md). Verified 0 remaining occurrences via grep.

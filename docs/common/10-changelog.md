@@ -17,6 +17,9 @@
      릴리스 시 [Unreleased]를 버전 번호로 전환.
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
+### Added
+- k3d deployment scripts: deploy.sh, rebuild.sh, clean.sh, status.sh, logs.sh in scripts/ directory
+
 ### Fixed
 - CLAUDE_BASE.md: replaced 4 non-ASCII characters (3x U+2014 em dash -> hyphen, 1x U+2192 right arrow -> `->`) violating the non-ASCII 0 rule. Applied same fix to CLAUDE.md
 
