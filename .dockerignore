@@ -1,0 +1,39 @@
+__pycache__
+*.pyc
+*.pyo
+.git
+.github
+.env
+.env.*
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Dev/test files
+sdwc-api/tests/
+sdwc-api/.mypy_cache/
+sdwc-api/.ruff_cache/
+sdwc-api/.pytest_cache/
+
+# Web UI (not needed for sdwc-api image)
+sdwc-web/node_modules/
+sdwc-web/dist/
+sdwc-web/.vite/
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+.DS_Store
+
+# Docs (not needed at runtime)
+docs/
+skills/
+*.md
+!sdwc-api/README.md
+
+# Claude
+.claude/
