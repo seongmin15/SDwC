@@ -4,6 +4,10 @@
 # Copy this file as intake_data.yaml and fill in the values.
 # - required fields: Must be filled (validation fails if empty)
 # - optional fields: Leave empty to omit the section from docs
+# - IMPORTANT: If an optional field does not apply to your project,
+#   REMOVE THE ENTIRE FIELD (key + value) rather than leaving it empty.
+#   Empty values ("", {}, []) will trigger validation errors on sub-fields.
+#   Example: If no push notifications, delete the entire push_notification block.
 # - array ([]) fields: Any number of items, at least 1 recommended
 # - conditional sections: See condition comments (ignored if service type not selected)
 # - services array: Contains examples for all 5 types
@@ -339,7 +343,7 @@ services:                                   # required -- service list (at least
 
     # --- Deployment ---
     deployment:                             # required
-      target: ""                            # required -- values: docker_compose | kubernetes | ecs | lambda | cloud_run | fly_io | railway | vercel | bare_metal
+      target: ""                            # required -- values: docker_compose | kubernetes | ecs | lambda | cloud_run | fly_io | railway | vercel | bare_metal | app_store | play_store | both_stores
       target_rationale: ""                  # optional
       target_alternatives:                  # optional
         - target: ""
@@ -349,12 +353,12 @@ services:                                   # required -- service list (at least
           purpose: ""
           differences: ""                   # differences from production
       ci:                                   # optional
-        tool: ""                            # values: github_actions | gitlab_ci | jenkins | circleci | bitbucket_pipelines
+        tool: ""                            # values: github_actions | gitlab_ci | jenkins | circleci | bitbucket_pipelines | xcode_cloud | bitrise | codemagic
         pipeline_stages: ""                 # e.g. "lint -> test -> build -> deploy"
       cd:                                 # optional
-        tool: ""                            # values: argocd | fluxcd | spinnaker | none
+        tool: ""                            # values: argocd | fluxcd | spinnaker | none | fastlane | app_center
         strategy: ""                        # values: gitops | push | manual
-      infrastructure_as_code:               # optional
+      infrastructure_as_code:               # optional -- DELETE THIS BLOCK if not using IaC
         enabled: false
         tool: ""                            # values: terraform | pulumi | cdk | cloudformation | ansible
       container_registry: ""                # optional -- values: dockerhub | ecr | gcr | ghcr | acr
@@ -414,7 +418,7 @@ services:                                   # required -- service list (at least
 
     # --- Deployment ---
     deployment:                             # required
-      target: ""                            # required -- values: docker_compose | kubernetes | ecs | lambda | cloud_run | fly_io | railway | vercel | bare_metal
+      target: ""                            # required -- values: docker_compose | kubernetes | ecs | lambda | cloud_run | fly_io | railway | vercel | bare_metal | app_store | play_store | both_stores
       target_rationale: ""                  # optional
       target_alternatives:                  # optional
         - target: ""
@@ -424,12 +428,12 @@ services:                                   # required -- service list (at least
           purpose: ""
           differences: ""
       ci:                                   # optional
-        tool: ""
+        tool: ""                            # values: github_actions | gitlab_ci | jenkins | circleci | bitbucket_pipelines | xcode_cloud | bitrise | codemagic
         pipeline_stages: ""
       cd:                                 # optional
-        tool: ""
+        tool: ""                            # values: argocd | fluxcd | spinnaker | none | fastlane | app_center
         strategy: ""
-      infrastructure_as_code:               # optional
+      infrastructure_as_code:               # optional -- DELETE THIS BLOCK if not using IaC
         enabled: false
         tool: ""
       container_registry: ""                # optional
@@ -493,7 +497,7 @@ services:                                   # required -- service list (at least
 
     # --- Deployment ---
     deployment:                             # required
-      target: ""                            # required -- values: docker_compose | kubernetes | ecs | lambda | cloud_run | fly_io | railway | vercel | bare_metal
+      target: ""                            # required -- values: docker_compose | kubernetes | ecs | lambda | cloud_run | fly_io | railway | vercel | bare_metal | app_store | play_store | both_stores
       target_rationale: ""                  # optional
       target_alternatives:                  # optional
         - target: ""
@@ -503,12 +507,12 @@ services:                                   # required -- service list (at least
           purpose: ""
           differences: ""
       ci:                                   # optional
-        tool: ""
+        tool: ""                            # values: github_actions | gitlab_ci | jenkins | circleci | bitbucket_pipelines | xcode_cloud | bitrise | codemagic
         pipeline_stages: ""
       cd:                                 # optional
-        tool: ""
+        tool: ""                            # values: argocd | fluxcd | spinnaker | none | fastlane | app_center
         strategy: ""
-      infrastructure_as_code:               # optional
+      infrastructure_as_code:               # optional -- DELETE THIS BLOCK if not using IaC
         enabled: false
         tool: ""
       container_registry: ""                # optional
@@ -563,7 +567,7 @@ services:                                   # required -- service list (at least
         permission: ""
         denial_behavior: ""                 # behavior when permission denied
 
-    push_notification:                      # optional
+    push_notification:                      # optional -- DELETE THIS BLOCK if not using push notifications
       service: ""                           # values: fcm | apns | onesignal | expo_push
       types:
         - type: ""
@@ -577,7 +581,7 @@ services:                                   # required -- service list (at least
 
     # --- Deployment ---
     deployment:                             # required
-      target: ""                            # required -- values: docker_compose | kubernetes | ecs | lambda | cloud_run | fly_io | railway | vercel | bare_metal
+      target: ""                            # required -- values: docker_compose | kubernetes | ecs | lambda | cloud_run | fly_io | railway | vercel | bare_metal | app_store | play_store | both_stores
       target_rationale: ""                  # optional
       target_alternatives:                  # optional
         - target: ""
@@ -587,12 +591,12 @@ services:                                   # required -- service list (at least
           purpose: ""
           differences: ""
       ci:                                   # optional
-        tool: ""
+        tool: ""                            # values: github_actions | gitlab_ci | jenkins | circleci | bitbucket_pipelines | xcode_cloud | bitrise | codemagic
         pipeline_stages: ""
       cd:                                 # optional
-        tool: ""
+        tool: ""                            # values: argocd | fluxcd | spinnaker | none | fastlane | app_center
         strategy: ""
-      infrastructure_as_code:               # optional
+      infrastructure_as_code:               # optional -- DELETE THIS BLOCK if not using IaC
         enabled: false
         tool: ""
       container_registry: ""                # optional
@@ -662,7 +666,7 @@ services:                                   # required -- service list (at least
 
     # --- Deployment ---
     deployment:                             # required
-      target: ""                            # required -- values: docker_compose | kubernetes | ecs | lambda | cloud_run | fly_io | railway | vercel | bare_metal
+      target: ""                            # required -- values: docker_compose | kubernetes | ecs | lambda | cloud_run | fly_io | railway | vercel | bare_metal | app_store | play_store | both_stores
       target_rationale: ""                  # optional
       target_alternatives:                  # optional
         - target: ""
@@ -672,12 +676,12 @@ services:                                   # required -- service list (at least
           purpose: ""
           differences: ""
       ci:                                   # optional
-        tool: ""
+        tool: ""                            # values: github_actions | gitlab_ci | jenkins | circleci | bitbucket_pipelines | xcode_cloud | bitrise | codemagic
         pipeline_stages: ""
       cd:                                 # optional
-        tool: ""
+        tool: ""                            # values: argocd | fluxcd | spinnaker | none | fastlane | app_center
         strategy: ""
-      infrastructure_as_code:               # optional
+      infrastructure_as_code:               # optional -- DELETE THIS BLOCK if not using IaC
         enabled: false
         tool: ""
       container_registry: ""                # optional
@@ -776,7 +780,7 @@ performance:                                # required -> docs/common/04-infrast
 availability:                               # optional -> docs/common/04-infrastructure.md S3
   target: ""                                # e.g. "99.9%"
   acceptable_downtime: ""                   # e.g. "< 10min/month"
-  disaster_recovery:                        # optional
+  disaster_recovery:                        # optional -- DELETE THIS BLOCK if not applicable
     rpo: ""                                 # Recovery Point Objective
     rto: ""                                 # Recovery Time Objective
     backup_strategy: ""
@@ -789,12 +793,12 @@ observability:                              # optional -> docs/common/04-infrast
     structured: false
     sensitive_data_masking: false
     retention_period: ""
-  metrics:                                  # optional
+  metrics:                                  # optional -- DELETE THIS BLOCK if not collecting metrics
     tool: ""
     key_metrics:
       - ""
     dashboards: ""
-  alerting:                                 # optional
+  alerting:                                 # optional -- DELETE THIS BLOCK if not using alerting
     tool: ""
     critical_alerts:
       - ""
@@ -844,7 +848,7 @@ testing:                                    # required -> docs/common/03-quality
   levels:                                   # required -- test levels (at least 1)
     - level: ""                             # values: unit | integration | e2e | contract | smoke | performance
       coverage_target: ""                   # optional -- e.g. "80%"
-      framework: ""                         # required -- values: pytest | jest | vitest | playwright | cypress | junit | go_test | rspec
+      framework: ""                         # required -- values: pytest | jest | vitest | playwright | cypress | junit | go_test | rspec | xctest | espresso | robolectric | flutter_test | detox
       approach: ""                          # optional -- approach description
   test_data_strategy: ""                    # optional -- values: fixtures | factories | snapshots | seed_scripts
   test_environment:                         # optional

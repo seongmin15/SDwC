@@ -667,6 +667,9 @@ class DeploymentTarget(StrEnum):
     RAILWAY = "railway"
     VERCEL = "vercel"
     BARE_METAL = "bare_metal"
+    APP_STORE = "app_store"
+    PLAY_STORE = "play_store"
+    BOTH_STORES = "both_stores"
 
 
 class EnvironmentName(StrEnum):
@@ -685,6 +688,9 @@ class CiTool(StrEnum):
     JENKINS = "jenkins"
     CIRCLECI = "circleci"
     BITBUCKET_PIPELINES = "bitbucket_pipelines"
+    XCODE_CLOUD = "xcode_cloud"
+    BITRISE = "bitrise"
+    CODEMAGIC = "codemagic"
 
 
 class CdTool(StrEnum):
@@ -694,6 +700,8 @@ class CdTool(StrEnum):
     FLUXCD = "fluxcd"
     SPINNAKER = "spinnaker"
     NONE = "none"
+    FASTLANE = "fastlane"
+    APP_CENTER = "app_center"
 
 
 class CdStrategy(StrEnum):
@@ -838,6 +846,11 @@ class TestFrameworkEnum(StrEnum):
     JUNIT = "junit"
     GO_TEST = "go_test"
     RSPEC = "rspec"
+    XCTEST = "xctest"
+    ESPRESSO = "espresso"
+    ROBOLECTRIC = "robolectric"
+    FLUTTER_TEST = "flutter_test"
+    DETOX = "detox"
 
 
 class TestDataStrategy(StrEnum):

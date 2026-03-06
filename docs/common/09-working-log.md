@@ -197,3 +197,10 @@
 - **변경된 파일**: scripts/deploy.sh (신규), scripts/rebuild.sh (신규), scripts/clean.sh (신규), scripts/status.sh (신규), scripts/logs.sh (신규), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: Human이 직접 작성한 스크립트. Section 5.6 절차에 따라 문서 업데이트.
 - **미완료/후속**: 없음
+
+### 2026-03-07 — T022-T023: intake_template.yaml mobile enums & optional field guidance
+
+- **작업**: ZIP Review v1.32 발견 사항 2건 해결. T022: 모바일 네이티브 테스트 프레임워크(xctest, espresso, robolectric, flutter_test, detox), 배포 타겟(app_store, play_store, both_stores), CI 도구(xcode_cloud, bitrise, codemagic), CD 도구(fastlane, app_center) enum 추가. T023: 파일 헤더에 미사용 optional 필드 제거 안내 4줄 추가 + 9개 optional 블록에 DELETE 리마인더 코멘트 추가.
+- **변경된 파일**: .sdwc/intake_template.yaml (enum 확장 + 안내 추가), sdwc-api/src/sdwc_api/schemas/enums.py (TestFrameworkEnum, DeploymentTarget, CiTool, CdTool 확장), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: (1) web_ui/worker/mobile_app/data_pipeline의 ci.tool, cd.tool에 누락된 enum 주석도 함께 추가 (기존에 backend_api만 있었음). (2) generation_rules.md, output_contract.md는 generic variable path 사용으로 수정 불필요 확인.
+- **미완료/후속**: 없음
