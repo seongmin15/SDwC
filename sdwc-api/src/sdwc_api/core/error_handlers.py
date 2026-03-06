@@ -78,11 +78,13 @@ async def request_validation_error_handler(
 
 async def unhandled_error_handler(request: Request, exc: Exception) -> JSONResponse:
     """Handle any unhandled exception. Never expose internals."""
+    request_id = getattr(request.state, "request_id", None)
     await logger.aerror(
         "unhandled_exception",
         exc_type=type(exc).__name__,
         exc_detail=str(exc),
         path=request.url.path,
+        request_id=request_id,
     )
     return _build_rfc7807(
         error_type="https://sdwc.dev/errors/internal-error",
