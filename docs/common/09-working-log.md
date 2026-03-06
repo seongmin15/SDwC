@@ -134,3 +134,10 @@
 - **변경된 파일**: src/sdwc_api/core/logging.py (신규), src/sdwc_api/middleware/__init__.py (신규), src/sdwc_api/middleware/request_logging.py (신규), src/sdwc_api/main.py (수정), src/sdwc_api/core/error_handlers.py (수정), tests/unit/test_logging_setup.py (신규, 5 tests), tests/unit/test_request_logging.py (신규, 8 tests), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: (1) BaseHTTPMiddleware 대신 순수 ASGI 미들웨어 사용 — StreamingResponse (/generate)와의 호환성 문제 방지. (2) structlog.contextvars로 request_id 자동 바인딩 — 요청 내 모든 로그에 자동 포함. (3) /health 경로 제외 — 노이즈 감소. (4) setup_logging()을 core/logging.py로 분리 — 테스트에서 재사용 가능.
 - **미완료/후속**: T013 (sdwc-web project scaffolding)
+
+### 2026-03-06 — T013: sdwc-web project scaffolding
+
+- **작업**: Vite + React + TypeScript 프로젝트 초기화. Tailwind CSS v4, Zustand v5, Vitest + @testing-library/react, ESLint flat config (typescript-eslint, react-hooks, jsx-a11y), Prettier 설정. coding-standards skill 기반 디렉토리 구조 생성.
+- **변경된 파일**: sdwc-web/ (전체 신규 — package.json, vite.config.ts, tsconfig.*.json, eslint.config.js, .prettierrc, src/app/App.tsx, src/app/providers.tsx, src/main.tsx, src/index.css, src/app/App.test.tsx, tests/setup.ts, index.html, .gitignore), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: (1) Tailwind v4 @tailwindcss/vite 플러그인 사용 (postcss.config 불필요). (2) ESLint flat config (eslint.config.js) 채택 — 신규 프로젝트 표준. (3) vitest/config에서 defineConfig import — test 옵션 타입 지원. (4) tsconfig.app.json에서 *.test.tsx 제외 — tsc -b가 vitest 타입 없이도 빌드 가능. (5) 라우터 미설치 — 단일 페이지 앱으로 라우팅 불필요.
+- **미완료/후속**: T014 (Web UI - upload flow components)

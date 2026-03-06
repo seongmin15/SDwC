@@ -208,16 +208,17 @@ Any active status -> Cancelled
 - Result: core/logging.py with setup_logging() (JSON renderer, contextvars, timestamper, configurable log level). middleware/request_logging.py with pure ASGI RequestLoggingMiddleware (request_id UUID4, method/path/status/duration_ms, /health excluded, structlog contextvars binding). error_handlers.py updated with request_id in unhandled error logs. 13 new unit tests (379 total). All ruff/mypy/pytest pass.
 
 ### T013: sdwc-web project scaffolding
-- Status: Ready
+- Status: Done
 - Service: sdwc-web
 - Description: Initialize React + TypeScript project with Vite. Configure Tailwind CSS, Zustand, ESLint, Prettier. Set up project structure following skills/sdwc-web/coding-standards.
 - Acceptance Criteria:
-  - [ ] Vite project initialized with React + TypeScript
-  - [ ] Tailwind CSS configured and working
-  - [ ] Zustand installed
-  - [ ] ESLint + Prettier configured
-  - [ ] Project structure matches skills/sdwc-web/coding-standards
-  - [ ] `npm run dev` starts successfully
+  - [x] Vite project initialized with React + TypeScript
+  - [x] Tailwind CSS configured and working
+  - [x] Zustand installed
+  - [x] ESLint + Prettier configured
+  - [x] Project structure matches skills/sdwc-web/coding-standards
+  - [x] `npm run dev` starts successfully
+- Result: Vite 7 + React 19 + TypeScript 5.9 project. Tailwind CSS v4 via @tailwindcss/vite plugin. Zustand v5 installed. ESLint flat config with typescript-eslint, react-hooks, jsx-a11y. Prettier (double quotes, trailing commas, 100 chars). Vitest + @testing-library/react + jsdom. Path alias @/ = src/. Proxy /api → localhost:8000. Project structure per coding-standards skill. 1 test passing. Build, lint, format all pass.
 
 ### T014: Web UI - upload flow components
 - Status: Ready
