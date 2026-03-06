@@ -3,6 +3,7 @@
 import pytest
 import yaml
 
+from sdwc_api.exceptions import YamlParseError
 from sdwc_api.services.yaml_parser import parse_intake_yaml
 
 
@@ -112,29 +113,29 @@ class TestParseIntakeYaml:
         assert result.project.name == "Test"
         assert result.process.methodology == "kanban"
 
-    def test_oversized_file_raises_value_error(self) -> None:
+    def test_oversized_file_raises_yaml_parse_error(self) -> None:
         content = b"x" * (1_048_576 + 1)
-        with pytest.raises(ValueError, match="exceeds maximum"):
+        with pytest.raises(YamlParseError, match="exceeds maximum"):
             parse_intake_yaml(content)
 
-    def test_invalid_yaml_raises_value_error(self) -> None:
+    def test_invalid_yaml_raises_yaml_parse_error(self) -> None:
         content = b"invalid: yaml: [unterminated"
-        with pytest.raises(ValueError, match="Invalid YAML"):
+        with pytest.raises(YamlParseError, match="Invalid YAML"):
             parse_intake_yaml(content)
 
-    def test_non_mapping_yaml_raises_value_error(self) -> None:
+    def test_non_mapping_yaml_raises_yaml_parse_error(self) -> None:
         content = b"- just\n- a\n- list"
-        with pytest.raises(ValueError, match="must be a mapping"):
+        with pytest.raises(YamlParseError, match="must be a mapping"):
             parse_intake_yaml(content)
 
-    def test_empty_yaml_raises_value_error(self) -> None:
+    def test_empty_yaml_raises_yaml_parse_error(self) -> None:
         content = b""
-        with pytest.raises(ValueError, match="must be a mapping"):
+        with pytest.raises(YamlParseError, match="must be a mapping"):
             parse_intake_yaml(content)
 
-    def test_invalid_utf8_raises_value_error(self) -> None:
+    def test_invalid_utf8_raises_yaml_parse_error(self) -> None:
         content = b"\xff\xfe invalid utf8"
-        with pytest.raises(ValueError, match="Invalid"):
+        with pytest.raises(YamlParseError, match="Invalid"):
             parse_intake_yaml(content)
 
     def test_pydantic_validation_error_propagates(self) -> None:
@@ -166,3 +167,11 @@ class TestParseIntakeYaml:
         assert result.evolution is not None
         assert result.rollout is not None
         assert result.operations is not None
+
+    def test_yaml_parse_error_is_sdwc_error_subclass(self) -> None:
+        """YamlParseError should be a subclass of SdwcError."""
+        from sdwc_api.exceptions import SdwcError
+
+        content = b"x" * (1_048_576 + 1)
+        with pytest.raises(SdwcError):
+            parse_intake_yaml(content)

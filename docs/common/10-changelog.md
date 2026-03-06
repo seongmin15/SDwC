@@ -18,6 +18,7 @@
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
 ### Changed
+- Error handling: centralized inline try/except blocks into 4 global exception handlers (SdwcError, ValidationError, RequestValidationError, unhandled Exception) producing RFC 7807 responses. Simplified /preview and /generate routes by removing ~60 lines of duplicated error handling. Added domain exceptions (YamlParseError, PipelineTimeoutError, RenderingError) with class-level HTTP/RFC7807 metadata.
 - Section 5.1 Receiving a Task: added pre-coding checklist (step 7) requiring 07-workplan In Progress and 09-working-log plan recording before writing any code (applied to CLAUDE.md and .sdwc/CLAUDE_BASE.md)
 - Section 5.8 Completing a Task: added pre-commit doc checklist (step 5) with sub-tasks for 07-workplan, 09-working-log, 10-changelog, and Section 6 trigger docs (applied to CLAUDE.md and .sdwc/CLAUDE_BASE.md)
 

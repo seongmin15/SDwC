@@ -186,14 +186,15 @@ Any active status -> Cancelled
 - Result: routers/intake.py에 POST /preview (PreviewResponse JSON), POST /generate (StreamingResponse ZIP) 추가. schemas/responses.py에 PreviewResponse, ServiceInfo 모델 추가. 30s asyncio.wait_for 타임아웃 적용. RFC 7807 에러 (validation-failed, rendering-failed, request-timeout, output-contract-failed). 10개 신규 integration tests (352 total). 부수 수정: renderer.py에 ChainableUndefined (optional 필드 Jinja2 호환), validator.py C-1 코드블록 false positive 수정, postprocess.py 교차 규칙 iteration-until-stable.
 
 ### T011: Error handling - RFC 7807 & domain exceptions
-- Status: Ready
+- Status: Done
 - Service: sdwc-api
 - Description: Implement global exception handler returning RFC 7807 format. Define domain exceptions (ValidationError, RenderingError, FrameworkNotFoundError, etc.) with HTTP status code mapping.
 - Acceptance Criteria:
-  - [ ] Global exception handler catches all unhandled errors
-  - [ ] Domain exceptions map to correct HTTP status codes
-  - [ ] All error responses follow RFC 7807 format
-  - [ ] Unit tests for error handler
+  - [x] Global exception handler catches all unhandled errors
+  - [x] Domain exceptions map to correct HTTP status codes
+  - [x] All error responses follow RFC 7807 format
+  - [x] Unit tests for error handler
+- Result: 4 global exception handlers in core/error_handlers.py (SdwcError, ValidationError, RequestValidationError, unhandled Exception). 3 new domain exceptions (YamlParseError, PipelineTimeoutError, RenderingError) with class-level RFC 7807 metadata. Existing exceptions (FrameworkNotFoundError, OutputContractError) enhanced with RFC 7807 attrs. yaml_parser ValueError/TimeoutError → YamlParseError. /preview and /generate simplified (~60 lines removed). 14 new unit tests (366 total). All ruff/mypy/pytest pass.
 
 ### T012: Structured logging - structlog & request middleware
 - Status: Ready

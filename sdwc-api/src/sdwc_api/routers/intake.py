@@ -7,15 +7,14 @@ from collections.abc import Iterable
 from typing import Any
 
 from fastapi import APIRouter, UploadFile
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import ValidationError
 
 from sdwc_api.core.config import settings
 from sdwc_api.engine.packager import build_zip
 from sdwc_api.engine.renderer import render_all
 from sdwc_api.engine.validator import validate_or_raise
-from sdwc_api.exceptions import FrameworkNotFoundError, OutputContractError, SdwcError
-from sdwc_api.schemas.intake import IntakeData
+from sdwc_api.exceptions import PipelineTimeoutError, YamlParseError
 from sdwc_api.schemas.responses import (
     PreviewResponse,
     ServiceInfo,
@@ -34,26 +33,6 @@ _PIPELINE_TIMEOUT = 30.0
 # ---------------------------------------------------------------------------
 
 
-def _rfc7807(
-    error_type: str,
-    title: str,
-    status: int,
-    detail: str,
-    instance: str,
-) -> JSONResponse:
-    """Return a single RFC 7807 error as a JSONResponse."""
-    return JSONResponse(
-        status_code=status,
-        content={
-            "type": error_type,
-            "title": title,
-            "status": status,
-            "detail": detail,
-            "instance": instance,
-        },
-    )
-
-
 def _validation_error_items(
     exc: ValidationError,
     instance: str,
@@ -69,32 +48,6 @@ def _validation_error_items(
         )
         for e in exc.errors()
     ]
-
-
-def _parse_or_error(
-    content: bytes,
-    instance: str,
-) -> IntakeData | JSONResponse:
-    """Parse YAML content, returning IntakeData or an RFC 7807 JSONResponse."""
-    try:
-        return parse_intake_yaml(content)
-    except (ValueError, TimeoutError) as exc:
-        return _rfc7807(
-            "https://sdwc.dev/errors/validation-failed",
-            "Validation Failed",
-            422,
-            str(exc),
-            instance,
-        )
-    except ValidationError as exc:
-        return JSONResponse(
-            status_code=422,
-            content={
-                "valid": False,
-                "errors": [item.model_dump() for item in _validation_error_items(exc, instance)],
-                "warnings": [],
-            },
-        )
 
 
 def _build_file_tree(paths: Iterable[str]) -> dict[str, Any]:
@@ -132,7 +85,7 @@ async def validate_intake(file: UploadFile) -> ValidationResponse:
 
     try:
         parse_intake_yaml(content)
-    except (ValueError, TimeoutError) as exc:
+    except YamlParseError as exc:
         return ValidationResponse(
             valid=False,
             errors=[
@@ -157,15 +110,10 @@ async def validate_intake(file: UploadFile) -> ValidationResponse:
 
 
 @router.post("/preview", response_model=PreviewResponse)
-async def preview_output(file: UploadFile) -> PreviewResponse | JSONResponse:
+async def preview_output(file: UploadFile) -> PreviewResponse:
     """Preview the file structure that would be generated."""
     content = await file.read()
-    instance = "/api/v1/preview"
-
-    result = _parse_or_error(content, instance)
-    if isinstance(result, JSONResponse):
-        return result
-    intake = result
+    intake = parse_intake_yaml(content)
 
     try:
         rendered = await asyncio.wait_for(
@@ -173,29 +121,9 @@ async def preview_output(file: UploadFile) -> PreviewResponse | JSONResponse:
             timeout=_PIPELINE_TIMEOUT,
         )
     except TimeoutError:
-        return _rfc7807(
-            "https://sdwc.dev/errors/request-timeout",
-            "Request Timeout",
-            408,
-            f"Template rendering exceeded {_PIPELINE_TIMEOUT:.0f}s timeout",
-            instance,
-        )
-    except FrameworkNotFoundError as exc:
-        return _rfc7807(
-            "https://sdwc.dev/errors/rendering-failed",
-            "Rendering Failed",
-            422,
-            str(exc),
-            instance,
-        )
-    except (SdwcError, Exception) as exc:
-        return _rfc7807(
-            "https://sdwc.dev/errors/rendering-failed",
-            "Rendering Failed",
-            500,
-            str(exc),
-            instance,
-        )
+        raise PipelineTimeoutError(
+            f"Template rendering exceeded {_PIPELINE_TIMEOUT:.0f}s timeout"
+        ) from None
 
     services = [ServiceInfo(name=svc.name, type=svc.type, framework=str(svc.framework)) for svc in intake.services]
 
@@ -207,59 +135,26 @@ async def preview_output(file: UploadFile) -> PreviewResponse | JSONResponse:
 
 
 @router.post("/generate", response_model=None)
-async def generate_output(file: UploadFile) -> StreamingResponse | JSONResponse:
+async def generate_output(file: UploadFile) -> StreamingResponse:
     """Generate documentation ZIP from intake YAML."""
     content = await file.read()
-    instance = "/api/v1/generate"
-
-    result = _parse_or_error(content, instance)
-    if isinstance(result, JSONResponse):
-        return result
-    intake = result
+    intake = parse_intake_yaml(content)
 
     try:
 
-        def _pipeline() -> tuple[dict[str, str], IntakeData]:
+        def _pipeline() -> dict[str, str]:
             rendered = render_all(intake, settings.SDWC_RESOURCE_DIR)
             validate_or_raise(rendered, intake)
-            return rendered, intake
+            return rendered
 
-        rendered, _ = await asyncio.wait_for(
+        rendered = await asyncio.wait_for(
             asyncio.to_thread(_pipeline),
             timeout=_PIPELINE_TIMEOUT,
         )
     except TimeoutError:
-        return _rfc7807(
-            "https://sdwc.dev/errors/request-timeout",
-            "Request Timeout",
-            408,
-            f"Generation pipeline exceeded {_PIPELINE_TIMEOUT:.0f}s timeout",
-            instance,
-        )
-    except FrameworkNotFoundError as exc:
-        return _rfc7807(
-            "https://sdwc.dev/errors/rendering-failed",
-            "Rendering Failed",
-            422,
-            str(exc),
-            instance,
-        )
-    except OutputContractError as exc:
-        return _rfc7807(
-            "https://sdwc.dev/errors/output-contract-failed",
-            "Output Contract Failed",
-            422,
-            str(exc),
-            instance,
-        )
-    except (SdwcError, Exception) as exc:
-        return _rfc7807(
-            "https://sdwc.dev/errors/rendering-failed",
-            "Rendering Failed",
-            500,
-            str(exc),
-            instance,
-        )
+        raise PipelineTimeoutError(
+            f"Generation pipeline exceeded {_PIPELINE_TIMEOUT:.0f}s timeout"
+        ) from None
 
     zip_buf = build_zip(rendered, intake, settings.SDWC_RESOURCE_DIR)
     filename = f"{intake.project.name}.zip"
