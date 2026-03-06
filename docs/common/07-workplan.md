@@ -292,3 +292,14 @@ Any active status -> Cancelled
   - [x] Web UI accessible via ingress (http://localhost:8080/)
   - [x] Local deployment steps documented in README.md
 - Result: k3d v5.8.3 installed, cluster deployed and verified. Fixed 3 issues during deployment: (1) poetry-plugin-export missing in Dockerfile, (2) pip --ignore-installed needed for shared deps, (3) config.py Path parents IndexError in container. Ingress split into two resources with Traefik priority annotations for correct routing. README.md updated with local deployment section.
+
+### T020: Fix CLAUDE_BASE.md non-ASCII characters
+- Status: Done
+- Service: sdwc-api
+- Origin: ZIP Review v1.32
+- Description: Fix 4 non-ASCII characters in .sdwc/CLAUDE_BASE.md (3x U+2014 em dash, 1x U+2192 right arrow) that violate the "non-ASCII 0" rule. Apply same fix to CLAUDE.md (rendered output).
+- Acceptance Criteria:
+  - [x] .sdwc/CLAUDE_BASE.md contains 0 non-ASCII em dash (U+2014) or right arrow (U+2192) characters
+  - [x] CLAUDE.md contains 0 non-ASCII em dash (U+2014) or right arrow (U+2192) characters
+  - [x] Replacements: em dash -> hyphen, right arrow -> ->
+- Result: Fixed 4 non-ASCII characters in both .sdwc/CLAUDE_BASE.md and CLAUDE.md. Lines 216, 305, 306, 309 (CLAUDE_BASE.md) / 171, 260, 261, 264 (CLAUDE.md). Verified 0 remaining occurrences via grep.

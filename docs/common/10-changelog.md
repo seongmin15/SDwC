@@ -17,6 +17,9 @@
      릴리스 시 [Unreleased]를 버전 번호로 전환.
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
+### Fixed
+- CLAUDE_BASE.md: replaced 4 non-ASCII characters (3x U+2014 em dash -> hyphen, 1x U+2192 right arrow -> `->`) violating the non-ASCII 0 rule. Applied same fix to CLAUDE.md
+
 ### Added
 - Local k3d deployment: k3d cluster setup with port mapping, local image build/import workflow, README.md local deployment section with step-by-step instructions
 

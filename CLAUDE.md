@@ -168,7 +168,7 @@ This folder contains the **original templates and rules** used by SDwC to genera
 5. Propose a plan (per Section 5.14).
 6. After plan approval, create a feature branch (per skills/common/git/).
    - **learning mode**: skip (human creates branch).
-7. **Pre-coding checklist** — complete ALL before writing any code:
+7. **Pre-coding checklist** - complete ALL before writing any code:
    - [ ] 07-workplan: move task status to In Progress.
    - [ ] 09-working-log: record the plan (date, task name, planned scope).
 8. Execute according to mode:
@@ -257,11 +257,11 @@ When a technology change is needed (framework, library, database, etc.):
 2. Execute Document Update Triggers (Section 6).
 3. Run the verification checklist (Section 6).
 4. Record completion in 09-working-log (what was done, what changed, any follow-ups).
-5. **Pre-commit doc checklist** — complete ALL before committing:
-   - [ ] 07-workplan: status → Done, all Acceptance Criteria checked (`[x]`), Result recorded.
+5. **Pre-commit doc checklist** - complete ALL before committing:
+   - [ ] 07-workplan: status -> Done, all Acceptance Criteria checked (`[x]`), Result recorded.
    - [ ] 09-working-log: completion entry recorded (what was done, changed files, decisions, follow-ups).
    - [ ] 10-changelog: change recorded under `[Unreleased]`.
-   - [ ] Other docs updated per Section 6 trigger table (01-requirements, service docs, 02-architecture-decisions, 06-glossary, 11-troubleshooting, 12-runbook — as applicable).
+   - [ ] Other docs updated per Section 6 trigger table (01-requirements, service docs, 02-architecture-decisions, 06-glossary, 11-troubleshooting, 12-runbook - as applicable).
 6. Commit with proper convention (Section 3 Git rules).
    - **learning mode**: skip (human commits).
 7. Push the branch.

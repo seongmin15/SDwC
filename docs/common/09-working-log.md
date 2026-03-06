@@ -183,3 +183,10 @@
 - **변경된 파일**: infra/sdwc-api/deployment.yaml (image → sdwc-api:local, imagePullPolicy: Never), infra/sdwc-web/deployment.yaml (image → sdwc-web:local, imagePullPolicy: Never), infra/ingress.yaml (Traefik priority 기반 2개 Ingress로 분리), sdwc-api/Dockerfile (poetry-plugin-export 추가, --ignore-installed 추가), sdwc-api/src/sdwc_api/core/config.py (_REPO_ROOT try/except fallback), README.md (Local Deployment 섹션 추가), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: (1) Ingress를 2개로 분리하고 Traefik priority 어노테이션 적용 — 단일 Ingress에서 `/` Prefix가 `/health` Exact보다 우선 매칭되는 문제 해결. (2) config.py에 try/except 추가 — Docker 컨테이너 내 path depth 차이로 IndexError 발생, env var SDWC_RESOURCE_DIR이 이미 설정되어 fallback은 안전. (3) pip --ignore-installed 추가 — Poetry 의존성이 /usr/local에 설치되어 --prefix=/install로 복사되지 않는 문제 해결.
 - **미완료/후속**: 없음
+
+### 2026-03-06 — T020: Fix CLAUDE_BASE.md non-ASCII characters
+
+- **작업**: ZIP Review v1.32에서 발견된 CLAUDE_BASE.md 내 non-ASCII 문자 4건 수정. U+2014 (em dash) 3건 -> ASCII hyphen, U+2192 (right arrow) 1건 -> ASCII `->`. .sdwc/CLAUDE_BASE.md (서버 리소스 원본) 및 CLAUDE.md (렌더링 결과) 양쪽 수정.
+- **변경된 파일**: .sdwc/CLAUDE_BASE.md (4건 수정), CLAUDE.md (4건 수정), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: 서버 리소스 결함 원칙에 따라 .sdwc/CLAUDE_BASE.md 원본 수정. CLI 환경에서 재렌더링 불가하므로 CLAUDE.md도 직접 수정 (임시 조치). Desktop에서 재렌더링 ZIP 발급 시 근본 조치 완료.
+- **미완료/후속**: Desktop에 보고하여 재렌더링 ZIP 발급 요청 필요
