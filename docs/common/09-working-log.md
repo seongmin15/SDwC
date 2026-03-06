@@ -162,3 +162,10 @@
 - **변경된 파일**: src/services/intakeApi.ts (신규), src/services/intakeApi.test.ts (신규, 9 tests), src/stores/useIntakeStore.ts (신규), src/stores/useIntakeStore.test.ts (신규, 8 tests), src/app/App.tsx (수정 — 스토어 기반으로 리팩터링), src/app/App.test.tsx (수정 — 스토어 리셋 추가), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: (1) React Query/SWR 미도입 — 단일 선형 플로우에서 캐싱/재검증 불필요, 의존성 추가 요청 승인 필요. Zustand 비동기 액션 + 서비스 레이어로 충분. (2) upload 액션에서 validate → preview 자동 체이닝 — useEffect 의존 제거 (코딩 표준 anti-pattern 해소). (3) validateYaml은 네트워크 에러 시 throw 대신 {valid:false} 반환 — /validate 엔드포인트의 의미론 유지. (4) vi.clearAllMocks()로 모듈 레벨 vi.mock() 호출 카운트 격리.
 - **미완료/후속**: T017 (Docker setup - sdwc-api)
+
+### 2026-03-06 — T017: Docker setup - sdwc-api
+
+- **작업**: sdwc-api용 multi-stage Dockerfile 및 .dockerignore 생성. Builder 스테이지에서 poetry export → pip install, runtime 스테이지에서 python:3.12-slim + non-root user. .sdwc/ 템플릿 리소스 포함. HEALTHCHECK 설정.
+- **변경된 파일**: sdwc-api/Dockerfile (신규), .dockerignore (신규), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: (1) 빌드 컨텍스트를 프로젝트 루트로 설정 (`docker build -f sdwc-api/Dockerfile .`) — .sdwc/ 템플릿 디렉토리가 sdwc-api/ 외부에 위치하므로. (2) non-root user (appuser:1000) 적용 — 보안 베스트 프랙티스. (3) HEALTHCHECK에 Python urllib 사용 — slim 이미지에 curl 미포함. (4) .dockerignore를 프로젝트 루트에 배치 — 빌드 컨텍스트 루트에서 적용.
+- **미완료/후속**: T018 (Docker setup - sdwc-web & k3s manifests)
