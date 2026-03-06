@@ -1,7 +1,13 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
+
+import { useIntakeStore } from "@/stores/useIntakeStore";
 
 import { App } from "./App";
+
+afterEach(() => {
+  useIntakeStore.getState().reset();
+});
 
 describe("App", () => {
   it("should render the SDwC heading", () => {

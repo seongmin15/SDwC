@@ -245,15 +245,16 @@ Any active status -> Cancelled
 - Result: 3 new components (FileTreePreview with recursive collapsible TreeNode, GenerateButton with spinner state, ErrorDisplay with RFC 7807 title/detail/status). App.tsx extended to full 9-state flow (idle→uploading→validating→validation_error/previewing→preview_ready→generating→complete/generation_error) with useEffect auto-trigger for preview, blob download for generate, and reset flow. 13 new component tests (26 total). Build, lint, format all pass.
 
 ### T016: Web UI - state management & API integration
-- Status: Ready
+- Status: Done
 - Service: sdwc-web
 - Description: Create Zustand store managing all 9 UI states. Implement API service layer calling sdwc-api endpoints. Wire components to store and API.
 - Acceptance Criteria:
-  - [ ] Zustand store manages all 9 states with transitions
-  - [ ] API service functions for all 4 endpoints
-  - [ ] Components connected to store and API
-  - [ ] Loading and error states handled in all flows
-  - [ ] Full upload → validate → preview → generate flow works end-to-end
+  - [x] Zustand store manages all 9 states with transitions
+  - [x] API service functions for all 4 endpoints
+  - [x] Components connected to store and API
+  - [x] Loading and error states handled in all flows
+  - [x] Full upload → validate → preview → generate flow works end-to-end
+- Result: Zustand store (useIntakeStore) with 9-state machine, 3 async actions (upload, generate, reset). API service layer (intakeApi.ts) with 3 pure fetch functions (validateYaml, fetchPreview, generateZip). App.tsx refactored from ~170 lines of local state + fetch to ~100 lines using store selectors. Upload action auto-chains validate → preview (eliminated useEffect anti-pattern). 17 new tests (43 total). Build, lint, format all pass.
 
 ### T017: Docker setup - sdwc-api
 - Status: Backlog
