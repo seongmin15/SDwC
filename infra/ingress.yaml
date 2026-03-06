@@ -1,9 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: sdwc-ingress
+  name: sdwc-ingress-api
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.priority: "100"
 spec:
   rules:
     - http:
@@ -22,6 +23,18 @@ spec:
                 name: sdwc-api
                 port:
                   number: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sdwc-ingress-web
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.priority: "1"
+spec:
+  rules:
+    - http:
+        paths:
           - path: /
             pathType: Prefix
             backend:

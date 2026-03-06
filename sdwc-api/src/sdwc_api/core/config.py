@@ -4,7 +4,10 @@ from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-_REPO_ROOT = Path(__file__).resolve().parents[4]  # core/config.py -> sdwc_api -> src -> sdwc-api -> SDwC
+try:
+    _REPO_ROOT = Path(__file__).resolve().parents[4]  # core/config.py -> sdwc_api -> src -> sdwc-api -> SDwC
+except IndexError:
+    _REPO_ROOT = Path("/app")  # Docker container fallback
 
 
 class Settings(BaseSettings):

@@ -277,3 +277,18 @@ Any active status -> Cancelled
   - [x] Ingress configuration for routing
   - [x] Health check probes configured
 - Result: sdwc-web Dockerfile (node:20-slim builder + nginx:alpine runtime with SPA routing). nginx.conf with try_files fallback, /assets cache headers, /api reverse proxy to sdwc-api:8000. k3s manifests: Deployment + ClusterIP Service for both services (with resource limits, liveness/readiness probes), Ingress with path-based routing (/api → sdwc-api, / → sdwc-web) using Traefik. infra/ directory structure established.
+
+### T019: Local deployment on k3d
+- Status: Done
+- Service: sdwc-api, sdwc-web
+- Description: Deploy full SDwC stack locally using k3d (k3s-in-Docker). Install k3d, build Docker images, import into cluster, update manifests for local images, apply to k3s, verify end-to-end.
+- Acceptance Criteria:
+  - [x] k3d cluster created with port mapping (8080:80)
+  - [x] Docker images built locally for both services
+  - [x] Images imported into k3d cluster
+  - [x] Deployment manifests updated for local images (imagePullPolicy: Never)
+  - [x] Both pods running and healthy
+  - [x] Health endpoint accessible via ingress (http://localhost:8080/health)
+  - [x] Web UI accessible via ingress (http://localhost:8080/)
+  - [x] Local deployment steps documented in README.md
+- Result: k3d v5.8.3 installed, cluster deployed and verified. Fixed 3 issues during deployment: (1) poetry-plugin-export missing in Dockerfile, (2) pip --ignore-installed needed for shared deps, (3) config.py Path parents IndexError in container. Ingress split into two resources with Traefik priority annotations for correct routing. README.md updated with local deployment section.

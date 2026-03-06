@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
         - name: sdwc-api
-          image: ghcr.io/seongmin15/sdwc-api:latest
+          image: sdwc-api:local
+          imagePullPolicy: Never
           ports:
             - containerPort: 8000
           env:

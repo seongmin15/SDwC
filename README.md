@@ -81,6 +81,38 @@ SDwC/
 
 Both services deploy to k3s (Kubernetes) on WSL2 via Jenkins CI and ArgoCD CD, with images stored in GitHub Container Registry (ghcr).
 
+### Local Deployment (k3d)
+
+Run the full stack locally using [k3d](https://k3d.io) (k3s-in-Docker).
+
+**Prerequisites**: Docker Desktop running, [k3d](https://k3d.io/#installation) installed, kubectl installed
+
+```bash
+# 1. Create k3d cluster with port mapping
+k3d cluster create sdwc -p "8080:80@loadbalancer"
+
+# 2. Build Docker images (from project root)
+docker build -f sdwc-api/Dockerfile -t sdwc-api:local .
+docker build -f sdwc-web/Dockerfile -t sdwc-web:local .
+
+# 3. Import images into k3d
+k3d image import sdwc-api:local sdwc-web:local -c sdwc
+
+# 4. Apply Kubernetes manifests
+kubectl apply -f infra/sdwc-api/deployment.yaml
+kubectl apply -f infra/sdwc-web/deployment.yaml
+kubectl apply -f infra/ingress.yaml
+
+# 5. Verify
+kubectl get pods            # Both pods should be Running
+curl http://localhost:8080/health   # {"status":"ok"}
+curl http://localhost:8080/         # SDwC web UI
+```
+
+Access at **http://localhost:8080**
+
+To shut down: `k3d cluster delete sdwc`
+
 ## License
 
 All rights reserved.

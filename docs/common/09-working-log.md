@@ -176,3 +176,10 @@
 - **변경된 파일**: sdwc-web/Dockerfile (신규), sdwc-web/nginx.conf (신규), infra/sdwc-api/deployment.yaml (신규), infra/sdwc-web/deployment.yaml (신규), infra/ingress.yaml (신규), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: (1) nginx.conf에 /api/ reverse proxy 포함 — k3s Ingress 없이도 단독 docker-compose 환경에서 API 라우팅 가능. (2) Ingress에 Traefik annotation 사용 — k3s 기본 Ingress controller. (3) sdwc-web 리소스 제한을 API보다 낮게 설정 (CPU 200m, Memory 128Mi) — 정적 파일 서빙만 수행. (4) HEALTHCHECK에 wget 사용 — nginx:alpine에 curl 미포함이나 wget 내장.
 - **미완료/후속**: 전체 T001-T018 태스크 완료. 향후 작업은 05-roadmap 참조.
+
+### 2026-03-06 — T019: Local deployment on k3d
+
+- **작업**: k3d (k3s-in-Docker) 기반 로컬 배포 완료. k3d 설치 (winget), 클러스터 생성 (port 8080:80), Docker 이미지 빌드 및 k3d import, k8s 매니페스트 적용, 엔드투엔드 검증. 배포 중 발견된 3개 버그 수정. README.md에 로컬 배포 절차 문서화.
+- **변경된 파일**: infra/sdwc-api/deployment.yaml (image → sdwc-api:local, imagePullPolicy: Never), infra/sdwc-web/deployment.yaml (image → sdwc-web:local, imagePullPolicy: Never), infra/ingress.yaml (Traefik priority 기반 2개 Ingress로 분리), sdwc-api/Dockerfile (poetry-plugin-export 추가, --ignore-installed 추가), sdwc-api/src/sdwc_api/core/config.py (_REPO_ROOT try/except fallback), README.md (Local Deployment 섹션 추가), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: (1) Ingress를 2개로 분리하고 Traefik priority 어노테이션 적용 — 단일 Ingress에서 `/` Prefix가 `/health` Exact보다 우선 매칭되는 문제 해결. (2) config.py에 try/except 추가 — Docker 컨테이너 내 path depth 차이로 IndexError 발생, env var SDWC_RESOURCE_DIR이 이미 설정되어 fallback은 안전. (3) pip --ignore-installed 추가 — Poetry 의존성이 /usr/local에 설치되어 --prefix=/install로 복사되지 않는 문제 해결.
+- **미완료/후속**: 없음

@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
         - name: sdwc-web
-          image: ghcr.io/seongmin15/sdwc-web:latest
+          image: sdwc-web:local
+          imagePullPolicy: Never
           ports:
             - containerPort: 80
           resources:

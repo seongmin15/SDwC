@@ -18,6 +18,17 @@
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
 ### Added
+- Local k3d deployment: k3d cluster setup with port mapping, local image build/import workflow, README.md local deployment section with step-by-step instructions
+
+### Changed
+- Deployment manifests updated for local images (sdwc-api:local, sdwc-web:local) with imagePullPolicy: Never
+- Ingress split into two resources (sdwc-ingress-api priority=100, sdwc-ingress-web priority=1) for correct Traefik path routing
+
+### Fixed
+- sdwc-api Dockerfile: added poetry-plugin-export (Poetry 2.1.1 removed built-in export command) and --ignore-installed flag (shared deps skipped by pip when already in Poetry's site-packages)
+- config.py: added try/except for _REPO_ROOT Path.parents[4] IndexError in Docker container (shorter path depth)
+
+### Added
 - Docker setup for sdwc-web: multi-stage Dockerfile (node:20-slim builder, nginx:alpine runtime), nginx.conf with SPA routing + /assets cache + /api reverse proxy. k3s manifests: Deployment + ClusterIP Service for both services, Ingress with path-based routing (/api → sdwc-api, / → sdwc-web) using Traefik
 - Docker setup for sdwc-api: multi-stage Dockerfile (python:3.12-slim, poetry export, non-root user), .dockerignore at project root, HEALTHCHECK via Python urllib, SDWC_RESOURCE_DIR for .sdwc/ templates
 - Web UI state management & API integration: Zustand store (useIntakeStore) with 9-state machine and async actions, API service layer (intakeApi.ts) with validateYaml/fetchPreview/generateZip. App.tsx refactored to use store selectors. 17 new tests (43 total)
