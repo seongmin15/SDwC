@@ -24,6 +24,7 @@
 - k3d deployment scripts: deploy.sh, rebuild.sh, clean.sh, status.sh, logs.sh in scripts/ directory
 
 ### Fixed
+- intake_template.yaml: 3 comment-validation mismatches fixed -- web_ui connected_endpoints (optional->required), mobile_app connected_endpoints (added required comment), observability retention_period (added required comment)
 - CLAUDE_BASE.md: replaced 4 non-ASCII characters (3x U+2014 em dash -> hyphen, 1x U+2192 right arrow -> `->`) violating the non-ASCII 0 rule. Applied same fix to CLAUDE.md
 
 ### Added
