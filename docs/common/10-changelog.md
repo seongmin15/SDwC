@@ -18,6 +18,7 @@
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
 ### Added
+- sdwc-web project scaffolding: Vite 7 + React 19 + TypeScript 5.9, Tailwind CSS v4, Zustand v5, Vitest + @testing-library/react, ESLint flat config (typescript-eslint, react-hooks, jsx-a11y), Prettier, path alias @/, API proxy, project structure per coding-standards skill
 - Structured logging: setup_logging() with JSON rendering, contextvars merge, configurable log level. Pure ASGI RequestLoggingMiddleware with request_id correlation (UUID4), method/path/status/duration_ms logging, /health exclusion. 13 new unit tests (379 total)
 
 ### Changed
