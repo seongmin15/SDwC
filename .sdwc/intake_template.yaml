@@ -404,7 +404,7 @@ services:                                   # required -- service list (at least
         purpose: ""                         # required -- purpose
         key_interactions:                   # optional -- key interactions
           - ""
-        connected_endpoints:                # optional -- connected APIs
+        connected_endpoints:                # required -- connected APIs (empty [] if none)
           - ""                              # e.g. "POST /api/v1/generate"
         states:                             # optional -- UI states
           - ""                              # e.g. "loading / empty / loaded / error"
@@ -544,8 +544,8 @@ services:                                   # required -- service list (at least
         purpose: ""
         key_interactions:
           - ""
-        connected_endpoints:
-          - ""
+        connected_endpoints:                # required -- connected APIs (empty [] if none)
+          - ""                              # e.g. "POST /api/v1/generate"
         states:
           - ""
         components:
@@ -792,7 +792,7 @@ observability:                              # optional -> docs/common/04-infrast
     framework: ""
     structured: false
     sensitive_data_masking: false
-    retention_period: ""
+    retention_period: ""                    # required -- e.g. "30 days", "7 days on device"
   metrics:                                  # optional -- DELETE THIS BLOCK if not collecting metrics
     tool: ""
     key_metrics:

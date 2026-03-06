@@ -204,3 +204,11 @@
 - **변경된 파일**: .sdwc/intake_template.yaml (enum 확장 + 안내 추가), sdwc-api/src/sdwc_api/schemas/enums.py (TestFrameworkEnum, DeploymentTarget, CiTool, CdTool 확장), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: (1) web_ui/worker/mobile_app/data_pipeline의 ci.tool, cd.tool에 누락된 enum 주석도 함께 추가 (기존에 backend_api만 있었음). (2) generation_rules.md, output_contract.md는 generic variable path 사용으로 수정 불필요 확인.
 - **미완료/후속**: 없음
+
+### 2026-03-07 — T024: Fix intake_template.yaml comment-validation mismatches
+
+- **작업**: Simple 모드 시뮬레이션에서 발견된 Validation 4건 에러의 근본 원인 수정. 템플릿 주석과 Validation 간 불일치 3건 (web_ui connected_endpoints, mobile_app connected_endpoints, observability retention_period) 주석 보정.
+- **계획**: 3개 주석 수정 → YAML 파싱 확인 → intake_data.yaml 교차 확인 → non-ASCII 0 확인
+- **변경된 파일**: .sdwc/intake_template.yaml (3건 주석 수정), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: intake_data.yaml이 repo에 없어 교차 확인은 템플릿 구조 기준으로 대체. generation_rules.md, output_contract.md는 수정 대상 아님 확인.
+- **미완료/후속**: 없음

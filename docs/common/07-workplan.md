@@ -340,3 +340,17 @@ Any active status -> Cancelled
   - [x] disaster_recovery, metrics, alerting blocks have DELETE reminder comments
   - [x] YAML syntax validates
 - Result: Added 4-line IMPORTANT header guidance after line 6. Added 9 DELETE reminder comments (1 push_notification, 5 infrastructure_as_code, 1 disaster_recovery, 1 metrics, 1 alerting). YAML syntax validates.
+
+### T024: Fix intake_template.yaml comment-validation mismatches
+- Status: Done
+- Service: sdwc-api
+- Origin: Simple mode simulation
+- Description: Fix 3 template comment-validation mismatches: web_ui connected_endpoints (optional->required), mobile_app connected_endpoints (missing comment), observability retention_period (missing comment). Root cause: template comments and validation out of sync (SDwC Principle 1 "Gap = server resource defect").
+- Acceptance Criteria:
+  - [x] web_ui pages[].connected_endpoints comment changed to required
+  - [x] mobile_app screens[].connected_endpoints comment added as required
+  - [x] observability.logging.retention_period comment added as required
+  - [x] YAML parsing passes
+  - [x] intake_data.yaml cross-check (same fields exist) -- intake_data.yaml not in repo; field structure matches template
+  - [x] Non-ASCII character count = 0
+- Result: 3 comment fixes in .sdwc/intake_template.yaml (lines 407, 547, 795). YAML parsing OK. Non-ASCII 0. intake_data.yaml not in repo for cross-check.
