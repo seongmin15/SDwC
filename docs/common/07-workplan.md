@@ -233,15 +233,16 @@ Any active status -> Cancelled
 - Result: 3 components (TemplateDownloadButton, FileUploader with drag-drop + file picker, ValidationResult with error/warning display). App.tsx wired with local state for idle/uploading/validating/validation_error/validated transitions. API types in types/api.ts. Test setup fixed with explicit cleanup. 13 tests passing. Build, lint, format all clean.
 
 ### T015: Web UI - preview & generate flow components
-- Status: Ready
+- Status: Done
 - Service: sdwc-web
 - Description: Build FileTreePreview (collapsible tree), GenerateButton, and ErrorDisplay components. Handle previewing → preview_ready → generating → complete → generation_error states.
 - Acceptance Criteria:
-  - [ ] FileTreePreview displays ZIP structure as collapsible tree
-  - [ ] GenerateButton triggers ZIP generation and download
-  - [ ] ErrorDisplay shows RFC 7807 error details
-  - [ ] State transitions: previewing → preview_ready → generating → complete work correctly
-  - [ ] Basic component tests
+  - [x] FileTreePreview displays ZIP structure as collapsible tree
+  - [x] GenerateButton triggers ZIP generation and download
+  - [x] ErrorDisplay shows RFC 7807 error details
+  - [x] State transitions: previewing → preview_ready → generating → complete work correctly
+  - [x] Basic component tests
+- Result: 3 new components (FileTreePreview with recursive collapsible TreeNode, GenerateButton with spinner state, ErrorDisplay with RFC 7807 title/detail/status). App.tsx extended to full 9-state flow (idle→uploading→validating→validation_error/previewing→preview_ready→generating→complete/generation_error) with useEffect auto-trigger for preview, blob download for generate, and reset flow. 13 new component tests (26 total). Build, lint, format all pass.
 
 ### T016: Web UI - state management & API integration
 - Status: Ready
