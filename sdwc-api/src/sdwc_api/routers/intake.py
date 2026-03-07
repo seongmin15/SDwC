@@ -77,6 +77,16 @@ async def get_template() -> FileResponse:
     )
 
 
+@router.get("/field-requirements")
+async def get_field_requirements() -> FileResponse:
+    """Download field_requirements.yaml."""
+    return FileResponse(
+        path=settings.SDWC_RESOURCE_DIR / "field_requirements.yaml",
+        media_type="application/x-yaml",
+        filename="field_requirements.yaml",
+    )
+
+
 @router.post("/validate", response_model=ValidationResponse)
 async def validate_intake(file: UploadFile) -> ValidationResponse:
     """Validate uploaded intake YAML and return detailed errors."""
