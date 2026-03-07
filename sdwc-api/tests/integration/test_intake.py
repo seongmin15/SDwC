@@ -151,6 +151,30 @@ class TestGetTemplate:
         assert "intake_template.yaml" in response.headers.get("content-disposition", "")
 
 
+class TestGetFieldRequirements:
+    @pytest.mark.integration
+    async def test_returns_200_with_yaml_content_type(self, client: AsyncClient) -> None:
+        response = await client.get("/api/v1/field-requirements")
+
+        assert response.status_code == 200
+        assert "application/x-yaml" in response.headers["content-type"]
+
+    @pytest.mark.integration
+    async def test_response_contains_valid_yaml_with_phases(self, client: AsyncClient) -> None:
+        response = await client.get("/api/v1/field-requirements")
+
+        data = yaml.safe_load(response.text)
+        assert data["version"] == "1.0"
+        assert "phases" in data
+        assert "phase1_why" in data["phases"]
+
+    @pytest.mark.integration
+    async def test_content_disposition_has_filename(self, client: AsyncClient) -> None:
+        response = await client.get("/api/v1/field-requirements")
+
+        assert "field_requirements.yaml" in response.headers.get("content-disposition", "")
+
+
 class TestPostValidate:
     @pytest.mark.integration
     async def test_valid_yaml_returns_valid_true(self, client: AsyncClient) -> None:
