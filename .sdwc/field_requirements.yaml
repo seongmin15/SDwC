@@ -1,0 +1,3345 @@
+version: '1.0'
+generated_from: sdwc_api.schemas.intake.IntakeData
+phases:
+  phase1_why:
+    title: Project Identity
+    sections:
+      project:
+        requirement: required
+        type: Project
+        children:
+          name:
+            requirement: required
+            type: str
+          codename:
+            requirement: optional
+            type: str | None
+            default: null
+          one_liner:
+            requirement: required
+            type: str
+          elevator_pitch:
+            requirement: required
+            type: str
+      problem:
+        requirement: required
+        type: Problem
+        children:
+          statement:
+            requirement: required
+            type: str
+          who_has_this_problem:
+            requirement: required
+            type: str
+          severity:
+            requirement: required
+            type: Severity
+            enum:
+            - high
+            - medium
+            - low
+          frequency:
+            requirement: required
+            type: Frequency
+            enum:
+            - daily
+            - weekly
+            - monthly
+            - occasional
+          current_workaround:
+            requirement: required
+            type: str
+          workaround_pain_points:
+            requirement: required
+            type: list[str]
+            min_length: 1
+          prior_attempts:
+            requirement: optional
+            type: str | None
+            default: null
+      motivation:
+        requirement: required
+        type: Motivation
+        children:
+          why_now:
+            requirement: required
+            type: str
+          trigger_event:
+            requirement: optional
+            type: str | None
+            default: null
+          opportunity_cost:
+            requirement: optional
+            type: str | None
+            default: null
+          competitive_landscape:
+            requirement: optional
+            type: str | None
+            default: null
+          inspiration_references:
+            requirement: optional
+            type: list[str] | None
+            default: null
+      value_proposition:
+        requirement: required
+        type: ValueProposition
+        children:
+          core_value:
+            requirement: required
+            type: str
+          unique_differentiator:
+            requirement: required
+            type: str
+          value_hypothesis:
+            requirement: optional
+            type: str | None
+            default: null
+      project_characteristics:
+        requirement: optional
+        type: list[ProjectCharacteristic] | None
+        default: null
+        children:
+          label:
+            requirement: required
+            type: str
+          description:
+            requirement: required
+            type: str
+  phase2_what:
+    title: Goals and Scope
+    sections:
+      goals:
+        requirement: required
+        type: Goals
+        children:
+          primary:
+            requirement: required
+            type: list[Goal]
+            min_length: 1
+            children:
+              goal:
+                requirement: required
+                type: str
+              measurable_criterion:
+                requirement: required
+                type: str
+              priority:
+                requirement: required
+                type: GoalPriority
+                enum:
+                - P0
+                - P1
+                - P2
+          success_scenario:
+            requirement: required
+            type: str
+          success_metrics:
+            requirement: optional
+            type: list[SuccessMetric] | None
+            default: null
+            children:
+              metric:
+                requirement: required
+                type: str
+              current_value:
+                requirement: required
+                type: str
+              target_value:
+                requirement: required
+                type: str
+              measurement_method:
+                requirement: required
+                type: str
+      non_goals:
+        requirement: required
+        type: list[NonGoal]
+        min_length: 1
+        children:
+          statement:
+            requirement: required
+            type: str
+          rationale:
+            requirement: required
+            type: str
+          reconsider_when:
+            requirement: optional
+            type: str | None
+            default: null
+      scope:
+        requirement: required
+        type: Scope
+        children:
+          in_scope:
+            requirement: required
+            type: list[InScopeFeature]
+            min_length: 1
+            children:
+              feature:
+                requirement: required
+                type: str
+              user_story:
+                requirement: required
+                type: str
+              priority:
+                requirement: required
+                type: ScopePriority
+                enum:
+                - must
+                - should
+                - could
+              complexity_estimate:
+                requirement: optional
+                type: ComplexityEstimate | None
+                default: null
+                enum:
+                - S
+                - M
+                - L
+                - XL
+          out_of_scope:
+            requirement: required
+            type: list[OutOfScopeFeature]
+            min_length: 1
+            children:
+              feature:
+                requirement: required
+                type: str
+              reason:
+                requirement: required
+                type: str
+              planned_phase:
+                requirement: optional
+                type: PlannedPhase | None
+                default: null
+                enum:
+                - v2
+                - v3
+                - post_launch
+                - backlog
+      assumptions:
+        requirement: required
+        type: list[Assumption]
+        min_length: 1
+        children:
+          assumption:
+            requirement: required
+            type: str
+          if_wrong:
+            requirement: required
+            type: str
+          validation_plan:
+            requirement: optional
+            type: str | None
+            default: null
+      constraints:
+        requirement: optional
+        type: list[Constraint] | None
+        default: null
+        children:
+          constraint:
+            requirement: required
+            type: str
+          source:
+            requirement: optional
+            type: ConstraintSource | None
+            default: null
+            enum:
+            - technical
+            - business
+            - legal
+            - regulatory
+          negotiable:
+            requirement: optional
+            type: Negotiable | None
+            default: null
+            enum:
+            - 'yes'
+            - 'no'
+            - partially
+      timeline:
+        requirement: optional
+        type: Timeline | None
+        default: null
+        children:
+          deadline:
+            requirement: optional
+            type: str | None
+            default: null
+          reason:
+            requirement: optional
+            type: str | None
+            default: null
+          flexibility:
+            requirement: optional
+            type: TimelineFlexibility | None
+            default: null
+            enum:
+            - rigid
+            - flexible
+            - aspirational
+      budget:
+        requirement: optional
+        type: Budget | None
+        default: null
+        children:
+          monthly_budget:
+            requirement: optional
+            type: str | None
+            default: null
+          one_time_budget:
+            requirement: optional
+            type: str | None
+            default: null
+          constraint_items:
+            requirement: optional
+            type: list[str] | None
+            default: null
+      glossary:
+        requirement: optional
+        type: list[GlossaryEntry] | None
+        default: null
+        children:
+          term:
+            requirement: required
+            type: str
+          definition:
+            requirement: required
+            type: str
+          aliases:
+            requirement: optional
+            type: str | None
+            default: null
+          example:
+            requirement: optional
+            type: str | None
+            default: null
+  phase3_who:
+    title: Users and Collaboration
+    sections:
+      user_personas:
+        requirement: required
+        type: list[UserPersona]
+        min_length: 1
+        children:
+          name:
+            requirement: required
+            type: str
+          description:
+            requirement: required
+            type: str
+          primary_goal:
+            requirement: required
+            type: str
+          pain_points:
+            requirement: required
+            type: list[str]
+            min_length: 1
+          is_primary:
+            requirement: optional
+            type: bool
+            default: false
+          tech_proficiency:
+            requirement: optional
+            type: TechProficiency | None
+            default: null
+            enum:
+            - beginner
+            - intermediate
+            - expert
+          usage_frequency:
+            requirement: optional
+            type: UsageFrequency | None
+            default: null
+            enum:
+            - daily
+            - weekly
+            - monthly
+      anti_personas:
+        requirement: optional
+        type: list[AntiPersona] | None
+        default: null
+        children:
+          name:
+            requirement: required
+            type: str
+          reason:
+            requirement: required
+            type: str
+      stakeholders:
+        requirement: optional
+        type: list[Stakeholder] | None
+        default: null
+        children:
+          role:
+            requirement: required
+            type: str
+          concern:
+            requirement: required
+            type: str
+          influence_level:
+            requirement: optional
+            type: InfluenceLevel | None
+            default: null
+            enum:
+            - high
+            - medium
+            - low
+      collaboration:
+        requirement: required
+        type: Collaboration
+        children:
+          human_developers:
+            requirement: required
+            type: int
+          review_policy:
+            requirement: required
+            type: str
+          model_routing:
+            requirement: required
+            type: ModelRouting
+            children:
+              primary:
+                requirement: required
+                type: str
+              secondary:
+                requirement: optional
+                type: str | None
+                default: null
+              routing_rule:
+                requirement: optional
+                type: str | None
+                default: null
+          use_subagent:
+            requirement: optional
+            type: bool
+            default: false
+          absolute_rules:
+            requirement: required
+            type: list[str]
+            min_length: 1
+          per_service:
+            requirement: required
+            type: list[PerServiceCollaboration]
+            min_length: 1
+            children:
+              service:
+                requirement: required
+                type: str
+              mode:
+                requirement: required
+                type: CollaborationMode
+                enum:
+                - autonomous
+                - collaborative
+                - learning
+              test_case_coverage:
+                requirement: required
+                type: TestCaseCoverage
+                enum:
+                - basic
+                - standard
+                - thorough
+              decision_authority:
+                requirement: required
+                type: DecisionAuthority
+                children:
+                  claude_autonomous:
+                    requirement: required
+                    type: list[str]
+                    min_length: 1
+                  requires_approval:
+                    requirement: required
+                    type: list[str]
+                    min_length: 1
+              human_roles:
+                requirement: optional
+                type: list[str] | None
+                default: null
+              claude_roles:
+                requirement: optional
+                type: list[str] | None
+                default: null
+              claude_boundaries:
+                requirement: optional
+                type: list[str] | None
+                default: null
+  phase4_how:
+    title: Architecture and Services
+    sections:
+      architecture:
+        requirement: required
+        type: Architecture
+        children:
+          pattern:
+            requirement: required
+            type: ArchitecturePattern
+            enum:
+            - monolith
+            - microservices
+            - modular_monolith
+          pattern_rationale:
+            requirement: required
+            type: str
+          pattern_alternatives:
+            requirement: required
+            type: list[PatternAlternative]
+            min_length: 1
+            children:
+              pattern:
+                requirement: required
+                type: str
+              pros:
+                requirement: required
+                type: str
+              cons:
+                requirement: required
+                type: str
+              rejection_reason:
+                requirement: required
+                type: str
+          internal_style:
+            requirement: optional
+            type: InternalStyle | None
+            default: null
+            enum:
+            - hexagonal
+            - clean
+            - layered
+            - none
+          internal_style_rationale:
+            requirement: optional
+            type: str | None
+            default: null
+          principles:
+            requirement: optional
+            type: list[str] | None
+            default: null
+      services:
+        requirement: required
+        type: list[Annotated]
+        min_length: 1
+        children:
+          backend_api:
+            name:
+              requirement: required
+              type: str
+            type:
+              requirement: required
+              type: Literal
+            responsibility:
+              requirement: required
+              type: str
+            communication_with:
+              requirement: optional
+              type: list[ServiceCommunication] | None
+              default: null
+              children:
+                target:
+                  requirement: required
+                  type: str
+                protocol:
+                  requirement: required
+                  type: CommunicationProtocol
+                  enum:
+                  - http
+                  - grpc
+                  - amqp
+                  - kafka
+                  - websocket
+                sync_async:
+                  requirement: required
+                  type: SyncAsync
+                  enum:
+                  - sync
+                  - async
+            language:
+              requirement: required
+              type: BackendLanguage
+              enum:
+              - python
+              - typescript
+              - java
+              - go
+              - rust
+              - ruby
+              - csharp
+              - kotlin
+            framework:
+              requirement: required
+              type: BackendFramework
+              enum:
+              - fastapi
+              - django
+              - express
+              - nestjs
+              - spring
+              - gin
+              - actix
+              - rails
+              - aspnet
+            framework_rationale:
+              requirement: optional
+              type: str | None
+              default: null
+            framework_alternatives:
+              requirement: optional
+              type: list[FrameworkAlternative] | None
+              default: null
+              children:
+                name:
+                  requirement: required
+                  type: str
+                rejection_reason:
+                  requirement: required
+                  type: str
+            build_tool:
+              requirement: required
+              type: BuildTool
+              enum:
+              - poetry
+              - pip
+              - npm
+              - pnpm
+              - yarn
+              - gradle
+              - maven
+              - cargo
+              - go_mod
+              - vite
+              - webpack
+              - turbopack
+              - bundler
+              - sbt
+            build_tool_rationale:
+              requirement: optional
+              type: str | None
+              default: null
+            key_libraries:
+              requirement: optional
+              type: list[Library] | None
+              default: null
+              children:
+                name:
+                  requirement: required
+                  type: str
+                purpose:
+                  requirement: required
+                  type: str
+                version_constraint:
+                  requirement: optional
+                  type: str | None
+                  default: null
+            databases:
+              requirement: optional
+              type: list[Database] | None
+              default: null
+              children:
+                engine:
+                  requirement: required
+                  type: DatabaseEngine
+                  enum:
+                  - postgresql
+                  - mysql
+                  - mongodb
+                  - redis
+                  - sqlite
+                  - dynamodb
+                  - elasticsearch
+                  - neo4j
+                role:
+                  requirement: required
+                  type: DatabaseRole
+                  enum:
+                  - primary
+                  - cache
+                  - search
+                  - queue
+                  - analytics
+                  - session
+                rationale:
+                  requirement: required
+                  type: str
+                alternatives_considered:
+                  requirement: optional
+                  type: list[DatabaseAlternative] | None
+                  default: null
+                  children:
+                    engine:
+                      requirement: required
+                      type: str
+                    rejection_reason:
+                      requirement: required
+                      type: str
+            entities:
+              requirement: optional
+              type: list[Entity] | None
+              default: null
+              children:
+                name:
+                  requirement: required
+                  type: str
+                description:
+                  requirement: required
+                  type: str
+                key_attributes:
+                  requirement: required
+                  type: list[Attribute]
+                  min_length: 1
+                  children:
+                    name:
+                      requirement: required
+                      type: str
+                    type:
+                      requirement: required
+                      type: AttributeType
+                      enum:
+                      - string
+                      - integer
+                      - uuid
+                      - timestamp
+                      - boolean
+                      - float
+                      - text
+                      - json
+                      - enum
+                      - date
+                    nullable:
+                      requirement: required
+                      type: bool
+                    description:
+                      requirement: required
+                      type: str
+                relationships:
+                  requirement: optional
+                  type: list[Relationship] | None
+                  default: null
+                  children:
+                    target:
+                      requirement: required
+                      type: str
+                    cardinality:
+                      requirement: required
+                      type: Cardinality
+                      enum:
+                      - '1:1'
+                      - 1:N
+                      - N:M
+                    description:
+                      requirement: required
+                      type: str
+                indexes:
+                  requirement: optional
+                  type: list[str] | None
+                  default: null
+            data_storage_decisions:
+              requirement: optional
+              type: list[DataDecision] | None
+              default: null
+              children:
+                decision:
+                  requirement: required
+                  type: str
+                rationale:
+                  requirement: required
+                  type: str
+                tradeoff:
+                  requirement: required
+                  type: str
+            schema_evolution_strategy:
+              requirement: optional
+              type: str | None
+              default: null
+            file_storage:
+              requirement: optional
+              type: FileStorage | None
+              default: null
+              children:
+                strategy:
+                  requirement: required
+                  type: FileStorageStrategy
+                  enum:
+                  - local
+                  - s3
+                  - gcs
+                  - azure_blob
+                  - minio
+                rationale:
+                  requirement: required
+                  type: str
+                size_limits:
+                  requirement: required
+                  type: str
+                retention_policy:
+                  requirement: required
+                  type: str
+            api_style:
+              requirement: required
+              type: ApiStyle
+              enum:
+              - rest
+              - graphql
+              - grpc
+            api_style_rationale:
+              requirement: optional
+              type: str | None
+              default: null
+            api_versioning:
+              requirement: optional
+              type: ApiVersioning | None
+              default: null
+              enum:
+              - url_prefix
+              - header
+              - query_param
+              - none
+            pagination:
+              requirement: optional
+              type: PaginationStyle | None
+              default: null
+              enum:
+              - cursor
+              - offset
+              - none
+            rate_limiting:
+              requirement: optional
+              type: RateLimiting | None
+              default: null
+              children:
+                enabled:
+                  requirement: optional
+                  type: bool
+                  default: false
+                strategy:
+                  requirement: optional
+                  type: str | None
+                  default: null
+            auth:
+              requirement: required
+              type: Auth
+              children:
+                method:
+                  requirement: required
+                  type: AuthMethod
+                  enum:
+                  - jwt
+                  - session
+                  - api_key
+                  - oauth2
+                  - none
+                rationale:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                if_none_risks_accepted:
+                  requirement: optional
+                  type: str | None
+                  default: null
+            error_response_format:
+              requirement: optional
+              type: ErrorResponseFormat | None
+              default: null
+              enum:
+              - rfc7807
+              - custom
+              - graphql_errors
+            error_response_example:
+              requirement: optional
+              type: str | None
+              default: null
+            endpoints:
+              requirement: conditional
+              type: list[Endpoint] | None
+              default: null
+              condition: required when api_style is 'rest'
+              children:
+                method:
+                  requirement: required
+                  type: HttpMethod
+                  enum:
+                  - GET
+                  - POST
+                  - PUT
+                  - PATCH
+                  - DELETE
+                path:
+                  requirement: required
+                  type: str
+                description:
+                  requirement: required
+                  type: str
+                auth_required:
+                  requirement: optional
+                  type: bool
+                  default: true
+                idempotent:
+                  requirement: optional
+                  type: bool | None
+                  default: null
+                sync_async:
+                  requirement: optional
+                  type: SyncAsync | None
+                  default: null
+                  enum:
+                  - sync
+                  - async
+                request_fields:
+                  requirement: optional
+                  type: list[RequestField] | None
+                  default: null
+                  children:
+                    name:
+                      requirement: required
+                      type: str
+                    type:
+                      requirement: required
+                      type: str
+                    required:
+                      requirement: required
+                      type: bool
+                    description:
+                      requirement: required
+                      type: str
+                response_fields:
+                  requirement: optional
+                  type: list[ResponseField] | None
+                  default: null
+                  children:
+                    name:
+                      requirement: required
+                      type: str
+                    type:
+                      requirement: required
+                      type: str
+                    required:
+                      requirement: required
+                      type: bool
+                    description:
+                      requirement: required
+                      type: str
+                processing_steps:
+                  requirement: optional
+                  type: list[str] | None
+                  default: null
+            graphql:
+              requirement: conditional
+              type: GraphQLSchema | None
+              default: null
+              condition: required when api_style is 'graphql'
+              children:
+                schema_types:
+                  requirement: required
+                  type: list[str]
+                queries:
+                  requirement: required
+                  type: list[GraphQLOperation]
+                  children:
+                    name:
+                      requirement: required
+                      type: str
+                    arguments:
+                      requirement: required
+                      type: str
+                    return_type:
+                      requirement: required
+                      type: str
+                    description:
+                      requirement: required
+                      type: str
+                mutations:
+                  requirement: required
+                  type: list[GraphQLOperation]
+                  children:
+                    name:
+                      requirement: required
+                      type: str
+                    arguments:
+                      requirement: required
+                      type: str
+                    return_type:
+                      requirement: required
+                      type: str
+                    description:
+                      requirement: required
+                      type: str
+            grpc:
+              requirement: conditional
+              type: GrpcDefinition | None
+              default: null
+              condition: required when api_style is 'grpc'
+              children:
+                services:
+                  requirement: required
+                  type: list[GrpcService]
+                  children:
+                    name:
+                      requirement: required
+                      type: str
+                    description:
+                      requirement: required
+                      type: str
+                rpc_methods:
+                  requirement: required
+                  type: list[RpcMethod]
+                  children:
+                    service:
+                      requirement: required
+                      type: str
+                    method:
+                      requirement: required
+                      type: str
+                    request_type:
+                      requirement: required
+                      type: str
+                    response_type:
+                      requirement: required
+                      type: str
+                    streaming:
+                      requirement: optional
+                      type: GrpcStreaming | None
+                      default: null
+                      enum:
+                      - none
+                      - server
+                      - client
+                      - bidirectional
+                    description:
+                      requirement: optional
+                      type: str
+                      default: ''
+            deployment:
+              requirement: required
+              type: Deployment
+              children:
+                target:
+                  requirement: required
+                  type: DeploymentTarget
+                  enum:
+                  - docker_compose
+                  - kubernetes
+                  - ecs
+                  - lambda
+                  - cloud_run
+                  - fly_io
+                  - railway
+                  - vercel
+                  - bare_metal
+                  - app_store
+                  - play_store
+                  - both_stores
+                target_rationale:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                target_alternatives:
+                  requirement: optional
+                  type: list[DeploymentAlternative] | None
+                  default: null
+                  children:
+                    target:
+                      requirement: required
+                      type: str
+                    rejection_reason:
+                      requirement: required
+                      type: str
+                environments:
+                  requirement: optional
+                  type: list[Environment] | None
+                  default: null
+                  children:
+                    name:
+                      requirement: required
+                      type: EnvironmentName
+                      enum:
+                      - dev
+                      - staging
+                      - production
+                    purpose:
+                      requirement: required
+                      type: str
+                    differences:
+                      requirement: required
+                      type: str
+                ci:
+                  requirement: optional
+                  type: CiConfig | None
+                  default: null
+                  children:
+                    tool:
+                      requirement: required
+                      type: CiTool
+                      enum:
+                      - github_actions
+                      - gitlab_ci
+                      - jenkins
+                      - circleci
+                      - bitbucket_pipelines
+                      - xcode_cloud
+                      - bitrise
+                      - codemagic
+                    pipeline_stages:
+                      requirement: required
+                      type: str
+                cd:
+                  requirement: optional
+                  type: CdConfig | None
+                  default: null
+                  children:
+                    tool:
+                      requirement: required
+                      type: CdTool
+                      enum:
+                      - argocd
+                      - fluxcd
+                      - spinnaker
+                      - none
+                      - fastlane
+                      - app_center
+                    strategy:
+                      requirement: required
+                      type: CdStrategy
+                      enum:
+                      - gitops
+                      - push
+                      - manual
+                infrastructure_as_code:
+                  requirement: optional
+                  type: IacConfig | None
+                  default: null
+                  children:
+                    enabled:
+                      requirement: required
+                      type: bool
+                    tool:
+                      requirement: optional
+                      type: IacTool | None
+                      default: null
+                      enum:
+                      - terraform
+                      - pulumi
+                      - cdk
+                      - cloudformation
+                      - ansible
+                container_registry:
+                  requirement: optional
+                  type: ContainerRegistry | None
+                  default: null
+                  enum:
+                  - dockerhub
+                  - ecr
+                  - gcr
+                  - ghcr
+                  - acr
+                secrets_management:
+                  requirement: optional
+                  type: SecretsManagement | None
+                  default: null
+                  enum:
+                  - env_file
+                  - vault
+                  - aws_ssm
+                  - doppler
+                  - infisical
+          web_ui:
+            name:
+              requirement: required
+              type: str
+            type:
+              requirement: required
+              type: Literal
+            responsibility:
+              requirement: required
+              type: str
+            communication_with:
+              requirement: optional
+              type: list[ServiceCommunication] | None
+              default: null
+              children:
+                target:
+                  requirement: required
+                  type: str
+                protocol:
+                  requirement: required
+                  type: CommunicationProtocol
+                  enum:
+                  - http
+                  - grpc
+                  - amqp
+                  - kafka
+                  - websocket
+                sync_async:
+                  requirement: required
+                  type: SyncAsync
+                  enum:
+                  - sync
+                  - async
+            language:
+              requirement: required
+              type: WebLanguage
+              enum:
+              - typescript
+              - javascript
+            framework:
+              requirement: required
+              type: WebFramework
+              enum:
+              - react
+              - vue
+              - svelte
+              - next
+              - nuxt
+              - angular
+              - solid
+              - astro
+            framework_rationale:
+              requirement: optional
+              type: str | None
+              default: null
+            framework_alternatives:
+              requirement: optional
+              type: list[FrameworkAlternative] | None
+              default: null
+              children:
+                name:
+                  requirement: required
+                  type: str
+                rejection_reason:
+                  requirement: required
+                  type: str
+            build_tool:
+              requirement: required
+              type: BuildTool
+              enum:
+              - poetry
+              - pip
+              - npm
+              - pnpm
+              - yarn
+              - gradle
+              - maven
+              - cargo
+              - go_mod
+              - vite
+              - webpack
+              - turbopack
+              - bundler
+              - sbt
+            build_tool_rationale:
+              requirement: optional
+              type: str | None
+              default: null
+            rendering_strategy:
+              requirement: optional
+              type: RenderingStrategy | None
+              default: null
+              enum:
+              - spa
+              - ssr
+              - ssg
+              - isr
+            rendering_rationale:
+              requirement: optional
+              type: str | None
+              default: null
+            css_strategy:
+              requirement: optional
+              type: CssStrategy | None
+              default: null
+              enum:
+              - tailwind
+              - css_modules
+              - styled_components
+              - sass
+              - vanilla_css
+              - emotion
+            state_management:
+              requirement: optional
+              type: StateManagementLib | None
+              default: null
+              enum:
+              - zustand
+              - redux
+              - recoil
+              - jotai
+              - context
+              - pinia
+              - mobx
+            accessibility_level:
+              requirement: optional
+              type: AccessibilityLevel | None
+              default: null
+              enum:
+              - wcag_aa
+              - wcag_aaa
+              - basic
+              - none
+            i18n_required:
+              requirement: optional
+              type: bool | None
+              default: null
+            supported_languages:
+              requirement: optional
+              type: str | None
+              default: null
+            responsive_strategy:
+              requirement: optional
+              type: ResponsiveStrategy | None
+              default: null
+              enum:
+              - mobile_first
+              - desktop_first
+            browser_support:
+              requirement: optional
+              type: str | None
+              default: null
+            offline_support:
+              requirement: optional
+              type: bool | None
+              default: null
+            seo_requirements:
+              requirement: optional
+              type: str | None
+              default: null
+            design_references:
+              requirement: optional
+              type: list[str] | None
+              default: null
+            pages:
+              requirement: required
+              type: list[Page]
+              min_length: 1
+              children:
+                name:
+                  requirement: required
+                  type: str
+                purpose:
+                  requirement: required
+                  type: str
+                key_interactions:
+                  requirement: optional
+                  type: list[str] | None
+                  default: null
+                connected_endpoints:
+                  requirement: required
+                  type: list[str]
+                states:
+                  requirement: optional
+                  type: list[str] | None
+                  default: null
+                components:
+                  requirement: optional
+                  type: list[Component] | None
+                  default: null
+                  children:
+                    name:
+                      requirement: required
+                      type: str
+                    purpose:
+                      requirement: required
+                      type: str
+            page_transitions:
+              requirement: optional
+              type: list[PageTransition] | None
+              default: null
+              children:
+                from_page:
+                  requirement: required
+                  type: str
+                to:
+                  requirement: required
+                  type: str
+                condition:
+                  requirement: required
+                  type: str
+            deployment:
+              requirement: required
+              type: Deployment
+              children:
+                target:
+                  requirement: required
+                  type: DeploymentTarget
+                  enum:
+                  - docker_compose
+                  - kubernetes
+                  - ecs
+                  - lambda
+                  - cloud_run
+                  - fly_io
+                  - railway
+                  - vercel
+                  - bare_metal
+                  - app_store
+                  - play_store
+                  - both_stores
+                target_rationale:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                target_alternatives:
+                  requirement: optional
+                  type: list[DeploymentAlternative] | None
+                  default: null
+                  children:
+                    target:
+                      requirement: required
+                      type: str
+                    rejection_reason:
+                      requirement: required
+                      type: str
+                environments:
+                  requirement: optional
+                  type: list[Environment] | None
+                  default: null
+                  children:
+                    name:
+                      requirement: required
+                      type: EnvironmentName
+                      enum:
+                      - dev
+                      - staging
+                      - production
+                    purpose:
+                      requirement: required
+                      type: str
+                    differences:
+                      requirement: required
+                      type: str
+                ci:
+                  requirement: optional
+                  type: CiConfig | None
+                  default: null
+                  children:
+                    tool:
+                      requirement: required
+                      type: CiTool
+                      enum:
+                      - github_actions
+                      - gitlab_ci
+                      - jenkins
+                      - circleci
+                      - bitbucket_pipelines
+                      - xcode_cloud
+                      - bitrise
+                      - codemagic
+                    pipeline_stages:
+                      requirement: required
+                      type: str
+                cd:
+                  requirement: optional
+                  type: CdConfig | None
+                  default: null
+                  children:
+                    tool:
+                      requirement: required
+                      type: CdTool
+                      enum:
+                      - argocd
+                      - fluxcd
+                      - spinnaker
+                      - none
+                      - fastlane
+                      - app_center
+                    strategy:
+                      requirement: required
+                      type: CdStrategy
+                      enum:
+                      - gitops
+                      - push
+                      - manual
+                infrastructure_as_code:
+                  requirement: optional
+                  type: IacConfig | None
+                  default: null
+                  children:
+                    enabled:
+                      requirement: required
+                      type: bool
+                    tool:
+                      requirement: optional
+                      type: IacTool | None
+                      default: null
+                      enum:
+                      - terraform
+                      - pulumi
+                      - cdk
+                      - cloudformation
+                      - ansible
+                container_registry:
+                  requirement: optional
+                  type: ContainerRegistry | None
+                  default: null
+                  enum:
+                  - dockerhub
+                  - ecr
+                  - gcr
+                  - ghcr
+                  - acr
+                secrets_management:
+                  requirement: optional
+                  type: SecretsManagement | None
+                  default: null
+                  enum:
+                  - env_file
+                  - vault
+                  - aws_ssm
+                  - doppler
+                  - infisical
+          worker:
+            name:
+              requirement: required
+              type: str
+            type:
+              requirement: required
+              type: Literal
+            responsibility:
+              requirement: required
+              type: str
+            communication_with:
+              requirement: optional
+              type: list[ServiceCommunication] | None
+              default: null
+              children:
+                target:
+                  requirement: required
+                  type: str
+                protocol:
+                  requirement: required
+                  type: CommunicationProtocol
+                  enum:
+                  - http
+                  - grpc
+                  - amqp
+                  - kafka
+                  - websocket
+                sync_async:
+                  requirement: required
+                  type: SyncAsync
+                  enum:
+                  - sync
+                  - async
+            language:
+              requirement: required
+              type: WorkerLanguage
+              enum:
+              - python
+              - typescript
+              - java
+              - kotlin
+              - ruby
+              - go
+            framework:
+              requirement: required
+              type: WorkerFramework
+              enum:
+              - celery
+              - bullmq
+              - sidekiq
+              - spring_batch
+              - temporal
+            framework_rationale:
+              requirement: optional
+              type: str | None
+              default: null
+            framework_alternatives:
+              requirement: optional
+              type: list[FrameworkAlternative] | None
+              default: null
+              children:
+                name:
+                  requirement: required
+                  type: str
+                rejection_reason:
+                  requirement: required
+                  type: str
+            build_tool:
+              requirement: required
+              type: BuildTool
+              enum:
+              - poetry
+              - pip
+              - npm
+              - pnpm
+              - yarn
+              - gradle
+              - maven
+              - cargo
+              - go_mod
+              - vite
+              - webpack
+              - turbopack
+              - bundler
+              - sbt
+            build_tool_rationale:
+              requirement: optional
+              type: str | None
+              default: null
+            key_libraries:
+              requirement: optional
+              type: list[Library] | None
+              default: null
+              children:
+                name:
+                  requirement: required
+                  type: str
+                purpose:
+                  requirement: required
+                  type: str
+                version_constraint:
+                  requirement: optional
+                  type: str | None
+                  default: null
+            workers:
+              requirement: required
+              type: list[Worker]
+              min_length: 1
+              children:
+                name:
+                  requirement: required
+                  type: str
+                responsibility:
+                  requirement: required
+                  type: str
+                trigger_type:
+                  requirement: required
+                  type: TriggerType
+                  enum:
+                  - queue
+                  - cron
+                  - event
+                  - webhook
+                trigger_config:
+                  requirement: required
+                  type: str
+                processing_steps:
+                  requirement: optional
+                  type: list[str] | None
+                  default: null
+                input_fields:
+                  requirement: optional
+                  type: list[WorkerInputField] | None
+                  default: null
+                  children:
+                    name:
+                      requirement: required
+                      type: str
+                    type:
+                      requirement: required
+                      type: str
+                    description:
+                      requirement: required
+                      type: str
+                outputs:
+                  requirement: optional
+                  type: list[WorkerOutput] | None
+                  default: null
+                  children:
+                    result:
+                      requirement: required
+                      type: str
+                    description:
+                      requirement: required
+                      type: str
+                concurrency:
+                  requirement: optional
+                  type: int | None
+                  default: null
+                batch_size:
+                  requirement: optional
+                  type: int | None
+                  default: null
+                ordering_required:
+                  requirement: optional
+                  type: bool | None
+                  default: null
+                ordering_key:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                overlap_policy:
+                  requirement: optional
+                  type: OverlapPolicy | None
+                  default: null
+                  enum:
+                  - skip
+                  - queue
+                  - parallel
+                retry_policy:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                timeout:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                idempotent:
+                  requirement: required
+                  type: bool
+                idempotent_strategy:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                failure_destination:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                graceful_shutdown:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                execution_logging:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                dependencies:
+                  requirement: optional
+                  type: list[WorkerDependency] | None
+                  default: null
+                  children:
+                    service:
+                      requirement: required
+                      type: str
+                    failure_behavior:
+                      requirement: required
+                      type: FailureBehavior
+                      enum:
+                      - retry
+                      - skip
+                      - fail
+            deployment:
+              requirement: required
+              type: Deployment
+              children:
+                target:
+                  requirement: required
+                  type: DeploymentTarget
+                  enum:
+                  - docker_compose
+                  - kubernetes
+                  - ecs
+                  - lambda
+                  - cloud_run
+                  - fly_io
+                  - railway
+                  - vercel
+                  - bare_metal
+                  - app_store
+                  - play_store
+                  - both_stores
+                target_rationale:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                target_alternatives:
+                  requirement: optional
+                  type: list[DeploymentAlternative] | None
+                  default: null
+                  children:
+                    target:
+                      requirement: required
+                      type: str
+                    rejection_reason:
+                      requirement: required
+                      type: str
+                environments:
+                  requirement: optional
+                  type: list[Environment] | None
+                  default: null
+                  children:
+                    name:
+                      requirement: required
+                      type: EnvironmentName
+                      enum:
+                      - dev
+                      - staging
+                      - production
+                    purpose:
+                      requirement: required
+                      type: str
+                    differences:
+                      requirement: required
+                      type: str
+                ci:
+                  requirement: optional
+                  type: CiConfig | None
+                  default: null
+                  children:
+                    tool:
+                      requirement: required
+                      type: CiTool
+                      enum:
+                      - github_actions
+                      - gitlab_ci
+                      - jenkins
+                      - circleci
+                      - bitbucket_pipelines
+                      - xcode_cloud
+                      - bitrise
+                      - codemagic
+                    pipeline_stages:
+                      requirement: required
+                      type: str
+                cd:
+                  requirement: optional
+                  type: CdConfig | None
+                  default: null
+                  children:
+                    tool:
+                      requirement: required
+                      type: CdTool
+                      enum:
+                      - argocd
+                      - fluxcd
+                      - spinnaker
+                      - none
+                      - fastlane
+                      - app_center
+                    strategy:
+                      requirement: required
+                      type: CdStrategy
+                      enum:
+                      - gitops
+                      - push
+                      - manual
+                infrastructure_as_code:
+                  requirement: optional
+                  type: IacConfig | None
+                  default: null
+                  children:
+                    enabled:
+                      requirement: required
+                      type: bool
+                    tool:
+                      requirement: optional
+                      type: IacTool | None
+                      default: null
+                      enum:
+                      - terraform
+                      - pulumi
+                      - cdk
+                      - cloudformation
+                      - ansible
+                container_registry:
+                  requirement: optional
+                  type: ContainerRegistry | None
+                  default: null
+                  enum:
+                  - dockerhub
+                  - ecr
+                  - gcr
+                  - ghcr
+                  - acr
+                secrets_management:
+                  requirement: optional
+                  type: SecretsManagement | None
+                  default: null
+                  enum:
+                  - env_file
+                  - vault
+                  - aws_ssm
+                  - doppler
+                  - infisical
+          mobile_app:
+            name:
+              requirement: required
+              type: str
+            type:
+              requirement: required
+              type: Literal
+            responsibility:
+              requirement: required
+              type: str
+            communication_with:
+              requirement: optional
+              type: list[ServiceCommunication] | None
+              default: null
+              children:
+                target:
+                  requirement: required
+                  type: str
+                protocol:
+                  requirement: required
+                  type: CommunicationProtocol
+                  enum:
+                  - http
+                  - grpc
+                  - amqp
+                  - kafka
+                  - websocket
+                sync_async:
+                  requirement: required
+                  type: SyncAsync
+                  enum:
+                  - sync
+                  - async
+            approach:
+              requirement: required
+              type: MobileApproach
+              enum:
+              - native
+              - cross_platform
+              - hybrid
+            framework:
+              requirement: required
+              type: MobileFramework
+              enum:
+              - react_native
+              - flutter
+              - swift
+              - kotlin_mobile
+              - swiftui
+              - jetpack_compose
+            framework_rationale:
+              requirement: optional
+              type: str | None
+              default: null
+            framework_alternatives:
+              requirement: optional
+              type: list[FrameworkAlternative] | None
+              default: null
+              children:
+                name:
+                  requirement: required
+                  type: str
+                rejection_reason:
+                  requirement: required
+                  type: str
+            min_os_versions:
+              requirement: required
+              type: str
+            navigation_pattern:
+              requirement: optional
+              type: NavigationPattern | None
+              default: null
+              enum:
+              - tab
+              - drawer
+              - stack
+              - bottom_nav
+            screens:
+              requirement: required
+              type: list[Screen]
+              min_length: 1
+              children:
+                name:
+                  requirement: required
+                  type: str
+                purpose:
+                  requirement: required
+                  type: str
+                key_interactions:
+                  requirement: required
+                  type: list[str]
+                connected_endpoints:
+                  requirement: required
+                  type: list[str]
+                states:
+                  requirement: required
+                  type: list[str]
+                components:
+                  requirement: required
+                  type: list[Component]
+                  children:
+                    name:
+                      requirement: required
+                      type: str
+                    purpose:
+                      requirement: required
+                      type: str
+            screen_transitions:
+              requirement: optional
+              type: list[ScreenTransition] | None
+              default: null
+              children:
+                from_screen:
+                  requirement: required
+                  type: str
+                to:
+                  requirement: required
+                  type: str
+                condition:
+                  requirement: required
+                  type: str
+            offline_support:
+              requirement: optional
+              type: bool | None
+              default: null
+            local_storage:
+              requirement: optional
+              type: LocalStorageType | None
+              default: null
+              enum:
+              - sqlite
+              - realm
+              - async_storage
+              - mmkv
+              - core_data
+            sync_strategy:
+              requirement: optional
+              type: str | None
+              default: null
+            cache_policy:
+              requirement: optional
+              type: str | None
+              default: null
+            device_features:
+              requirement: optional
+              type: list[DeviceFeature] | None
+              default: null
+              children:
+                feature:
+                  requirement: required
+                  type: DeviceFeatureType
+                  enum:
+                  - camera
+                  - gps
+                  - biometrics
+                  - push
+                  - nfc
+                  - bluetooth
+                  - accelerometer
+                  - contacts
+                purpose:
+                  requirement: required
+                  type: str
+                permission:
+                  requirement: required
+                  type: str
+                denial_behavior:
+                  requirement: required
+                  type: str
+            push_notification:
+              requirement: optional
+              type: PushNotification | None
+              default: null
+              children:
+                service:
+                  requirement: required
+                  type: PushServiceType
+                  enum:
+                  - fcm
+                  - apns
+                  - onesignal
+                  - expo_push
+                types:
+                  requirement: required
+                  type: list[NotificationType]
+                  children:
+                    type:
+                      requirement: required
+                      type: str
+                    trigger:
+                      requirement: required
+                      type: str
+                    content:
+                      requirement: required
+                      type: str
+            distribution:
+              requirement: optional
+              type: DistributionChannel | None
+              default: null
+              enum:
+              - app_store
+              - play_store
+              - enterprise
+              - both_stores
+              - testflight
+            update_strategy:
+              requirement: optional
+              type: UpdateStrategy | None
+              default: null
+              enum:
+              - force
+              - soft
+              - in_app
+              - code_push
+            deep_link_scheme:
+              requirement: optional
+              type: str | None
+              default: null
+            app_size_target:
+              requirement: optional
+              type: str | None
+              default: null
+            deployment:
+              requirement: required
+              type: Deployment
+              children:
+                target:
+                  requirement: required
+                  type: DeploymentTarget
+                  enum:
+                  - docker_compose
+                  - kubernetes
+                  - ecs
+                  - lambda
+                  - cloud_run
+                  - fly_io
+                  - railway
+                  - vercel
+                  - bare_metal
+                  - app_store
+                  - play_store
+                  - both_stores
+                target_rationale:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                target_alternatives:
+                  requirement: optional
+                  type: list[DeploymentAlternative] | None
+                  default: null
+                  children:
+                    target:
+                      requirement: required
+                      type: str
+                    rejection_reason:
+                      requirement: required
+                      type: str
+                environments:
+                  requirement: optional
+                  type: list[Environment] | None
+                  default: null
+                  children:
+                    name:
+                      requirement: required
+                      type: EnvironmentName
+                      enum:
+                      - dev
+                      - staging
+                      - production
+                    purpose:
+                      requirement: required
+                      type: str
+                    differences:
+                      requirement: required
+                      type: str
+                ci:
+                  requirement: optional
+                  type: CiConfig | None
+                  default: null
+                  children:
+                    tool:
+                      requirement: required
+                      type: CiTool
+                      enum:
+                      - github_actions
+                      - gitlab_ci
+                      - jenkins
+                      - circleci
+                      - bitbucket_pipelines
+                      - xcode_cloud
+                      - bitrise
+                      - codemagic
+                    pipeline_stages:
+                      requirement: required
+                      type: str
+                cd:
+                  requirement: optional
+                  type: CdConfig | None
+                  default: null
+                  children:
+                    tool:
+                      requirement: required
+                      type: CdTool
+                      enum:
+                      - argocd
+                      - fluxcd
+                      - spinnaker
+                      - none
+                      - fastlane
+                      - app_center
+                    strategy:
+                      requirement: required
+                      type: CdStrategy
+                      enum:
+                      - gitops
+                      - push
+                      - manual
+                infrastructure_as_code:
+                  requirement: optional
+                  type: IacConfig | None
+                  default: null
+                  children:
+                    enabled:
+                      requirement: required
+                      type: bool
+                    tool:
+                      requirement: optional
+                      type: IacTool | None
+                      default: null
+                      enum:
+                      - terraform
+                      - pulumi
+                      - cdk
+                      - cloudformation
+                      - ansible
+                container_registry:
+                  requirement: optional
+                  type: ContainerRegistry | None
+                  default: null
+                  enum:
+                  - dockerhub
+                  - ecr
+                  - gcr
+                  - ghcr
+                  - acr
+                secrets_management:
+                  requirement: optional
+                  type: SecretsManagement | None
+                  default: null
+                  enum:
+                  - env_file
+                  - vault
+                  - aws_ssm
+                  - doppler
+                  - infisical
+          data_pipeline:
+            name:
+              requirement: required
+              type: str
+            type:
+              requirement: required
+              type: Literal
+            responsibility:
+              requirement: required
+              type: str
+            communication_with:
+              requirement: optional
+              type: list[ServiceCommunication] | None
+              default: null
+              children:
+                target:
+                  requirement: required
+                  type: str
+                protocol:
+                  requirement: required
+                  type: CommunicationProtocol
+                  enum:
+                  - http
+                  - grpc
+                  - amqp
+                  - kafka
+                  - websocket
+                sync_async:
+                  requirement: required
+                  type: SyncAsync
+                  enum:
+                  - sync
+                  - async
+            language:
+              requirement: required
+              type: PipelineLanguage
+              enum:
+              - python
+              - java
+              - scala
+              - sql
+            framework:
+              requirement: required
+              type: PipelineFramework
+              enum:
+              - airflow
+              - dagster
+              - prefect
+              - spark
+              - dbt
+              - flink
+            framework_rationale:
+              requirement: optional
+              type: str | None
+              default: null
+            framework_alternatives:
+              requirement: optional
+              type: list[FrameworkAlternative] | None
+              default: null
+              children:
+                name:
+                  requirement: required
+                  type: str
+                rejection_reason:
+                  requirement: required
+                  type: str
+            build_tool:
+              requirement: required
+              type: BuildTool
+              enum:
+              - poetry
+              - pip
+              - npm
+              - pnpm
+              - yarn
+              - gradle
+              - maven
+              - cargo
+              - go_mod
+              - vite
+              - webpack
+              - turbopack
+              - bundler
+              - sbt
+            build_tool_rationale:
+              requirement: optional
+              type: str | None
+              default: null
+            key_libraries:
+              requirement: optional
+              type: list[Library] | None
+              default: null
+              children:
+                name:
+                  requirement: required
+                  type: str
+                purpose:
+                  requirement: required
+                  type: str
+                version_constraint:
+                  requirement: optional
+                  type: str | None
+                  default: null
+            pipelines:
+              requirement: required
+              type: list[Pipeline]
+              min_length: 1
+              children:
+                name:
+                  requirement: required
+                  type: str
+                responsibility:
+                  requirement: required
+                  type: str
+                type:
+                  requirement: required
+                  type: PipelineType
+                  enum:
+                  - batch
+                  - streaming
+                  - micro_batch
+                  - hybrid
+                sources:
+                  requirement: required
+                  type: list[Source]
+                  children:
+                    name:
+                      requirement: required
+                      type: str
+                    system:
+                      requirement: required
+                      type: str
+                    extraction_method:
+                      requirement: optional
+                      type: ExtractionMethod | None
+                      default: null
+                      enum:
+                      - full
+                      - incremental
+                      - cdc
+                      - api_poll
+                    format:
+                      requirement: optional
+                      type: DataFormat | None
+                      default: null
+                      enum:
+                      - json
+                      - csv
+                      - parquet
+                      - avro
+                      - protobuf
+                      - xml
+                transformation_steps:
+                  requirement: optional
+                  type: list[str] | None
+                  default: null
+                sinks:
+                  requirement: required
+                  type: list[Sink]
+                  children:
+                    name:
+                      requirement: required
+                      type: str
+                    system:
+                      requirement: required
+                      type: str
+                    load_method:
+                      requirement: optional
+                      type: LoadMethod | None
+                      default: null
+                      enum:
+                      - upsert
+                      - append
+                      - overwrite
+                      - merge
+                    format:
+                      requirement: optional
+                      type: DataFormat | None
+                      default: null
+                      enum:
+                      - json
+                      - csv
+                      - parquet
+                      - avro
+                      - protobuf
+                      - xml
+                schedule:
+                  requirement: required
+                  type: PipelineSchedule
+                  enum:
+                  - cron
+                  - real_time
+                  - trigger_based
+                expected_duration:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                volume_per_run:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                quality_checks:
+                  requirement: optional
+                  type: list[QualityCheck] | None
+                  default: null
+                  children:
+                    rule:
+                      requirement: required
+                      type: str
+                    target:
+                      requirement: required
+                      type: str
+                    on_failure:
+                      requirement: required
+                      type: QualityCheckAction
+                      enum:
+                      - abort
+                      - warn
+                      - quarantine
+                retry_policy:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                partial_failure_strategy:
+                  requirement: optional
+                  type: PartialFailureStrategy | None
+                  default: null
+                  enum:
+                  - skip_bad
+                  - fail_all
+                  - dead_letter
+                recovery_strategy:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                sla:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                schema_change_handling:
+                  requirement: optional
+                  type: SchemaChangeHandling | None
+                  default: null
+                  enum:
+                  - auto_detect
+                  - fail
+                  - alert
+                backfill_strategy:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                depends_on:
+                  requirement: optional
+                  type: list[str] | None
+                  default: null
+            pipeline_dependencies:
+              requirement: optional
+              type: list[PipelineDependency] | None
+              default: null
+              children:
+                pipeline:
+                  requirement: required
+                  type: str
+                depends_on:
+                  requirement: required
+                  type: str
+                reason:
+                  requirement: required
+                  type: str
+            deployment:
+              requirement: required
+              type: Deployment
+              children:
+                target:
+                  requirement: required
+                  type: DeploymentTarget
+                  enum:
+                  - docker_compose
+                  - kubernetes
+                  - ecs
+                  - lambda
+                  - cloud_run
+                  - fly_io
+                  - railway
+                  - vercel
+                  - bare_metal
+                  - app_store
+                  - play_store
+                  - both_stores
+                target_rationale:
+                  requirement: optional
+                  type: str | None
+                  default: null
+                target_alternatives:
+                  requirement: optional
+                  type: list[DeploymentAlternative] | None
+                  default: null
+                  children:
+                    target:
+                      requirement: required
+                      type: str
+                    rejection_reason:
+                      requirement: required
+                      type: str
+                environments:
+                  requirement: optional
+                  type: list[Environment] | None
+                  default: null
+                  children:
+                    name:
+                      requirement: required
+                      type: EnvironmentName
+                      enum:
+                      - dev
+                      - staging
+                      - production
+                    purpose:
+                      requirement: required
+                      type: str
+                    differences:
+                      requirement: required
+                      type: str
+                ci:
+                  requirement: optional
+                  type: CiConfig | None
+                  default: null
+                  children:
+                    tool:
+                      requirement: required
+                      type: CiTool
+                      enum:
+                      - github_actions
+                      - gitlab_ci
+                      - jenkins
+                      - circleci
+                      - bitbucket_pipelines
+                      - xcode_cloud
+                      - bitrise
+                      - codemagic
+                    pipeline_stages:
+                      requirement: required
+                      type: str
+                cd:
+                  requirement: optional
+                  type: CdConfig | None
+                  default: null
+                  children:
+                    tool:
+                      requirement: required
+                      type: CdTool
+                      enum:
+                      - argocd
+                      - fluxcd
+                      - spinnaker
+                      - none
+                      - fastlane
+                      - app_center
+                    strategy:
+                      requirement: required
+                      type: CdStrategy
+                      enum:
+                      - gitops
+                      - push
+                      - manual
+                infrastructure_as_code:
+                  requirement: optional
+                  type: IacConfig | None
+                  default: null
+                  children:
+                    enabled:
+                      requirement: required
+                      type: bool
+                    tool:
+                      requirement: optional
+                      type: IacTool | None
+                      default: null
+                      enum:
+                      - terraform
+                      - pulumi
+                      - cdk
+                      - cloudformation
+                      - ansible
+                container_registry:
+                  requirement: optional
+                  type: ContainerRegistry | None
+                  default: null
+                  enum:
+                  - dockerhub
+                  - ecr
+                  - gcr
+                  - ghcr
+                  - acr
+                secrets_management:
+                  requirement: optional
+                  type: SecretsManagement | None
+                  default: null
+                  enum:
+                  - env_file
+                  - vault
+                  - aws_ssm
+                  - doppler
+                  - infisical
+  phase5_risks:
+    title: Critical Flows and Risks
+    sections:
+      critical_flows:
+        requirement: required
+        type: list[CriticalFlow]
+        min_length: 1
+        children:
+          flow_name:
+            requirement: required
+            type: str
+          happy_path:
+            requirement: required
+            type: str
+          failure_scenarios:
+            requirement: optional
+            type: list[FailureScenario] | None
+            default: null
+            children:
+              scenario:
+                requirement: required
+                type: str
+              likelihood:
+                requirement: required
+                type: Likelihood
+                enum:
+                - high
+                - medium
+                - low
+              impact:
+                requirement: required
+                type: Impact
+                enum:
+                - high
+                - medium
+                - low
+              handling_strategy:
+                requirement: required
+                type: str
+      global_error_handling:
+        requirement: optional
+        type: GlobalErrorHandling | None
+        default: null
+        children:
+          retry_policy:
+            requirement: optional
+            type: str | None
+            default: null
+          circuit_breaker:
+            requirement: optional
+            type: str | None
+            default: null
+          graceful_degradation:
+            requirement: optional
+            type: str | None
+            default: null
+          dead_letter_queue:
+            requirement: optional
+            type: str | None
+            default: null
+      data_consistency:
+        requirement: optional
+        type: str | None
+        default: null
+      security:
+        requirement: required
+        type: Security
+        children:
+          requirements:
+            requirement: required
+            type: list[SecurityRequirement]
+            min_length: 1
+            children:
+              category:
+                requirement: required
+                type: SecurityCategory
+                enum:
+                - authentication
+                - authorization
+                - encryption
+                - input_validation
+                - audit
+                - transport_security
+              requirement:
+                requirement: required
+                type: str
+              implementation_approach:
+                requirement: required
+                type: str
+          input_validation_strategy:
+            requirement: optional
+            type: str | None
+            default: null
+          threat_model:
+            requirement: optional
+            type: list[Threat] | None
+            default: null
+            children:
+              threat:
+                requirement: required
+                type: str
+              mitigation:
+                requirement: required
+                type: str
+          sensitive_data:
+            requirement: optional
+            type: list[SensitiveDataHandling] | None
+            default: null
+            children:
+              data_type:
+                requirement: required
+                type: str
+              protection_method:
+                requirement: required
+                type: str
+              retention_policy:
+                requirement: required
+                type: str
+          compliance_requirements:
+            requirement: optional
+            type: list[str] | None
+            default: null
+          accepted_security_risks:
+            requirement: optional
+            type: list[AcceptedSecurityRisk] | None
+            default: null
+            children:
+              risk:
+                requirement: required
+                type: str
+              acceptance_rationale:
+                requirement: required
+                type: str
+              reconsider_when:
+                requirement: required
+                type: str
+      risks:
+        requirement: required
+        type: Risks
+        children:
+          technical:
+            requirement: required
+            type: list[TechnicalRisk]
+            min_length: 1
+            children:
+              risk:
+                requirement: required
+                type: str
+              likelihood:
+                requirement: required
+                type: Likelihood
+                enum:
+                - high
+                - medium
+                - low
+              impact:
+                requirement: required
+                type: Impact
+                enum:
+                - high
+                - medium
+                - low
+              mitigation:
+                requirement: required
+                type: str
+              contingency:
+                requirement: required
+                type: str
+          irreversible_decisions:
+            requirement: required
+            type: list[IrreversibleDecision]
+            min_length: 1
+            children:
+              decision:
+                requirement: required
+                type: str
+              why_irreversible:
+                requirement: required
+                type: str
+              confidence_level:
+                requirement: required
+                type: ConfidenceLevel
+                enum:
+                - high
+                - medium
+                - low
+              reversal_cost:
+                requirement: required
+                type: str
+          known_technical_debt:
+            requirement: optional
+            type: list[TechnicalDebt] | None
+            default: null
+            children:
+              debt:
+                requirement: required
+                type: str
+              reason:
+                requirement: required
+                type: str
+              resolution_plan:
+                requirement: required
+                type: str
+  phase6_quality:
+    title: Performance and Observability
+    sections:
+      performance:
+        requirement: required
+        type: Performance
+        children:
+          expected_concurrent_users:
+            requirement: required
+            type: str
+          response_time_targets:
+            requirement: optional
+            type: list[ResponseTimeTarget] | None
+            default: null
+            children:
+              endpoint_or_flow:
+                requirement: required
+                type: str
+              p50_target:
+                requirement: required
+                type: str
+              p99_target:
+                requirement: required
+                type: str
+          throughput_target:
+            requirement: optional
+            type: str | None
+            default: null
+          data_volume:
+            requirement: optional
+            type: DataVolume | None
+            default: null
+            children:
+              initial:
+                requirement: required
+                type: str
+              one_year:
+                requirement: required
+                type: str
+              growth_rate:
+                requirement: required
+                type: str
+          caching_strategy:
+            requirement: optional
+            type: str | None
+            default: null
+          long_running_operations:
+            requirement: optional
+            type: list[LongRunningOperation] | None
+            default: null
+            children:
+              operation:
+                requirement: required
+                type: str
+              expected_duration:
+                requirement: required
+                type: str
+              handling:
+                requirement: required
+                type: LongRunningHandling
+                enum:
+                - background
+                - queue
+                - streaming
+              timeout_policy:
+                requirement: required
+                type: str
+              progress_feedback:
+                requirement: required
+                type: ProgressFeedback
+                enum:
+                - polling
+                - websocket
+                - sse
+                - none
+      availability:
+        requirement: optional
+        type: Availability | None
+        default: null
+        children:
+          target:
+            requirement: optional
+            type: str | None
+            default: null
+          acceptable_downtime:
+            requirement: optional
+            type: str | None
+            default: null
+          disaster_recovery:
+            requirement: optional
+            type: DisasterRecovery | None
+            default: null
+            children:
+              rpo:
+                requirement: required
+                type: str
+              rto:
+                requirement: required
+                type: str
+              backup_strategy:
+                requirement: required
+                type: str
+          single_points_of_failure:
+            requirement: optional
+            type: list[str] | None
+            default: null
+      observability:
+        requirement: optional
+        type: Observability | None
+        default: null
+        children:
+          logging:
+            requirement: optional
+            type: Logging | None
+            default: null
+            children:
+              framework:
+                requirement: required
+                type: str
+              structured:
+                requirement: optional
+                type: bool
+                default: false
+              sensitive_data_masking:
+                requirement: optional
+                type: bool
+                default: false
+              retention_period:
+                requirement: required
+                type: str
+          metrics:
+            requirement: optional
+            type: Metrics | None
+            default: null
+            children:
+              tool:
+                requirement: required
+                type: str
+              key_metrics:
+                requirement: required
+                type: list[str]
+              dashboards:
+                requirement: required
+                type: str
+          alerting:
+            requirement: optional
+            type: Alerting | None
+            default: null
+            children:
+              tool:
+                requirement: required
+                type: str
+              critical_alerts:
+                requirement: required
+                type: list[str]
+          tracing:
+            requirement: optional
+            type: Tracing | None
+            default: null
+            children:
+              enabled:
+                requirement: optional
+                type: bool
+                default: false
+              tool:
+                requirement: optional
+                type: str | None
+                default: null
+          health_checks:
+            requirement: optional
+            type: list[HealthCheck] | None
+            default: null
+            children:
+              endpoint:
+                requirement: required
+                type: str
+              checks:
+                requirement: required
+                type: str
+      scalability:
+        requirement: optional
+        type: Scalability | None
+        default: null
+        children:
+          strategy:
+            requirement: optional
+            type: ScalingStrategy | None
+            default: null
+            enum:
+            - vertical
+            - horizontal
+            - auto
+          bottlenecks:
+            requirement: optional
+            type: str | None
+            default: null
+          scaling_trigger:
+            requirement: optional
+            type: str | None
+            default: null
+      external_systems:
+        requirement: optional
+        type: list[ExternalSystem] | None
+        default: null
+        children:
+          name:
+            requirement: required
+            type: str
+          purpose:
+            requirement: required
+            type: str
+          protocol:
+            requirement: required
+            type: str
+          reliability:
+            requirement: optional
+            type: Likelihood | None
+            default: null
+            enum:
+            - high
+            - medium
+            - low
+          fallback:
+            requirement: optional
+            type: str | None
+            default: null
+  phase7_process:
+    title: Process and Version Control
+    sections:
+      process:
+        requirement: required
+        type: Process
+        children:
+          methodology:
+            requirement: required
+            type: Methodology
+            enum:
+            - scrum
+            - kanban
+            - scrumban
+            - xp
+          sprint_length:
+            requirement: optional
+            type: str | None
+            default: null
+          wip_limit:
+            requirement: optional
+            type: str | None
+            default: null
+          task_review_minutes:
+            requirement: optional
+            type: str | None
+            default: null
+          definition_of_done:
+            requirement: optional
+            type: list[str] | None
+            default: null
+      code_quality:
+        requirement: optional
+        type: CodeQuality | None
+        default: null
+        children:
+          coding_standards:
+            requirement: optional
+            type: list[CodingStandard] | None
+            default: null
+            children:
+              language:
+                requirement: required
+                type: str
+              style_guide:
+                requirement: required
+                type: str
+              linter:
+                requirement: required
+                type: str
+              formatter:
+                requirement: required
+                type: str
+          code_review:
+            requirement: optional
+            type: CodeReview | None
+            default: null
+            children:
+              required:
+                requirement: optional
+                type: bool
+                default: true
+              min_reviewers:
+                requirement: optional
+                type: int
+                default: 1
+              auto_merge_allowed:
+                requirement: optional
+                type: bool
+                default: false
+          documentation:
+            requirement: optional
+            type: Documentation | None
+            default: null
+            children:
+              code_comments:
+                requirement: optional
+                type: str | None
+                default: null
+              adr_usage:
+                requirement: optional
+                type: str | None
+                default: null
+              changelog_policy:
+                requirement: optional
+                type: str | None
+                default: null
+      testing:
+        requirement: required
+        type: Testing
+        children:
+          approach:
+            requirement: required
+            type: TestApproach
+            enum:
+            - tdd
+            - bdd
+            - test_after
+            - test_first
+          levels:
+            requirement: required
+            type: list[TestLevelConfig]
+            min_length: 1
+            children:
+              level:
+                requirement: required
+                type: TestLevel
+                enum:
+                - unit
+                - integration
+                - e2e
+                - contract
+                - smoke
+                - performance
+              framework:
+                requirement: required
+                type: TestFrameworkEnum
+                enum:
+                - pytest
+                - jest
+                - vitest
+                - playwright
+                - cypress
+                - junit
+                - go_test
+                - rspec
+                - xctest
+                - espresso
+                - robolectric
+                - flutter_test
+                - detox
+              coverage_target:
+                requirement: optional
+                type: str | None
+                default: null
+              approach:
+                requirement: optional
+                type: str | None
+                default: null
+          test_data_strategy:
+            requirement: optional
+            type: TestDataStrategy | None
+            default: null
+            enum:
+            - fixtures
+            - factories
+            - snapshots
+            - seed_scripts
+          test_environment:
+            requirement: optional
+            type: TestEnvironment | None
+            default: null
+            children:
+              db_strategy:
+                requirement: optional
+                type: DbTestStrategy | None
+                default: null
+                enum:
+                - in_memory
+                - testcontainers
+                - shared_test_db
+                - docker_compose
+              external_service_strategy:
+                requirement: optional
+                type: ExternalServiceStrategy | None
+                default: null
+                enum:
+                - mocks
+                - stubs
+                - sandbox
+                - wiremock
+      version_control:
+        requirement: required
+        type: VersionControl
+        children:
+          branch_strategy:
+            requirement: required
+            type: BranchStrategy
+            enum:
+            - github_flow
+            - gitflow
+            - trunk_based
+            - master_develop_task
+          branch_strategy_description:
+            requirement: optional
+            type: str | None
+            default: null
+          commit_convention:
+            requirement: optional
+            type: CommitConvention | None
+            default: null
+            enum:
+            - conventional
+            - gitmoji
+            - angular
+            - free
+          monorepo_or_polyrepo:
+            requirement: optional
+            type: RepoStructure | None
+            default: null
+            enum:
+            - monorepo
+            - polyrepo
+          pr_policy:
+            requirement: optional
+            type: PrPolicy | None
+            default: null
+            children:
+              created_by:
+                requirement: optional
+                type: PrCreatedBy | None
+                default: null
+                enum:
+                - human
+                - claude
+                - both
+              template_required:
+                requirement: optional
+                type: bool
+                default: true
+              squash_merge:
+                requirement: optional
+                type: bool
+                default: true
+  phase8_evolution:
+    title: Evolution and Operations
+    sections:
+      evolution:
+        requirement: optional
+        type: Evolution | None
+        default: null
+        children:
+          future_features:
+            requirement: optional
+            type: list[FutureFeature] | None
+            default: null
+            children:
+              feature:
+                requirement: required
+                type: str
+              planned_phase:
+                requirement: required
+                type: PlannedPhase
+                enum:
+                - v2
+                - v3
+                - post_launch
+                - backlog
+              architectural_impact:
+                requirement: required
+                type: str
+              preparation_needed:
+                requirement: required
+                type: str
+          migration_path:
+            requirement: optional
+            type: str | None
+            default: null
+          sunset_criteria:
+            requirement: optional
+            type: str | None
+            default: null
+      rollout:
+        requirement: optional
+        type: Rollout | None
+        default: null
+        children:
+          strategy:
+            requirement: optional
+            type: RolloutStrategy | None
+            default: null
+            enum:
+            - big_bang
+            - canary
+            - blue_green
+            - rolling
+            - feature_flag
+          phases:
+            requirement: optional
+            type: list[RolloutPhase] | None
+            default: null
+            children:
+              phase:
+                requirement: required
+                type: str
+              audience:
+                requirement: required
+                type: str
+              success_criteria:
+                requirement: required
+                type: str
+          rollback_plan:
+            requirement: optional
+            type: str | None
+            default: null
+          db_migration_strategy:
+            requirement: optional
+            type: str | None
+            default: null
+      operations:
+        requirement: optional
+        type: Operations | None
+        default: null
+        children:
+          on_call_policy:
+            requirement: optional
+            type: str | None
+            default: null
+          incident_response:
+            requirement: optional
+            type: str | None
+            default: null
+          maintenance_window:
+            requirement: optional
+            type: str | None
+            default: null
+          documentation_maintenance:
+            requirement: optional
+            type: str | None
+            default: null

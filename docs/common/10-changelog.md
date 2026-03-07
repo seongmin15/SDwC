@@ -17,6 +17,15 @@
      릴리스 시 [Unreleased]를 버전 번호로 전환.
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
+### Added
+- Auto-generation script `scripts/generate_field_requirements.py`: introspects IntakeData model hierarchy recursively, outputs `.sdwc/field_requirements.yaml` (287 fields, 36 sections, 8 phases) with requirement levels, types, defaults, enums, constraints
+- `.sdwc/field_requirements.yaml`: SSOT for field requirement documentation, auto-generated from Pydantic models
+
+### Changed
+- Pydantic models: added Tracing, HealthCheck, Scalability models (phase6.py); ScalingStrategy enum; BackendApiService api_style conditional validator (model_validator); Page.connected_endpoints now required; RateLimiting.enabled defaults to False; Logging.structured/sensitive_data_masking default to False; CodeReview required/min_reviewers/auto_merge_allowed defaults; PrPolicy template_required/squash_merge defaults; intake.py scalability type str→Scalability
+- output_contract.md: R-2 updated to include field_requirements.yaml (5 server resource files)
+- 10 test files updated for BackendApiService endpoints requirement and Page.connected_endpoints requirement; 23 new unit tests added (402 total)
+
 ### Removed
 - `infra/` directory (k8s deployment manifests migrated to sdwc-platform repo `manifests/sdwc/`)
 - `scripts/` directory (k3d deployment helper scripts migrated to sdwc-platform repo `scripts/`)
