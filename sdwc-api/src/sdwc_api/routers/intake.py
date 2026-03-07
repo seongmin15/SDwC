@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 from collections.abc import Iterable
 from typing import Any
+from urllib.parse import quote
 
 from fastapi import APIRouter, UploadFile
 from fastapi.responses import FileResponse, StreamingResponse
@@ -168,9 +169,12 @@ async def generate_output(file: UploadFile) -> StreamingResponse:
 
     zip_buf = build_zip(rendered, intake, settings.SDWC_RESOURCE_DIR)
     filename = f"{intake.project.name}.zip"
+    encoded = quote(filename)
 
     return StreamingResponse(
         zip_buf,
         media_type="application/zip",
-        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+        headers={
+            "Content-Disposition": f"attachment; filename*=UTF-8''{encoded}",
+        },
     )
