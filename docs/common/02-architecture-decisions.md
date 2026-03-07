@@ -157,6 +157,20 @@
 
 ---
 
+### ADR-7: 인프라 매니페스트 외부화 (SDwC -> sdwc-platform)
+
+- **결정**: k8s 배포 매니페스트를 SDwC 레포의 infra/에서 sdwc-platform 레포의 manifests/sdwc/로 이관
+- **맥락**: sdwc-platform이 SDwC + intake-assistant의 통합 배포 오케스트레이터로 역할. 각 서비스 레포에 매니페스트를 분산 보관하면 SSOT 원칙 위반 (ArgoCD source of truth 이중화). sdwc-platform에 매니페스트를 집중하여 단일 장소에서 전체 배포 상태 관리.
+- **검토한 대안**:
+
+| 대안 | 장점 | 단점 | 탈락 사유 |
+|------|------|------|----------|
+| 각 서비스 레포에 유지 | 코드와 매니페스트 동일 레포 | 배포 오케스트레이션 분산, ArgoCD source 이중화 | sdwc-platform 도입으로 SSOT 위치가 변경됨 |
+
+- **상태**: 확정
+
+---
+
 <!-- Claude: 수정/추가 시 기존 섹션 구조와 형식을 유지.
      ADR 번호는 이 문서의 마지막 ADR 번호 + 1로 채번.
      형식: ### ADR-NNN: 제목 → 결정/맥락/대안/상태.

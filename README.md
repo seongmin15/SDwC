@@ -67,9 +67,7 @@ SDwC/
 │   └── sdwc-web/          # Web UI coding skills
 ├── .sdwc/                 # SDwC server resource originals (read-only)
 ├── sdwc-api/              # Backend service (FastAPI)
-├── sdwc-web/              # Frontend service (React + Vite)
-├── infra/                 # k8s deployment manifests
-└── scripts/               # k3d deployment helper scripts
+└── sdwc-web/              # Frontend service (React + Vite)
 ```
 
 ## Key Features
@@ -98,55 +96,13 @@ Each service has its own workflow, triggered by path-filtered PRs and pushes to 
 
 ### CD - ArgoCD (GitOps)
 
-Deployment to k3s via ArgoCD watching the `infra/` manifests.
+Deployment to k3s via ArgoCD. Kubernetes manifests are managed in the [sdwc-platform](https://github.com/seongmin15/sdwc-platform) repo (`manifests/sdwc/`).
 
 ## Deployment
 
 Both services deploy to k3s (Kubernetes) on WSL2, with images stored in GitHub Container Registry (GHCR).
 
-### Local Deployment (k3d)
-
-Run the full stack locally using [k3d](https://k3d.io) (k3s-in-Docker).
-
-**Prerequisites**: Docker Desktop running, [k3d](https://k3d.io/#installation) installed, kubectl installed
-
-**Quick start** (using helper scripts):
-
-```bash
-./scripts/deploy.sh        # Create cluster, build, import, apply manifests
-./scripts/status.sh         # Check pod/service/ingress status
-./scripts/rebuild.sh        # Rebuild images and restart deployments
-./scripts/logs.sh           # View pod logs
-./scripts/clean.sh          # Delete cluster
-```
-
-**Manual steps**:
-
-```bash
-# 1. Create k3d cluster with port mapping
-k3d cluster create sdwc -p "8080:80@loadbalancer"
-
-# 2. Build Docker images (from project root)
-docker build -f sdwc-api/Dockerfile -t ghcr.io/seongmin15/sdwc/sdwc-api:latest .
-docker build -f sdwc-web/Dockerfile -t ghcr.io/seongmin15/sdwc/sdwc-web:latest .
-
-# 3. Import images into k3d
-k3d image import ghcr.io/seongmin15/sdwc/sdwc-api:latest ghcr.io/seongmin15/sdwc/sdwc-web:latest -c sdwc
-
-# 4. Apply Kubernetes manifests
-kubectl apply -f infra/sdwc-api/deployment.yaml
-kubectl apply -f infra/sdwc-web/deployment.yaml
-kubectl apply -f infra/ingress.yaml
-
-# 5. Verify
-kubectl get pods            # Both pods should be Running
-curl http://localhost:8080/health   # {"status":"ok"}
-curl http://localhost:8080/         # SDwC web UI
-```
-
-Access at **http://localhost:8080**
-
-To shut down: `k3d cluster delete sdwc`
+Deployment is managed via the [sdwc-platform](https://github.com/seongmin15/sdwc-platform) repo, which orchestrates SDwC and intake-assistant services together. See sdwc-platform's README for local k3d deployment instructions.
 
 ## License
 

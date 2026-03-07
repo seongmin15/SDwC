@@ -71,7 +71,7 @@ dist/
 
 **Tool: **
 
-- IaC files location: `infra/` directory at project root.
+- IaC files location: [sdwc-platform](https://github.com/seongmin15/sdwc-platform) repo `manifests/sdwc/` directory.
 - Never hardcode environment-specific values.
 - All infra changes go through PR review.
 
