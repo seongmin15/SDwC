@@ -9,8 +9,8 @@
 
 | 서비스 | 배포 대상 | CI | CD | 시크릿 관리 |
 |--------|----------|-----|-----|-----------|
-| sdwc-api | kubernetes | jenkins | argocd | env_file |
-| sdwc-web | kubernetes | jenkins | argocd | env_file |
+| sdwc-api | kubernetes | github_actions | argocd | env_file |
+| sdwc-web | kubernetes | github_actions | argocd | env_file |
 
 ---
 

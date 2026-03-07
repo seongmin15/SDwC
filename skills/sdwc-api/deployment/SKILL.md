@@ -60,7 +60,7 @@ tests/
 
 **Tool: **
 
-- IaC files location: `infra/` directory at project root.
+- IaC files location: [sdwc-platform](https://github.com/seongmin15/sdwc-platform) repo `manifests/sdwc/` directory.
 - Never hardcode environment-specific values — use variables/parameters.
 - All infra changes go through the same PR review process as code.
 

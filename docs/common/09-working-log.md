@@ -220,3 +220,11 @@
 - **변경된 파일**: .github/workflows/ci-sdwc-api.yml (신규), .github/workflows/ci-sdwc-web.yml (신규), docs/common/07-workplan.md, docs/common/04-infrastructure.md, docs/common/02-architecture-decisions.md, skills/sdwc-api/deployment/SKILL.md, skills/sdwc-web/deployment/SKILL.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: (1) 서비스별 별도 워크플로우 — path filter로 불필요한 실행 방지. (2) Poetry 2.1.1 고정 — Dockerfile과 일치. (3) GHA 레이어 캐시 (cache-from/to: type=gha) — Docker 빌드 시간 단축. (4) Short SHA (7자) 태그 — 가독성과 트레이서빌리티 균형.
 - **미완료/후속**: PR 머지 후 워크플로우 실행 검증, GHCR 이미지 확인
+
+### 2026-03-07 — T026: Migrate infrastructure to sdwc-platform
+
+- **작업**: infra/ 및 scripts/ 디렉토리를 sdwc-platform 레포로 이관. SDwC에서 삭제. 12-runbook.md CI 컬럼 수정 (jenkins -> github_actions). ADR-7 기록.
+- **계획**: sdwc-platform에 manifests/sdwc/ 생성 (deployment.yaml 복사) → ArgoCD/deploy-all.sh 경로 변경 → SDwC에서 infra/, scripts/ 삭제 → README.md 업데이트 → deployment skills IaC 위치 변경 → 12-runbook.md CI 수정 → ADR-7 기록
+- **변경된 파일**: [sdwc-platform] manifests/sdwc/sdwc-api/deployment.yaml (신규 복사), manifests/sdwc/sdwc-web/deployment.yaml (신규 복사), argocd/sdwc-app.yaml (수정), scripts/deploy-all.sh (수정), README.md (수정). [SDwC] infra/ (삭제), scripts/ (삭제), README.md (수정), skills/sdwc-api/deployment/SKILL.md (수정), skills/sdwc-web/deployment/SKILL.md (수정), docs/common/02-architecture-decisions.md (ADR-7 추가), docs/common/12-runbook.md (수정), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: (1) ingress.yaml은 sdwc-platform의 platform-ingress.yaml로 대체되어 복사하지 않음. (2) sdwc-platform 먼저 커밋 후 SDwC 변경 — ArgoCD가 매니페스트를 잃지 않도록 순서 보장.
+- **미완료/후속**: 없음

@@ -355,6 +355,22 @@ Any active status -> Cancelled
   - [x] Non-ASCII character count = 0
 - Result: 3 comment fixes in .sdwc/intake_template.yaml (lines 407, 547, 795). YAML parsing OK. Non-ASCII 0. intake_data.yaml not in repo for cross-check.
 
+### T026: Migrate infrastructure to sdwc-platform
+- Status: Done
+- Service: sdwc-api, sdwc-web
+- Description: Externalize infra/ and scripts/ directories to sdwc-platform repo (unified deployment orchestrator). Delete local infra/ and scripts/. Fix stale CI reference in 12-runbook.md (jenkins -> github_actions, missed in T025). Record ADR-7.
+- Acceptance Criteria:
+  - [x] sdwc-platform/manifests/sdwc/ has both deployment.yaml files
+  - [x] ArgoCD sdwc-app.yaml points to sdwc-platform repo
+  - [x] deploy-all.sh uses $PLATFORM_ROOT/manifests/sdwc/ paths
+  - [x] SDwC infra/ directory deleted
+  - [x] SDwC scripts/ directory deleted
+  - [x] README.md has zero references to infra/ or ./scripts/
+  - [x] 12-runbook.md CI column shows github_actions
+  - [x] ADR-7 recorded for infra externalization
+  - [x] Deployment skills updated (IaC location)
+- Result: sdwc-platform 레포에 manifests/sdwc/ 디렉토리 생성 및 deployment.yaml 2개 복사. ArgoCD source와 deploy-all.sh 경로 변경. SDwC에서 infra/ (3파일), scripts/ (5파일) 삭제. README.md 프로젝트 구조 및 배포 섹션 업데이트. 12-runbook.md CI 컬럼 수정. ADR-7 기록.
+
 ### T025: GitHub Actions CI Pipeline
 - Status: Done
 - Service: sdwc-api, sdwc-web

@@ -17,6 +17,18 @@
      릴리스 시 [Unreleased]를 버전 번호로 전환.
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
+### Removed
+- `infra/` directory (k8s deployment manifests migrated to sdwc-platform repo `manifests/sdwc/`)
+- `scripts/` directory (k3d deployment helper scripts migrated to sdwc-platform repo `scripts/`)
+
+### Changed
+- README.md: removed infra/ and scripts/ from project structure, replaced local k3d deployment section with sdwc-platform reference, updated CD section
+- Deployment skills (sdwc-api, sdwc-web): IaC location changed from `infra/` to sdwc-platform repo `manifests/sdwc/`
+- ADR-7: recorded infra externalization decision (SDwC -> sdwc-platform, SSOT principle)
+
+### Fixed
+- 12-runbook.md: CI column corrected from `jenkins` to `github_actions` (missed in T025)
+
 ### Added
 - GitHub Actions CI pipelines: ci-sdwc-api.yml (ruff + mypy + pytest, Docker build/push to GHCR) and ci-sdwc-web.yml (eslint + tsc + prettier + vitest + build, Docker build/push to GHCR). Path-filtered triggers, concurrency control, GHA layer cache.
 
