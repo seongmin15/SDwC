@@ -98,27 +98,33 @@ settings = Settings()
 
 ## 4. CI/CD Pipeline
 
-**Tool: jenkins**
-**Stages: lint -> test -> build -> push to ghcr**
+**Tool: GitHub Actions**
+**Stages: lint -> typecheck -> test -> build -> push to ghcr**
 
-Standard pipeline steps for this service:
+Standard pipeline steps for this service (`.github/workflows/ci-sdwc-api.yml`):
 
 ```
+Job: check (on PR and push to main)
 1. Checkout code
-2. Install dependencies
-3. Lint (ruff check .)
-4. Type check (mypy src/)
-5. Unit tests (pytest tests/unit/)
-6. Integration tests (pytest tests/integration/)
-7. Build container image
-8. Push to registry
-9. Deploy to target environment
+2. Setup Python 3.12
+3. Install Poetry 2.1.1
+4. poetry install
+5. ruff check src/
+6. mypy src/
+7. pytest --tb=short
+
+Job: docker (on push to main only, after check passes)
+1. Setup Docker Buildx
+2. Login to GHCR
+3. Build + push image (tags: sha-<7char>, latest)
 ```
+
+**Triggers:** PR to main + push to main, path-filtered to `sdwc-api/**` and `.sdwc/**`
 
 **Rules:**
 - Pipeline must pass before merge.
-- Integration tests run against a disposable test database.
-- Container image tag uses git commit SHA for traceability.
+- Container image tag uses git commit SHA (short, 7 chars) for traceability.
+- Concurrency: cancel-in-progress per ref.
 **CD Tool: argocd**
 **Strategy: gitops**
 

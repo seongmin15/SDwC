@@ -354,3 +354,18 @@ Any active status -> Cancelled
   - [x] intake_data.yaml cross-check (same fields exist) -- intake_data.yaml not in repo; field structure matches template
   - [x] Non-ASCII character count = 0
 - Result: 3 comment fixes in .sdwc/intake_template.yaml (lines 407, 547, 795). YAML parsing OK. Non-ASCII 0. intake_data.yaml not in repo for cross-check.
+
+### T025: GitHub Actions CI Pipeline
+- Status: Done
+- Service: sdwc-api, sdwc-web
+- Description: Configure GitHub Actions CI pipelines for both services (lint, test, build, push to GHCR). Dockerfiles already exist from T017/T018. Update docs from jenkins to GitHub Actions.
+- Acceptance Criteria:
+  - [x] Dockerfile for sdwc-api (done in T017)
+  - [x] Dockerfile for sdwc-web (done in T018)
+  - [x] GitHub Actions workflow for sdwc-api (lint + test + docker push)
+  - [x] GitHub Actions workflow for sdwc-web (lint + test + build + docker push)
+  - [x] Push images to GHCR on main push
+  - [x] ADR recorded for jenkins -> GitHub Actions decision
+  - [x] 04-infrastructure.md CI column updated
+  - [x] Deployment skills updated for both services
+- Result: 2 GitHub Actions workflows (ci-sdwc-api.yml, ci-sdwc-web.yml) with path-filtered triggers, check + docker jobs, GHCR push with sha-7char + latest tags, GHA layer cache. ADR-6 recorded. Infra manifests and k3d scripts updated from local tags to GHCR paths. README.md updated with CI/CD section. Workflow REPO_LC lowercasing for GHCR compatibility.

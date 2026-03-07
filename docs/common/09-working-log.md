@@ -212,3 +212,11 @@
 - **변경된 파일**: .sdwc/intake_template.yaml (3건 주석 수정), docs/common/07-workplan.md, docs/common/09-working-log.md, docs/common/10-changelog.md
 - **의사결정**: intake_data.yaml이 repo에 없어 교차 확인은 템플릿 구조 기준으로 대체. generation_rules.md, output_contract.md는 수정 대상 아님 확인.
 - **미완료/후속**: 없음
+
+### 2026-03-07 — T025: GitHub Actions CI Pipeline
+
+- **작업**: GitHub Actions CI 파이프라인 구성. 서비스별 워크플로우 2개 생성 (ci-sdwc-api.yml, ci-sdwc-web.yml). Jenkins → GitHub Actions CI 도구 변경에 따른 문서 업데이트 (04-infrastructure, deployment skills, ADR-6).
+- **계획**: 07-workplan T025 수정 → 04-infrastructure CI 컬럼 변경 → ADR-6 추가 → deployment skills 업데이트 → 워크플로우 파일 생성 → 10-changelog 기록
+- **변경된 파일**: .github/workflows/ci-sdwc-api.yml (신규), .github/workflows/ci-sdwc-web.yml (신규), docs/common/07-workplan.md, docs/common/04-infrastructure.md, docs/common/02-architecture-decisions.md, skills/sdwc-api/deployment/SKILL.md, skills/sdwc-web/deployment/SKILL.md, docs/common/09-working-log.md, docs/common/10-changelog.md
+- **의사결정**: (1) 서비스별 별도 워크플로우 — path filter로 불필요한 실행 방지. (2) Poetry 2.1.1 고정 — Dockerfile과 일치. (3) GHA 레이어 캐시 (cache-from/to: type=gha) — Docker 빌드 시간 단축. (4) Short SHA (7자) 태그 — 가독성과 트레이서빌리티 균형.
+- **미완료/후속**: PR 머지 후 워크플로우 실행 검증, GHCR 이미지 확인

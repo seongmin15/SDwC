@@ -18,6 +18,13 @@
      형식: ## [X.Y.Z] - YYYY-MM-DD -->
 
 ### Added
+- GitHub Actions CI pipelines: ci-sdwc-api.yml (ruff + mypy + pytest, Docker build/push to GHCR) and ci-sdwc-web.yml (eslint + tsc + prettier + vitest + build, Docker build/push to GHCR). Path-filtered triggers, concurrency control, GHA layer cache.
+
+### Changed
+- CI tool changed from Jenkins to GitHub Actions (ADR-6). Updated 04-infrastructure.md CI column and deployment skills for both services.
+- Deployment manifests and k3d scripts: image references changed from local tags (sdwc-api:local, sdwc-web:local) to GHCR paths (ghcr.io/seongmin15/sdwc/sdwc-api:latest, ghcr.io/seongmin15/sdwc/sdwc-web:latest). imagePullPolicy changed from Never to IfNotPresent.
+
+### Added
 - intake_template.yaml: mobile/native enum values for testing.levels[].framework (xctest, espresso, robolectric, flutter_test, detox), deployment.target (app_store, play_store, both_stores), ci.tool (xcode_cloud, bitrise, codemagic), cd.tool (fastlane, app_center). Matching Pydantic StrEnum values added.
 - intake_template.yaml: header guidance about removing unused optional fields + DELETE reminders on optional blocks with required sub-fields (push_notification, infrastructure_as_code x5, disaster_recovery, metrics, alerting)
 - intake_template.yaml: enum comments added to ci.tool and cd.tool in web_ui, worker, mobile_app, data_pipeline deployment sections (previously only backend_api had them)
