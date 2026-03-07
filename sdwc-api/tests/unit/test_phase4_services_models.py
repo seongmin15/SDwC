@@ -1,11 +1,10 @@
 """Tests for Phase 4 models: Services (all 5 types) and discriminated union."""
 
-from typing import Annotated
-
 import pytest
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, ValidationError
 
 from sdwc_api.schemas.phase4_services import (
+    Attribute,
     Auth,
     BackendApiService,
     Component,
@@ -13,10 +12,15 @@ from sdwc_api.schemas.phase4_services import (
     Deployment,
     Endpoint,
     Entity,
-    Attribute,
+    GraphQLOperation,
+    GraphQLSchema,
+    GrpcDefinition,
+    GrpcService,
     MobileAppService,
     Page,
     Pipeline,
+    RateLimiting,
+    RpcMethod,
     Screen,
     Service,
     Sink,
@@ -25,7 +29,6 @@ from sdwc_api.schemas.phase4_services import (
     Worker,
     WorkerService,
 )
-
 
 # --- Helper: minimal Deployment ---
 
@@ -50,11 +53,12 @@ class TestBackendApiService:
             build_tool="poetry",
             api_style="rest",
             auth=Auth(method="none", if_none_risks_accepted="Public utility"),
+            endpoints=[Endpoint(method="GET", path="/health", description="Health check")],
             deployment=_deployment(),
         )
         assert svc.type == "backend_api"
         assert svc.databases is None
-        assert svc.endpoints is None
+        assert len(svc.endpoints) == 1
 
     def test_create_with_endpoints_succeeds(self) -> None:
         svc = BackendApiService(
@@ -84,6 +88,7 @@ class TestBackendApiService:
             build_tool="gradle",
             api_style="rest",
             auth=Auth(method="session"),
+            endpoints=[Endpoint(method="GET", path="/users", description="List users")],
             entities=[
                 Entity(
                     name="User",
@@ -139,6 +144,126 @@ class TestBackendApiService:
             Entity(name="x", description="x", key_attributes=[])
         assert "key_attributes" in str(exc_info.value)
 
+    def test_rest_without_endpoints_raises_error(self) -> None:
+        """api_style='rest' requires endpoints."""
+        with pytest.raises(ValidationError) as exc_info:
+            BackendApiService(
+                name="x",
+                type="backend_api",
+                responsibility="x",
+                language="python",
+                framework="fastapi",
+                build_tool="poetry",
+                api_style="rest",
+                auth=Auth(method="none"),
+                deployment=_deployment(),
+            )
+        assert "endpoints required" in str(exc_info.value)
+
+    def test_graphql_without_graphql_raises_error(self) -> None:
+        """api_style='graphql' requires graphql field."""
+        with pytest.raises(ValidationError) as exc_info:
+            BackendApiService(
+                name="x",
+                type="backend_api",
+                responsibility="x",
+                language="python",
+                framework="fastapi",
+                build_tool="poetry",
+                api_style="graphql",
+                auth=Auth(method="none"),
+                deployment=_deployment(),
+            )
+        assert "graphql required" in str(exc_info.value)
+
+    def test_graphql_with_graphql_field_succeeds(self) -> None:
+        svc = BackendApiService(
+            name="x",
+            type="backend_api",
+            responsibility="x",
+            language="python",
+            framework="fastapi",
+            build_tool="poetry",
+            api_style="graphql",
+            auth=Auth(method="none"),
+            graphql=GraphQLSchema(
+                schema_types=["User"],
+                queries=[
+                    GraphQLOperation(
+                        name="getUser", arguments="id: ID!", return_type="User", description="Get user",
+                    ),
+                ],
+                mutations=[
+                    GraphQLOperation(
+                        name="createUser", arguments="input: Input!", return_type="User", description="Create",
+                    ),
+                ],
+            ),
+            deployment=_deployment(),
+        )
+        assert svc.api_style == "graphql"
+
+    def test_grpc_without_grpc_raises_error(self) -> None:
+        """api_style='grpc' requires grpc field."""
+        with pytest.raises(ValidationError) as exc_info:
+            BackendApiService(
+                name="x",
+                type="backend_api",
+                responsibility="x",
+                language="python",
+                framework="fastapi",
+                build_tool="poetry",
+                api_style="grpc",
+                auth=Auth(method="none"),
+                deployment=_deployment(),
+            )
+        assert "grpc required" in str(exc_info.value)
+
+    def test_grpc_with_grpc_field_succeeds(self) -> None:
+        svc = BackendApiService(
+            name="x",
+            type="backend_api",
+            responsibility="x",
+            language="python",
+            framework="fastapi",
+            build_tool="poetry",
+            api_style="grpc",
+            auth=Auth(method="none"),
+            grpc=GrpcDefinition(
+                services=[GrpcService(name="UserService", description="User ops")],
+                rpc_methods=[
+                    RpcMethod(
+                        service="UserService", method="GetUser",
+                        request_type="GetUserRequest", response_type="User",
+                    ),
+                ],
+            ),
+            deployment=_deployment(),
+        )
+        assert svc.api_style == "grpc"
+
+
+class TestRateLimiting:
+    def test_enabled_defaults_to_false(self) -> None:
+        rl = RateLimiting()
+        assert rl.enabled is False
+        assert rl.strategy is None
+
+    def test_explicit_enabled_true(self) -> None:
+        rl = RateLimiting(enabled=True, strategy="sliding_window")
+        assert rl.enabled is True
+
+
+class TestPageConnectedEndpoints:
+    def test_connected_endpoints_required(self) -> None:
+        with pytest.raises(ValidationError) as exc_info:
+            Page(name="Home", purpose="Main")
+        assert "connected_endpoints" in str(exc_info.value)
+
+    def test_connected_endpoints_empty_list_allowed(self) -> None:
+        p = Page(name="Home", purpose="Main", connected_endpoints=[])
+        assert p.connected_endpoints == []
+
 
 # --- WebUiService ---
 
@@ -152,7 +277,7 @@ class TestWebUiService:
             language="typescript",
             framework="react",
             build_tool="vite",
-            pages=[Page(name="Home", purpose="Main page")],
+            pages=[Page(name="Home", purpose="Main page", connected_endpoints=[])],
             deployment=_deployment(target="vercel"),
         )
         assert svc.type == "web_ui"
@@ -175,6 +300,7 @@ class TestWebUiService:
                 Page(
                     name="Home",
                     purpose="Landing",
+                    connected_endpoints=["/api/home"],
                     components=[Component(name="Hero", purpose="Banner")],
                 ),
             ],
@@ -206,7 +332,7 @@ class TestWebUiService:
                 language="python",
                 framework="react",
                 build_tool="vite",
-                pages=[Page(name="x", purpose="x")],
+                pages=[Page(name="x", purpose="x", connected_endpoints=[])],
                 deployment=_deployment(),
             )
         assert "language" in str(exc_info.value)
@@ -414,6 +540,7 @@ class TestServiceDiscriminatedUnion:
                 "build_tool": "poetry",
                 "api_style": "rest",
                 "auth": {"method": "none"},
+                "endpoints": [{"method": "GET", "path": "/health", "description": "Health"}],
                 "deployment": {"target": "docker_compose"},
             },
         }
@@ -429,7 +556,7 @@ class TestServiceDiscriminatedUnion:
                 "language": "typescript",
                 "framework": "react",
                 "build_tool": "vite",
-                "pages": [{"name": "Home", "purpose": "Main"}],
+                "pages": [{"name": "Home", "purpose": "Main", "connected_endpoints": []}],
                 "deployment": {"target": "vercel"},
             },
         }

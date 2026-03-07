@@ -25,6 +25,7 @@ from sdwc_api.schemas.phase4_services import (
     Auth,
     BackendApiService,
     Deployment,
+    Endpoint,
 )
 from sdwc_api.schemas.phase5 import (
     CriticalFlow,
@@ -109,6 +110,7 @@ def _minimal_intake_data(**overrides: object) -> dict:
                 build_tool="poetry",
                 api_style="rest",
                 auth=Auth(method="none", if_none_risks_accepted="Public"),
+                endpoints=[Endpoint(method="POST", path="/generate", description="Generate docs")],
                 deployment=Deployment(target="docker_compose"),
             ),
         ],
@@ -260,7 +262,7 @@ class TestIntakeDataCrossValidation:
             language="typescript",
             framework="react",
             build_tool="vite",
-            pages=[Page(name="Home", purpose="Main page")],
+            pages=[Page(name="Home", purpose="Main page", connected_endpoints=[])],
             deployment=Deployment(target="docker_compose"),
         )
         data["services"] = [*list(data["services"]), web_svc]

@@ -47,9 +47,9 @@ class CodingStandard(BaseModel):
 class CodeReview(BaseModel):
     """Code review policy."""
 
-    required: bool
-    min_reviewers: int
-    auto_merge_allowed: bool
+    required: bool = True
+    min_reviewers: int = 1
+    auto_merge_allowed: bool = False
 
 
 class Documentation(BaseModel):
@@ -103,8 +103,8 @@ class PrPolicy(BaseModel):
     """Pull request policy."""
 
     created_by: PrCreatedBy | None = None
-    template_required: bool | None = None
-    squash_merge: bool | None = None
+    template_required: bool = True
+    squash_merge: bool = True
 
 
 class VersionControl(BaseModel):

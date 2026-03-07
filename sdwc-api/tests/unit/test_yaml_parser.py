@@ -66,6 +66,7 @@ def _minimal_intake_yaml() -> str:
                     "build_tool": "poetry",
                     "api_style": "rest",
                     "auth": {"method": "none", "if_none_risks_accepted": "Public"},
+                    "endpoints": [{"method": "GET", "path": "/health", "description": "Health"}],
                     "deployment": {"target": "docker_compose"},
                 },
             ],

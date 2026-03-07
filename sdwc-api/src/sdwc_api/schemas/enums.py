@@ -783,6 +783,14 @@ class SecurityCategory(StrEnum):
 # Phase 6 enums
 
 
+class ScalingStrategy(StrEnum):
+    """Scaling strategy."""
+
+    VERTICAL = "vertical"
+    HORIZONTAL = "horizontal"
+    AUTO = "auto"
+
+
 class LongRunningHandling(StrEnum):
     """Long-running operation handling strategy."""
 

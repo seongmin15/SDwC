@@ -38,6 +38,7 @@ from sdwc_api.schemas.phase6 import (
     ExternalSystem,
     Observability,
     Performance,
+    Scalability,
 )
 from sdwc_api.schemas.phase7 import (
     CodeQuality,
@@ -92,7 +93,7 @@ class IntakeData(BaseModel):
     performance: Performance
     availability: Availability | None = None
     observability: Observability | None = None
-    scalability: str | None = None
+    scalability: Scalability | None = None
     external_systems: list[ExternalSystem] | None = None
 
     # Phase 7

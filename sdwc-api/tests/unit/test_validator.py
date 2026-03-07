@@ -48,6 +48,7 @@ from sdwc_api.schemas.phase4_services import (
     Auth,
     BackendApiService,
     Deployment,
+    Endpoint,
     Page,
     WebUiService,
 )
@@ -80,6 +81,7 @@ def _minimal_backend_service(**overrides: object) -> BackendApiService:
         "build_tool": "poetry",
         "api_style": "rest",
         "auth": Auth(method="none", if_none_risks_accepted="Public"),
+        "endpoints": [Endpoint(method="GET", path="/health", description="Health")],
         "deployment": Deployment(target="docker_compose"),
     }
     defaults.update(overrides)
@@ -94,7 +96,7 @@ def _minimal_web_service(**overrides: object) -> WebUiService:
         "language": "typescript",
         "framework": "react",
         "build_tool": "vite",
-        "pages": [Page(name="Home", purpose="Main")],
+        "pages": [Page(name="Home", purpose="Main", connected_endpoints=[])],
         "page_transitions": [{"from": "Home", "to": "Result", "condition": "submit"}],
         "deployment": Deployment(target="docker_compose"),
     }

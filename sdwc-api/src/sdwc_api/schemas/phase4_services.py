@@ -1,8 +1,8 @@
 """Phase 4 models: Services — all 5 types with Deployment and discriminated union."""
 
-from typing import Annotated, Literal
+from typing import Annotated, Literal, Self
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from sdwc_api.schemas.enums import (
     AccessibilityLevel,
@@ -207,7 +207,7 @@ class FileStorage(BaseModel):
 class RateLimiting(BaseModel):
     """Rate limiting configuration."""
 
-    enabled: bool
+    enabled: bool = False
     strategy: str | None = None
 
 
@@ -325,6 +325,17 @@ class BackendApiService(BaseModel):
     grpc: GrpcDefinition | None = None
     deployment: Deployment
 
+    @model_validator(mode="after")
+    def validate_api_style_fields(self) -> Self:
+        """Validate that api_style-specific fields are provided."""
+        if self.api_style == ApiStyle.REST and not self.endpoints:
+            raise ValueError("endpoints required when api_style is 'rest'")
+        if self.api_style == ApiStyle.GRAPHQL and not self.graphql:
+            raise ValueError("graphql required when api_style is 'graphql'")
+        if self.api_style == ApiStyle.GRPC and not self.grpc:
+            raise ValueError("grpc required when api_style is 'grpc'")
+        return self
+
 
 # --- Web UI service models ---
 
@@ -342,7 +353,7 @@ class Page(BaseModel):
     name: str
     purpose: str
     key_interactions: list[str] | None = None
-    connected_endpoints: list[str] | None = None
+    connected_endpoints: list[str]
     states: list[str] | None = None
     components: list[Component] | None = None
 

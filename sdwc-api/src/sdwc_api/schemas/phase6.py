@@ -1,4 +1,4 @@
-"""Phase 6 models: Performance, Availability, Observability, External Systems (HOW-WELL)."""
+"""Phase 6 models: Performance, Availability, Observability, Scalability, External Systems (HOW-WELL)."""
 
 from pydantic import BaseModel
 
@@ -6,6 +6,7 @@ from sdwc_api.schemas.enums import (
     Likelihood,
     LongRunningHandling,
     ProgressFeedback,
+    ScalingStrategy,
 )
 
 # --- Performance ---
@@ -75,8 +76,8 @@ class Logging(BaseModel):
     """Logging configuration."""
 
     framework: str
-    structured: bool
-    sensitive_data_masking: bool
+    structured: bool = False
+    sensitive_data_masking: bool = False
     retention_period: str
 
 
@@ -95,12 +96,39 @@ class Alerting(BaseModel):
     critical_alerts: list[str]
 
 
+class Tracing(BaseModel):
+    """Distributed tracing configuration."""
+
+    enabled: bool = False
+    tool: str | None = None
+
+
+class HealthCheck(BaseModel):
+    """Health check endpoint configuration."""
+
+    endpoint: str
+    checks: str
+
+
 class Observability(BaseModel):
     """Observability configuration."""
 
     logging: Logging | None = None
     metrics: Metrics | None = None
     alerting: Alerting | None = None
+    tracing: Tracing | None = None
+    health_checks: list[HealthCheck] | None = None
+
+
+# --- Scalability ---
+
+
+class Scalability(BaseModel):
+    """Scalability configuration."""
+
+    strategy: ScalingStrategy | None = None
+    bottlenecks: str | None = None
+    scaling_trigger: str | None = None
 
 
 # --- External Systems ---

@@ -9,12 +9,15 @@ from sdwc_api.schemas.phase6 import (
     DataVolume,
     DisasterRecovery,
     ExternalSystem,
+    HealthCheck,
     Logging,
     LongRunningOperation,
     Metrics,
     Observability,
     Performance,
     ResponseTimeTarget,
+    Scalability,
+    Tracing,
 )
 
 # --- Performance ---
@@ -109,12 +112,37 @@ class TestAvailability:
 # --- Observability ---
 
 
+class TestTracing:
+    def test_create_with_defaults(self) -> None:
+        t = Tracing()
+        assert t.enabled is False
+        assert t.tool is None
+
+    def test_create_with_all_fields(self) -> None:
+        t = Tracing(enabled=True, tool="jaeger")
+        assert t.enabled is True
+        assert t.tool == "jaeger"
+
+
+class TestHealthCheck:
+    def test_create_with_required_fields(self) -> None:
+        hc = HealthCheck(endpoint="/health", checks="db,redis")
+        assert hc.endpoint == "/health"
+        assert hc.checks == "db,redis"
+
+    def test_missing_required_fields_raises_error(self) -> None:
+        with pytest.raises(ValidationError):
+            HealthCheck()  # type: ignore[call-arg]
+
+
 class TestObservability:
     def test_create_with_all_optional_defaults(self) -> None:
         o = Observability()
         assert o.logging is None
         assert o.metrics is None
         assert o.alerting is None
+        assert o.tracing is None
+        assert o.health_checks is None
 
     def test_create_with_all_fields_succeeds(self) -> None:
         o = Observability(
@@ -133,10 +161,48 @@ class TestObservability:
                 tool="pagerduty",
                 critical_alerts=["error_rate > 5%", "latency_p99 > 10s"],
             ),
+            tracing=Tracing(enabled=True, tool="jaeger"),
+            health_checks=[HealthCheck(endpoint="/health", checks="db,redis")],
         )
         assert o.logging is not None
         assert o.logging.structured is True
         assert len(o.metrics.key_metrics) == 2
+        assert o.tracing.enabled is True
+        assert len(o.health_checks) == 1
+
+
+class TestLoggingDefaults:
+    def test_structured_defaults_to_false(self) -> None:
+        log = Logging(framework="structlog", retention_period="30d")
+        assert log.structured is False
+        assert log.sensitive_data_masking is False
+
+    def test_explicit_values_override_defaults(self) -> None:
+        log = Logging(framework="structlog", structured=True, sensitive_data_masking=True, retention_period="30d")
+        assert log.structured is True
+        assert log.sensitive_data_masking is True
+
+
+class TestScalability:
+    def test_create_with_all_optional_defaults(self) -> None:
+        s = Scalability()
+        assert s.strategy is None
+        assert s.bottlenecks is None
+        assert s.scaling_trigger is None
+
+    def test_create_with_all_fields(self) -> None:
+        s = Scalability(strategy="horizontal", bottlenecks="DB connections", scaling_trigger="CPU > 80%")
+        assert s.strategy == "horizontal"
+
+    def test_invalid_strategy_raises_error(self) -> None:
+        with pytest.raises(ValidationError) as exc_info:
+            Scalability(strategy="diagonal")  # type: ignore[arg-type]
+        assert "strategy" in str(exc_info.value)
+
+    def test_all_valid_strategy_values(self) -> None:
+        for v in ("vertical", "horizontal", "auto"):
+            s = Scalability(strategy=v)
+            assert s.strategy == v
 
 
 # --- ExternalSystem ---
