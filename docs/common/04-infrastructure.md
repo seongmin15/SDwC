@@ -8,8 +8,8 @@
 
 | 서비스 | 배포 대상 | CI | CD | 컨테이너 레지스트리 | 시크릿 관리 |
 |--------|----------|-----|-----|---------------------|-----------|
-| sdwc-api | kubernetes | jenkins | argocd | ghcr | env_file |
-| sdwc-web | kubernetes | jenkins | argocd | ghcr | env_file |
+| sdwc-api | kubernetes | github_actions | argocd | ghcr | env_file |
+| sdwc-web | kubernetes | github_actions | argocd | ghcr | env_file |
 
 > 배포 명령어, Dockerfile 작성, CI/CD 파이프라인 설정 등 상세 규칙은 skills/{service}/deployment/ 참조
 

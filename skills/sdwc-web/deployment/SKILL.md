@@ -101,27 +101,34 @@ VITE_APP_ENV=development
 
 ## 4. CI/CD Pipeline
 
-**Tool: jenkins**
-**Stages: lint -> test -> build -> push to ghcr**
+**Tool: GitHub Actions**
+**Stages: lint -> typecheck -> format -> test -> build -> push to ghcr**
 
-Standard pipeline steps:
+Standard pipeline steps (`.github/workflows/ci-sdwc-web.yml`):
 
 ```
+Job: check (on PR and push to main)
 1. Checkout code
-2. Install dependencies (--frozen-lockfile)
-3. Lint (eslint src/)
-4. Type check (tsc --noEmit)
-5. Unit tests (vitest)
-6. Build (npm run build)
-7. Bundle size check
-8. E2E tests (against preview build)
-9. Deploy to target environment
+2. Setup Node 20
+3. npm ci
+4. npm run lint
+5. npm run typecheck
+6. npm run format:check
+7. npm test
+8. npm run build
+
+Job: docker (on push to main only, after check passes)
+1. Setup Docker Buildx
+2. Login to GHCR
+3. Build + push image (tags: sha-<7char>, latest)
 ```
+
+**Triggers:** PR to main + push to main, path-filtered to `sdwc-web/**`
 
 **Rules:**
 - Pipeline must pass before merge.
-- E2E tests run against a built preview, not dev server.
-- Tag container images with git commit SHA.
+- Tag container images with git commit SHA (short, 7 chars).
+- Concurrency: cancel-in-progress per ref.
 **CD Tool: argocd**
 **Strategy: gitops**
 

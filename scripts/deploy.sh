@@ -11,12 +11,15 @@ cd "$PROJECT_ROOT"
 echo "🚀 Creating k3d cluster..."
 k3d cluster create $CLUSTER_NAME -p "8080:80@loadbalancer" || echo "Cluster already exists"
 
+API_IMAGE="ghcr.io/seongmin15/sdwc/sdwc-api:latest"
+WEB_IMAGE="ghcr.io/seongmin15/sdwc/sdwc-web:latest"
+
 echo "🐳 Building Docker images..."
-docker build -f sdwc-api/Dockerfile -t sdwc-api:local .
-docker build -f sdwc-web/Dockerfile -t sdwc-web:local .
+docker build -f sdwc-api/Dockerfile -t $API_IMAGE .
+docker build -f sdwc-web/Dockerfile -t $WEB_IMAGE .
 
 echo "📦 Importing images into k3d..."
-k3d image import sdwc-api:local sdwc-web:local -c $CLUSTER_NAME
+k3d image import $API_IMAGE $WEB_IMAGE -c $CLUSTER_NAME
 
 echo "☸️ Applying manifests..."
 kubectl apply -f infra/sdwc-api/deployment.yaml

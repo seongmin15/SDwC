@@ -143,6 +143,20 @@
 ---
 
 
+### ADR-6: CI 도구 변경 (Jenkins -> GitHub Actions)
+
+- **결정**: GitHub Actions for CI
+- **맥락**: GitHub-hosted repository에서 자연스러운 CI 통합. Jenkins는 별도 서버 설치/관리 필요. GitHub Actions는 리포지토리 내장, GHCR 네이티브 인증, PR 체크 자동 연동 제공.
+- **검토한 대안**:
+
+| 대안 | 장점 | 단점 | 탈락 사유 |
+|------|------|------|----------|
+| jenkins | Mature, highly customizable, self-hosted control | Requires separate server setup and maintenance, no native GitHub integration | Operational overhead unjustified for a small team project hosted on GitHub |
+
+- **상태**: 확정
+
+---
+
 <!-- Claude: 수정/추가 시 기존 섹션 구조와 형식을 유지.
      ADR 번호는 이 문서의 마지막 ADR 번호 + 1로 채번.
      형식: ### ADR-NNN: 제목 → 결정/맥락/대안/상태.
