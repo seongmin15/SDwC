@@ -221,6 +221,20 @@
 - **의사결정**: (1) 서비스별 별도 워크플로우 — path filter로 불필요한 실행 방지. (2) Poetry 2.1.1 고정 — Dockerfile과 일치. (3) GHA 레이어 캐시 (cache-from/to: type=gha) — Docker 빌드 시간 단축. (4) Short SHA (7자) 태그 — 가독성과 트레이서빌리티 균형.
 - **미완료/후속**: PR 머지 후 워크플로우 실행 검증, GHCR 이미지 확인
 
+### 2026-03-08 — T027: Fix Pydantic model discrepancies
+
+- **작업**: intake_template.yaml 주석과 Pydantic 모델 간 19개 불일치 수정 (5 카테고리: A-missing models, B-conditional validators, C-required/optional, D-defaults, E-minor)
+- **변경된 파일**: schemas/enums.py (ScalingStrategy enum 추가), schemas/phase6.py (Tracing, HealthCheck, Scalability 모델 추가, Observability 업데이트, Logging 기본값), schemas/phase4_services.py (api_style model_validator, Page.connected_endpoints required, RateLimiting.enabled 기본값), schemas/phase7.py (CodeReview, PrPolicy 기본값), schemas/intake.py (scalability str→Scalability), tests/unit/test_phase6_models.py, test_phase4_services_models.py, test_phase7_models.py, test_intake_model.py (신규 테스트 + 기존 테스트 수정), tests/unit/test_renderer.py, test_validator.py, test_context.py, test_packager.py, test_yaml_parser.py (endpoints/connected_endpoints 필드 추가), tests/integration/test_intake.py (endpoints 추가)
+- **의사결정**: (1) Category E 4건은 코드 변경 불필요 확인 (description 기본값 acceptable, Likelihood enum 재사용, external_systems phase 위치 유지, mobile screens connected_endpoints 이미 required). (2) BackendApiService api_style validator는 model_validator(mode="after")로 구현 — Self 타입 반환.
+- **미완료/후속**: T028 (field_requirements.yaml)
+
+### 2026-03-08 — T028: Create field_requirements.yaml
+
+- **작업**: IntakeData 모델 계층 구조를 재귀 탐색하여 .sdwc/field_requirements.yaml 자동 생성 스크립트 작성 및 실행. output_contract.md 업데이트.
+- **변경된 파일**: sdwc-api/scripts/generate_field_requirements.py (신규), .sdwc/field_requirements.yaml (신규, 자동 생성), .sdwc/output_contract.md (R-2 파일 목록 및 디렉토리 트리에 field_requirements.yaml 추가)
+- **의사결정**: (1) Python 3.10+ types.UnionType과 typing.Union 양쪽 지원하는 _is_union() 헬퍼 구현. (2) PydanticUndefined 직접 비교로 required/optional 분류 정확도 확보. (3) services 필드는 Annotated discriminated union이라 SERVICE_TYPE_MODELS dict로 5개 서비스 타입 별도 탐색. (4) CONDITIONAL_FIELDS dict으로 model_validator 조건부 필드 표시.
+- **미완료/후속**: 없음
+
 ### 2026-03-07 — T026: Migrate infrastructure to sdwc-platform
 
 - **작업**: infra/ 및 scripts/ 디렉토리를 sdwc-platform 레포로 이관. SDwC에서 삭제. 12-runbook.md CI 컬럼 수정 (jenkins -> github_actions). ADR-7 기록.

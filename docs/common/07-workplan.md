@@ -371,6 +371,37 @@ Any active status -> Cancelled
   - [x] Deployment skills updated (IaC location)
 - Result: sdwc-platform 레포에 manifests/sdwc/ 디렉토리 생성 및 deployment.yaml 2개 복사. ArgoCD source와 deploy-all.sh 경로 변경. SDwC에서 infra/ (3파일), scripts/ (5파일) 삭제. README.md 프로젝트 구조 및 배포 섹션 업데이트. 12-runbook.md CI 컬럼 수정. ADR-7 기록.
 
+### T027: Fix Pydantic model discrepancies
+- Status: Done
+- Service: sdwc-api
+- Origin: intake_template.yaml/Pydantic model audit
+- Description: Fix 19 discrepancies between intake_template.yaml comments and Pydantic models across 5 categories: (A) add missing models (Tracing, HealthCheck, Scalability), (B) add api_style conditional validators, (C) fix required/optional mismatches, (D) add defaults to match template comments, (E) minor no-code-change items. Update all affected tests.
+- Acceptance Criteria:
+  - [x] Tracing, HealthCheck models added to phase6.py; Observability updated
+  - [x] Scalability expanded from str to object model with ScalingStrategy enum
+  - [x] BackendApiService has api_style conditional validator
+  - [x] Page.connected_endpoints is required (not optional)
+  - [x] RateLimiting.enabled defaults to False
+  - [x] Logging.structured and sensitive_data_masking default to False
+  - [x] CodeReview fields have defaults (required=True, min_reviewers=1, auto_merge_allowed=False)
+  - [x] PrPolicy.template_required=True, squash_merge=True defaults
+  - [x] intake.py scalability type changed from str to Scalability
+  - [x] All existing tests pass + new tests for added models/validators
+- Result: 5 schema files updated (enums.py, phase6.py, phase4_services.py, phase7.py, intake.py). 3 new models (Tracing, HealthCheck, Scalability), 1 new enum (ScalingStrategy), BackendApiService api_style model_validator. 23 new unit tests added. 10 test files updated for BackendApiService endpoints and Page.connected_endpoints requirements. 402 tests passing. ruff/mypy clean.
+
+### T028: Create field_requirements.yaml
+- Status: Done
+- Service: sdwc-api
+- Origin: intake_template.yaml/Pydantic model audit
+- Description: Create auto-generation script that introspects IntakeData model hierarchy and outputs .sdwc/field_requirements.yaml as SSOT for field requirements. Update output_contract.md.
+- Acceptance Criteria:
+  - [x] scripts/generate_field_requirements.py introspects models recursively
+  - [x] .sdwc/field_requirements.yaml generated with correct structure
+  - [x] Field classification (required/optional/conditional) matches models
+  - [x] output_contract.md updated with new file
+  - [x] Generated YAML is valid and parseable
+- Result: scripts/generate_field_requirements.py created (287 fields, 36 top-level sections, 8 phases). Handles Python 3.10+ UnionType, PydanticUndefined, discriminated union service types. .sdwc/field_requirements.yaml generated. output_contract.md R-2 updated (5 files). ruff clean.
+
 ### T025: GitHub Actions CI Pipeline
 - Status: Done
 - Service: sdwc-api, sdwc-web

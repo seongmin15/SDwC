@@ -31,6 +31,7 @@ from sdwc_api.schemas.phase4_services import (
     Auth,
     BackendApiService,
     Deployment,
+    Endpoint,
 )
 from sdwc_api.schemas.phase5 import (
     CriticalFlow,
@@ -61,6 +62,7 @@ def _minimal_backend_service(**overrides: object) -> BackendApiService:
         "build_tool": "poetry",
         "api_style": "rest",
         "auth": Auth(method="none", if_none_risks_accepted="Public"),
+        "endpoints": [Endpoint(method="GET", path="/health", description="Health")],
         "deployment": Deployment(target="docker_compose"),
     }
     defaults.update(overrides)

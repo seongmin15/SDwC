@@ -86,6 +86,33 @@ class TestCodeQuality:
         assert cq.code_review.required is True
 
 
+class TestCodeReviewDefaults:
+    def test_defaults_applied(self) -> None:
+        cr = CodeReview()
+        assert cr.required is True
+        assert cr.min_reviewers == 1
+        assert cr.auto_merge_allowed is False
+
+    def test_explicit_values_override_defaults(self) -> None:
+        cr = CodeReview(required=False, min_reviewers=2, auto_merge_allowed=True)
+        assert cr.required is False
+        assert cr.min_reviewers == 2
+        assert cr.auto_merge_allowed is True
+
+
+class TestPrPolicyDefaults:
+    def test_defaults_applied(self) -> None:
+        pp = PrPolicy()
+        assert pp.template_required is True
+        assert pp.squash_merge is True
+        assert pp.created_by is None
+
+    def test_explicit_values_override_defaults(self) -> None:
+        pp = PrPolicy(template_required=False, squash_merge=False, created_by="human")
+        assert pp.template_required is False
+        assert pp.squash_merge is False
+
+
 # --- Testing ---
 
 

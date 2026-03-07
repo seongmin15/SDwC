@@ -89,6 +89,7 @@ def _base_intake_data() -> dict:  # type: ignore[type-arg]
                 "build_tool": "poetry",
                 "api_style": "rest",
                 "auth": {"method": "none", "if_none_risks_accepted": "Public"},
+                "endpoints": [{"method": "POST", "path": "/generate", "description": "Generate"}],
                 "deployment": {"target": "docker_compose"},
             },
         ],
